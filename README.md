@@ -23,3 +23,5 @@ npm run payload:seed
 4. Run `npm run dev` and open `http://localhost:3000`.
 
 Payload admin is available at `/admin`. Create the first admin user there.
+=======
+
