@@ -1,0 +1,28 @@
+export const figmaAssets = {
+  logo: '/figma/logo.png',
+  heroInterview: '/figma/hero-interview.webp',
+  profileCard: '/figma/profile-card.webp',
+  avatarOne: '/figma/avatar-one.webp',
+  teamOffice: '/figma/team-office.webp',
+  aboutOfficeTall: '/figma/about-office-tall.webp',
+  aboutOfficeSide: '/figma/about-office-side.webp',
+  awards: [
+    '/figma/award-1.png',
+    '/figma/award-2.png',
+    '/figma/award-3.png',
+    '/figma/award-4.png',
+    '/figma/award-5.png',
+  ],
+  insights: ['/figma/insight-1.webp', '/figma/insight-2.webp', '/figma/insight-3.webp'],
+  partners: [
+    '/figma/partner-1.png',
+    '/figma/partner-2.png',
+    '/figma/partner-3.png',
+    '/figma/partner-4.png',
+    '/figma/partner-5.png',
+    '/figma/partner-6.png',
+    '/figma/partner-7.png',
+    '/figma/partner-8.png',
+  ],
+  testimonialVideo: '/figma/testimonial-video.webp',
+} as const
