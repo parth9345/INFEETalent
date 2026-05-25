@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sqlite3 infe-talent.sqlite \".schema users\")",
+      "Bash(sqlite3 infe-talent.sqlite \"UPDATE users SET login_attempts = 0, lock_until = NULL WHERE email = 'moinbavan10@gmail.com';\")",
+      "Bash(sqlite3 infe-talent.sqlite \"SELECT email, login_attempts, lock_until FROM users WHERE email = 'moinbavan10@gmail.com';\")"
+    ]
+  }
+}

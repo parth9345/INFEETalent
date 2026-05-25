@@ -12,23 +12,31 @@ type ServicesBlock = Extract<PageBlock, { blockType: 'servicesGrid' }>
 export async function ServicesGridSection({ block, isHomepage = false }: { block: ServicesBlock; isHomepage?: boolean }) {
   const selectedItems = relationItems<ServiceItem>(block.services)
   const items = selectedItems.length ? selectedItems : await getServices(9)
-  const gridClass = block.columns === '2' ? 'md:grid-cols-2' : 'md:grid-cols-2 lg:grid-cols-3'
+  const gridClass = isHomepage ? 'md:grid-cols-2 lg:grid-cols-3' : block.columns === '2' ? 'md:grid-cols-2' : 'md:grid-cols-2 lg:grid-cols-3'
 
   return (
-    <section id={sectionId(block.settings)} className={isHomepage ? 'bg-brand-background py-[76px]' : sectionClasses(block.settings, { defaultBackground: 'cream' })}>
-      <Container className={isHomepage ? 'max-w-[1152px] px-[24px] lg:px-[0px]' : undefined}>
-        <SectionHeader
-          eyebrow={block.eyebrow}
-          title={block.heading}
-          description={block.description}
-          className={isHomepage ? 'mb-[42px] max-w-[690px] space-y-[14px]' : 'mb-10 max-w-3xl'}
-          headingClassName={isHomepage ? 'max-w-[690px] text-h2 leading-[38px] tracking-[0px] md:text-h2' : undefined}
-          descriptionClassName={isHomepage ? 'max-w-[690px] text-body14 leading-[22px] tracking-[0px] md:text-body14' : undefined}
-        />
+    <section id={sectionId(block.settings)} className={isHomepage ? 'bg-[#fff8ee] py-[80px] lg:py-[120px]' : sectionClasses(block.settings, { defaultBackground: 'cream' })}>
+      <Container className={isHomepage ? 'max-w-[1500px] px-[24px] lg:px-[0px]' : undefined}>
+        {isHomepage ? (
+          <div className="mb-[64px] w-full max-w-[764px]">
+            <h2 className="relative max-w-[563px] text-[50px] font-[800] capitalize leading-[66px] tracking-[-1.5px] text-[#000000]">
+              <span className="relative z-[1]">{block.heading}</span>
+              <span className="absolute bottom-[0px] left-[0px] z-0 h-[23px] w-full bg-gradient-to-t from-[rgba(251,223,45,0.4)] from-[40%] to-[rgba(251,223,45,0)] to-[40%]" aria-hidden="true" />
+            </h2>
+            {block.description ? <p className="mt-[16px] max-w-[764px] text-[18px] font-[400] leading-[28px] tracking-[0px] text-[#555555]">{block.description}</p> : null}
+          </div>
+        ) : (
+          <SectionHeader
+            eyebrow={block.eyebrow}
+            title={block.heading}
+            description={block.description}
+            className="mb-10 max-w-3xl"
+          />
+        )}
         {items.length ? (
-          <div className={cn('grid border-l border-t border-neutral-border', gridClass)}>
+          <div className={cn('grid border-l border-t border-[#CCCCCC]', gridClass)}>
             {items.map((service) => (
-              <ServiceCard key={service.slug || service.title} service={service} showIcon={block.showIcons !== false} variant={isHomepage ? 'home' : 'default'} />
+              <ServiceCard key={service.slug || service.title} service={service} showIcon={isHomepage ? false : block.showIcons !== false} variant={isHomepage ? 'home' : 'default'} />
             ))}
           </div>
         ) : null}

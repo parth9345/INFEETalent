@@ -1,6 +1,7 @@
 import * as Icons from 'lucide-react'
 import { createElement, type ComponentType } from 'react'
 
+import { OptimizedImage } from '@/components/ui/OptimizedImage'
 import { cn } from '@/lib/utils'
 import type { ServiceItem } from '@/types/content'
 
@@ -24,10 +25,25 @@ export function ServiceCard({ service, showIcon = true, className, variant = 'de
 
   if (variant === 'home') {
     return (
-      <article className={cn('min-h-[176px] border-b border-r border-neutral-border bg-brand-background px-[28px] pb-[25px] pt-[28px] transition duration-300 hover:bg-neutral-white', className)}>
-        {showIcon ? createElement(Icon, { className: 'mb-[24px] text-brand-primary', size: 22, strokeWidth: 1.75, 'aria-hidden': true }) : null}
-        <h3 className="break-words text-h5 font-extrabold leading-[26px] tracking-[0px] text-neutral-dark">{service.title}</h3>
-        <p className="mt-[13px] break-words text-body14 leading-[22px] tracking-[0px] text-neutral-muted">{service.summary}</p>
+      <article className={cn('group relative min-h-[300px] overflow-hidden border-b border-r border-[#CCCCCC] bg-[#fff8ee] px-[36px] py-[44px] transition duration-300 hover:bg-[#2C368D] md:px-[48px] md:py-[56px] lg:h-[373px] lg:px-[60px] lg:pb-[60px] lg:pt-[67px]', className)}>
+        {service.featuredImage ? (
+          <div className="absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-50">
+            <OptimizedImage
+              media={service.featuredImage}
+              altFallback={service.title}
+              sizes="(min-width: 1024px) 500px, 100vw"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-[#121964]/85" />
+          </div>
+        ) : (
+          <div className="absolute inset-0 bg-[#2C368D] opacity-0 transition duration-300 group-hover:opacity-100" />
+        )}
+        <div className="relative z-[1]">
+          {showIcon ? createElement(Icon, { className: 'mb-[24px] text-brand-primary transition duration-300 group-hover:text-[#FFFFFF]', size: 28, strokeWidth: 1.75, 'aria-hidden': true }) : null}
+          <h3 className="break-words text-[30px] font-[800] leading-[38px] tracking-[-0.9px] text-[#000000] transition duration-300 group-hover:text-[#FFFFFF]">{service.title}</h3>
+          <p className="mt-[16px] max-w-[360px] break-words text-[18px] font-[400] leading-[28px] tracking-[0px] text-[#555555] transition duration-300 group-hover:text-[rgba(255,255,255,0.9)]">{service.summary}</p>
+        </div>
       </article>
     )
   }

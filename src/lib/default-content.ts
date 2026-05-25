@@ -1,7 +1,7 @@
 import { figmaAssets } from './assets'
-import type { BlogItem, CareerItem, FAQItem, PageContent, ServiceItem, TeamMemberItem, TestimonialItem } from '@/types/content'
+import type { BlogItem, CareerItem, FAQItem, Link, PageContent, ServiceItem, TeamMemberItem, TestimonialItem } from '@/types/content'
 
-export const primaryNavigation = [
+export const primaryNavigation: Link[] = [
   { label: 'About', url: '/about' },
   { label: 'Services', url: '/services' },
   { label: 'Blogs', url: '/blogs' },
@@ -113,10 +113,13 @@ export const homePageFallback: PageContent = {
     {
       blockType: 'contentImage',
       heading: 'If It Is About People, We Make It Possible!',
-      bodyText: ['INFE Talent is a global offshore recruitment service provider with over 20 years of expertise. As an offshore recruitment partner, we empower staffing firms in the USA, UK, and APAC to build dynamic teams.', 'With delivery centers in India and the Philippines, we provide 360 recruitment services, from mapping and sourcing to onboarding and everything in between.'],
+      bodyText: [
+        'INFE Talent is a global offshore recruitment service provider with over 20 years of expertise. As an offshore recruitment partner, we empower staffing firms in the USA, UK, and APAC to benefit from our flexible, scalable, and uninterrupted recruitment solutions to build dynamic teams.',
+        'Our clients have trusted INFE Talent as their offshore recruitment partner for over 20 years. With delivery centers in India and the Philippines, we provide 360\u00B0 recruitment services, from mapping and sourcing to onboarding and everything in between!',
+      ],
       media: figmaAssets.aboutOfficeTall,
       mediaSecondary: figmaAssets.aboutOfficeSide,
-      action: { label: 'About Us', url: '/about' },
+      action: { label: 'Get In Touch', url: '#contact' },
     },
     { blockType: 'servicesGrid', heading: 'A Complete Offshore Recruitment Ecosystem.', description: 'By identifying, attracting, and engaging exceptional talent, we make every connection count.', services },
     {

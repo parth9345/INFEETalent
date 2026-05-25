@@ -5,15 +5,17 @@ import type { Route } from 'next'
 import { Menu, X } from 'lucide-react'
 import { useEffect, useId, useState } from 'react'
 
-import { ButtonLink } from '@/components/ui/ButtonLink'
+import { Button } from '@/components/ui/Button'
 import { cn } from '@/lib/utils'
-import type { Link as NavLink } from '@/types/content'
+import type { Link as NavLink, SiteCTA } from '@/types/content'
 
 type MobileNavProps = {
   navigation: NavLink[]
+  cta?: SiteCTA
+  socialLinks?: NavLink[]
 }
 
-export function MobileNav({ navigation }: MobileNavProps) {
+export function MobileNav({ navigation, cta, socialLinks = [] }: MobileNavProps) {
   const menuId = useId()
   const [open, setOpen] = useState(false)
 
@@ -45,7 +47,7 @@ export function MobileNav({ navigation }: MobileNavProps) {
     <div className="lg:hidden">
       <button
         type="button"
-        className="inline-flex size-11 items-center justify-center border border-neutral-border bg-neutral-white text-brand-primary transition hover:border-brand-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-accent"
+        className="inline-flex size-[44px] items-center justify-center border border-[#CCCCCC] bg-[#FFF8EE] text-[#262164] transition hover:border-[#262164] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FCA62B]"
         aria-label={open ? 'Close navigation' : 'Open navigation'}
         aria-controls={menuId}
         aria-expanded={open}
@@ -57,15 +59,16 @@ export function MobileNav({ navigation }: MobileNavProps) {
         id={menuId}
         className={cn(
           'fixed inset-x-0 top-[82px] z-[90] overflow-hidden border-b border-neutral-border bg-neutral-white px-5 shadow-[0_18px_36px_rgba(21,21,21,0.16)] transition-all duration-300 ease-out lg:hidden',
-          open ? 'max-h-[calc(100dvh-82px)] translate-y-0 opacity-100' : 'pointer-events-none max-h-0 -translate-y-2 opacity-0',
+          'top-[84px] bg-[#FFF8EE] shadow-[0px_18px_36px_rgba(21,21,21,0.16)] md:top-[96px]',
+          open ? 'max-h-[calc(100dvh-84px)] translate-y-0 opacity-100 md:max-h-[calc(100dvh-96px)]' : 'pointer-events-none max-h-0 -translate-y-2 opacity-0',
         )}
       >
-        <nav className="mx-auto grid max-w-[1500px] gap-1 py-5" aria-label="Mobile navigation">
+        <nav className="mx-auto grid max-w-[1800px] gap-[0px] py-[20px]" aria-label="Mobile navigation">
           {navigation.map((item) => (
             <Link
               key={`${item.label}-${item.url}`}
               href={(item.url || '/') as Route}
-              className="border-b border-neutral-border/70 py-3 text-header14 font-extrabold uppercase tracking-[0.8px] text-neutral-dark transition hover:text-brand-primary"
+              className="border-b border-[#CCCCCC]/70 py-[14px] text-[16px] font-[600] leading-[20px] tracking-[0px] text-[#151515] transition hover:text-[#262164]"
               onClick={closeMenu}
               target={item.newTab ? '_blank' : undefined}
               rel={item.newTab ? 'noopener noreferrer' : undefined}
@@ -73,11 +76,59 @@ export function MobileNav({ navigation }: MobileNavProps) {
               {item.label}
             </Link>
           ))}
-          <ButtonLink href="/contact" className="mt-4 w-full" onClick={closeMenu}>
-            Get Started
-          </ButtonLink>
+          {cta?.enabled && cta.label && cta.url ? (
+            <Button
+              href={cta.url}
+              newTab={cta.newTab}
+              variant={cta.variant || 'primary'}
+              size="md"
+              className="mt-[18px] w-full"
+              onClick={closeMenu}
+            >
+              {cta.label}
+            </Button>
+          ) : null}
+          {socialLinks.length ? (
+            <div className="flex items-center gap-[24px] pt-[18px] text-[20px] font-[800] leading-[20px] text-[#262164]">
+              {socialLinks.map((item) => (
+                <a
+                  key={`${item.label}-${item.url}`}
+                  href={item.url || '#'}
+                  target={item.newTab ? '_blank' : undefined}
+                  rel={item.newTab ? 'noopener noreferrer' : undefined}
+                  onClick={closeMenu}
+                  aria-label={item.label}
+                >
+                  {socialGlyph(item.label)}
+                </a>
+              ))}
+            </div>
+          ) : null}
         </nav>
       </div>
     </div>
   )
+}
+
+function socialGlyph(label?: string) {
+  const normalized = label?.toLowerCase() || ''
+
+  if (normalized.includes('instagram')) {
+    return (
+      <span className="relative block size-[18px] rounded-[5px] border-[2px] border-current">
+        <span className="absolute left-[4px] top-[4px] size-[6px] rounded-full border-[2px] border-current" />
+        <span className="absolute right-[3px] top-[3px] size-[3px] rounded-full bg-current" />
+      </span>
+    )
+  }
+
+  if (normalized.includes('linkedin')) {
+    return 'in'
+  }
+
+  if (normalized.includes('facebook')) {
+    return 'f'
+  }
+
+  return label?.slice(0, 1).toLowerCase() || ''
 }

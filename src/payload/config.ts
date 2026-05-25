@@ -11,6 +11,8 @@ import { siteConfig } from '@/lib/site'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+const localOrigins = ['http://localhost:3000', 'http://127.0.0.1:3000']
+const allowedOrigins = Array.from(new Set([siteConfig.url, ...localOrigins]))
 
 export default buildConfig({
   admin: {
@@ -24,9 +26,10 @@ export default buildConfig({
   },
   collections,
   globals: [SiteSettings],
-  cors: [siteConfig.url],
-  csrf: [siteConfig.url],
+  cors: allowedOrigins,
+  csrf: allowedOrigins,
   db: sqliteAdapter({
+    push: process.env.PAYLOAD_ENABLE_SCHEMA_PUSH === 'true',
     client: {
       url: process.env.DATABASE_URL || 'file:./infe-talent.sqlite',
     },

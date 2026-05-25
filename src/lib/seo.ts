@@ -65,9 +65,17 @@ export const buildMetadata = (page: PageContent | null, path = '/', options: Met
 }
 
 export const organizationSchema = (settings?: SiteSettingsContent): JsonLdObject => {
-  const contact = settings?.contact
-  const logo = resolveMediaUrl(settings?.logo, figmaAssets.logo, ['og', 'hero', 'card'])
-  const sameAs = settings?.socialLinks?.map((link) => link.url).filter(Boolean) || []
+  const footerContact = settings?.footer?.contact
+  const legacyContact = settings?.contact
+  const logo = resolveMediaUrl(settings?.header?.logo || settings?.footer?.logo || settings?.logo, figmaAssets.logo, ['og', 'hero', 'card'])
+  const sameAs = (settings?.footer?.socialLinks?.length ? settings.footer.socialLinks : settings?.socialLinks)
+    ?.map((link) => link.url)
+    .filter(Boolean) || []
+  const email = footerContact?.email || legacyContact?.email || siteConfig.contactEmail
+  const usPhone = footerContact?.usPhone || footerContact?.phone || legacyContact?.usPhone || siteConfig.phones.us
+  const ukPhone = footerContact?.ukPhone || footerContact?.phone || legacyContact?.ukPhone || siteConfig.phones.uk
+  const ausPhone = footerContact?.ausPhone || footerContact?.phone || legacyContact?.ausPhone || siteConfig.phones.aus
+  const address = footerContact?.address || legacyContact?.officeAddress || '2972 Westheimer Rd. Santa Ana, Illinois 85486'
 
   return {
     '@context': 'https://schema.org',
@@ -76,31 +84,31 @@ export const organizationSchema = (settings?: SiteSettingsContent): JsonLdObject
     name: settings?.brandName || siteConfig.name,
     url: absoluteUrl('/'),
     logo: absoluteUrl(logo),
-    email: contact?.email || siteConfig.contactEmail,
-    telephone: contact?.usPhone || siteConfig.phones.us,
+    email,
+    telephone: usPhone,
     sameAs,
     address: {
       '@type': 'PostalAddress',
-      streetAddress: contact?.officeAddress || '2972 Westheimer Rd. Santa Ana, Illinois 85486',
+      streetAddress: address,
     },
     contactPoint: [
       {
         '@type': 'ContactPoint',
-        telephone: contact?.usPhone || siteConfig.phones.us,
+        telephone: usPhone,
         contactType: 'sales',
         areaServed: 'US',
         availableLanguage: ['English'],
       },
       {
         '@type': 'ContactPoint',
-        telephone: contact?.ukPhone || siteConfig.phones.uk,
+        telephone: ukPhone,
         contactType: 'sales',
         areaServed: 'GB',
         availableLanguage: ['English'],
       },
       {
         '@type': 'ContactPoint',
-        telephone: contact?.ausPhone || siteConfig.phones.aus,
+        telephone: ausPhone,
         contactType: 'sales',
         areaServed: 'AU',
         availableLanguage: ['English'],

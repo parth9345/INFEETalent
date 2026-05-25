@@ -1,7 +1,10 @@
+import { Quote } from 'lucide-react'
+
 import { TestimonialCard } from '@/components/cards/TestimonialCard'
 import { Container } from '@/components/ui/Container'
 import { OptimizedImage } from '@/components/ui/OptimizedImage'
 import { SectionHeader } from '@/components/ui/SectionHeader'
+import { VideoTestimonialTile } from '@/components/sections/VideoTestimonialTile'
 import { figmaAssets } from '@/lib/assets'
 import { getTestimonials } from '@/lib/payload-queries'
 import { sectionClasses, sectionId } from '@/lib/sections'
@@ -16,8 +19,10 @@ export async function TestimonialsSection({ block, isHomepage = false }: { block
   const gridOnly = block.display === 'grid'
 
   return (
-    <section id={sectionId(block.settings)} className={isHomepage ? 'bg-brand-primary py-[72px] text-neutral-white' : sectionClasses(block.settings, { defaultBackground: 'blue' })}>
-      <Container className={isHomepage ? 'grid max-w-[1152px] gap-[56px] px-[24px] lg:grid-cols-[430px_1fr] lg:gap-[78px] lg:px-[0px]' : gridOnly ? 'space-y-10' : 'grid gap-10 lg:grid-cols-[0.8fr_1fr]'}>
+    <section id={sectionId(block.settings)} className={isHomepage ? 'bg-[#080D4D] text-[#FFFFFF]' : sectionClasses(block.settings, { defaultBackground: 'blue' })}>
+      {isHomepage ? <HomeVoices block={block} testimonials={testimonials} /> : null}
+      {!isHomepage ? (
+      <Container className={gridOnly ? 'space-y-10' : 'grid gap-10 lg:grid-cols-[0.8fr_1fr]'}>
         <div>
           <SectionHeader
             eyebrow={block.eyebrow}
@@ -47,6 +52,55 @@ export async function TestimonialsSection({ block, isHomepage = false }: { block
           ))}
         </div>
       </Container>
+      ) : null}
     </section>
+  )
+}
+
+function HomeVoices({ block, testimonials }: { block: TestimonialsBlock; testimonials: TestimonialItem[] }) {
+  const first = testimonials[0]
+  const second = testimonials[1] || testimonials[0]
+  const third = testimonials[2] || testimonials[1] || testimonials[0]
+
+  return (
+    <div className="relative overflow-hidden bg-[linear-gradient(108deg,#050948_0%,#121967_56%,#243C91_100%)] py-[80px] lg:min-h-[1322px] lg:py-[96px]">
+      <Container className="relative max-w-[1500px] px-[24px] lg:px-[0px]">
+        <div className="max-w-[672px]">
+          {block.eyebrow ? <p className="text-[12px] font-[800] uppercase leading-[16px] tracking-[6px] text-[#FCA62B]">{block.eyebrow}</p> : null}
+          <h2 className="relative mt-[24px] max-w-[672px] text-[50px] font-[800] capitalize leading-[66px] tracking-[-1.5px] text-[#FFFFFF]">
+            <span className="relative z-[1]">{block.heading}</span>
+            <span className="absolute bottom-[4px] left-[456px] z-0 h-[23px] w-[125px] bg-gradient-to-t from-[rgba(251,223,45,0.45)] from-[40%] to-[rgba(251,223,45,0)] to-[40%]" aria-hidden="true" />
+          </h2>
+        </div>
+
+        <div className="mt-[70px] grid gap-[24px] lg:mt-[70px]">
+          <div className="grid gap-[24px] lg:grid-cols-[605px_521px_326px]">
+            <VideoTestimonialTile media={block.featuredMedia || first?.avatar} fallbackSrc={figmaAssets.testimonialVideo} alt={first?.name || 'Partner testimonial video'} className="lg:h-[439px]" />
+            {first ? <VoiceQuoteCard item={first} className="lg:h-[439px]" wide /> : null}
+            <VideoTestimonialTile media={second?.avatar} fallbackSrc={figmaAssets.avatarOne} alt={second?.name || 'Partner testimonial video'} className="lg:h-[439px]" />
+          </div>
+          <div className="grid gap-[24px] lg:grid-cols-[423.5px_605px_423.5px]">
+            {second ? <VoiceQuoteCard item={second} className="lg:h-[438.75px]" /> : null}
+            <VideoTestimonialTile media={third?.avatar || block.featuredMedia} fallbackSrc={figmaAssets.aboutOfficeSide} alt={third?.name || 'Partner testimonial video'} className="lg:h-[438.75px]" />
+            {third ? <VoiceQuoteCard item={third} className="lg:h-[438.75px]" /> : null}
+          </div>
+        </div>
+      </Container>
+    </div>
+  )
+}
+
+function VoiceQuoteCard({ item, className, wide = false }: { item: TestimonialItem; className?: string; wide?: boolean }) {
+  return (
+    <article className={`group flex min-h-[360px] flex-col border border-[#FFFFFF]/10 bg-[#FFFFFF]/[0.05] p-[33px] text-[#FFFFFF] backdrop-blur-[4px] transition duration-300 hover:bg-[#FFFFFF]/[0.08] ${className || ''}`}>
+      <Quote size={28} className="rotate-180 text-[#FCA62B]" aria-hidden="true" />
+      <p className={`mt-[24px] text-[16px] font-[400] leading-[26px] tracking-[0px] text-[rgba(255,255,255,0.9)] ${wide ? 'max-w-[455px]' : 'max-w-[357.5px]'}`}>{item.quote}</p>
+      <div className="mt-auto border-t border-[#FFFFFF]/10 pt-[29px]">
+        <p className="text-[16px] font-[400] leading-[22px] tracking-[0px] text-[#FFFFFF]">
+          {item.role || item.name}
+          {item.company ? `, ${item.company}` : null}
+        </p>
+      </div>
+    </article>
   )
 }

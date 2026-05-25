@@ -187,7 +187,7 @@ export interface Page {
         /**
          * Choose the hero composition. Split matches the primary Figma homepage layout.
          */
-        variant?: ('split' | 'centered') | null;
+        variant?: ('split' | 'centered' | 'textOnly' | 'darkSplit') | null;
         /**
          * Small label shown above the main heading.
          */
@@ -232,6 +232,10 @@ export interface Page {
           url?: string | null;
           newTab?: boolean | null;
         };
+        /**
+         * Controls whether the image collage appears on the left or right. Only used by darkSplit variant.
+         */
+        imagePosition?: ('right' | 'left') | null;
         /**
          * Primary hero image. Use descriptive alt text on the media item for SEO and accessibility.
          */
@@ -283,9 +287,60 @@ export interface Page {
         blockType: 'hero';
       }
     | {
+        /**
+         * Small uppercase label shown above the heading.
+         */
+        eyebrow?: string | null;
+        /**
+         * Main section heading.
+         */
+        heading: string;
+        /**
+         * Optional word or phrase within the heading to emphasize with a gradient underline.
+         */
+        highlight?: string | null;
+        /**
+         * Optional summary paragraph shown below the heading.
+         */
+        description?: string | null;
+        /**
+         * Advantage cards. Each card has an icon, title, and description.
+         */
+        items?:
+          | {
+              /**
+               * Lucide icon name e.g. Globe, ShieldCheck, Users, Briefcase, Zap, Target.
+               */
+              icon?: string | null;
+              title: string;
+              description: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'advantage';
+      }
+    | {
+        /**
+         * Strip renders as a compact blue bar. Cards renders as a cream section with icon cards.
+         */
+        layout?: ('strip' | 'cards') | null;
+        /**
+         * Section heading shown above the cards. Only used in cards layout.
+         */
+        heading?: string | null;
+        /**
+         * Optional description below the heading. Only used in cards layout.
+         */
+        description?: string | null;
         items: {
           value: string;
           label: string;
+          /**
+           * Lucide icon name e.g. Globe, Users, Building2, MapPin, Star, ShieldCheck.
+           */
+          icon?: string | null;
           id?: string | null;
         }[];
         id?: string | null;
@@ -305,6 +360,10 @@ export interface Page {
          * Primary section heading. Keep it specific and search-friendly.
          */
         heading: string;
+        /**
+         * Optional word or phrase within the heading to emphasize with a gradient underline.
+         */
+        highlight?: string | null;
         /**
          * Main body copy. Use short paragraphs and clear subtopics for scannability.
          */
@@ -348,6 +407,52 @@ export interface Page {
            */
           url?: string | null;
           newTab?: boolean | null;
+        };
+        /**
+         * Optional call-to-action link. Leave blank to hide this button.
+         */
+        primaryAction?: {
+          /**
+           * Button text shown to visitors.
+           */
+          label?: string | null;
+          /**
+           * Use a relative path like /contact, an anchor like #contact, or a full URL.
+           */
+          url?: string | null;
+          newTab?: boolean | null;
+        };
+        /**
+         * Optional call-to-action link. Leave blank to hide this button.
+         */
+        secondaryAction?: {
+          /**
+           * Button text shown to visitors.
+           */
+          label?: string | null;
+          /**
+           * Use a relative path like /contact, an anchor like #contact, or a full URL.
+           */
+          url?: string | null;
+          newTab?: boolean | null;
+        };
+        /**
+         * Optional stats shown as overlay badges on the image in the dark background variant.
+         */
+        stats?:
+          | {
+              value: string;
+              label: string;
+              id?: string | null;
+            }[]
+          | null;
+        /**
+         * Optional profile card displayed on the image in the dark background variant.
+         */
+        overlayCard?: {
+          name?: string | null;
+          role?: string | null;
+          company?: string | null;
         };
         /**
          * Shared controls for editors. These do not change the main content.
@@ -1551,6 +1656,7 @@ export interface PagesSelect<T extends boolean = true> {
                     url?: T;
                     newTab?: T;
                   };
+              imagePosition?: T;
               media?: T;
               badgeLabel?: T;
               featureCard?:
@@ -1583,14 +1689,36 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        advantage?:
+          | T
+          | {
+              eyebrow?: T;
+              heading?: T;
+              highlight?: T;
+              description?: T;
+              items?:
+                | T
+                | {
+                    icon?: T;
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
         statsStrip?:
           | T
           | {
+              layout?: T;
+              heading?: T;
+              description?: T;
               items?:
                 | T
                 | {
                     value?: T;
                     label?: T;
+                    icon?: T;
                     id?: T;
                   };
               id?: T;
@@ -1602,6 +1730,7 @@ export interface PagesSelect<T extends boolean = true> {
               layout?: T;
               eyebrow?: T;
               heading?: T;
+              highlight?: T;
               body?: T;
               media?: T;
               mediaSecondary?: T;
@@ -1612,6 +1741,34 @@ export interface PagesSelect<T extends boolean = true> {
                     label?: T;
                     url?: T;
                     newTab?: T;
+                  };
+              primaryAction?:
+                | T
+                | {
+                    label?: T;
+                    url?: T;
+                    newTab?: T;
+                  };
+              secondaryAction?:
+                | T
+                | {
+                    label?: T;
+                    url?: T;
+                    newTab?: T;
+                  };
+              stats?:
+                | T
+                | {
+                    value?: T;
+                    label?: T;
+                    id?: T;
+                  };
+              overlayCard?:
+                | T
+                | {
+                    name?: T;
+                    role?: T;
+                    company?: T;
                   };
               settings?:
                 | T
@@ -2297,31 +2454,134 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface SiteSetting {
   id: number;
+  /**
+   * Used as the site name in SEO fallbacks and image alt text.
+   */
   brandName: string;
+  /**
+   * Legacy/shared logo fallback. Prefer the Header and Footer logo fields below.
+   */
   logo?: (number | null) | Media;
-  primaryNavigation?:
-    | {
-        label: string;
-        url: string;
-        id?: string | null;
-      }[]
-    | null;
-  footerNavigation?:
-    | {
-        label: string;
-        url: string;
-        id?: string | null;
-      }[]
-    | null;
+  header?: {
+    /**
+     * Logo shown in the website header.
+     */
+    logo?: (number | null) | Media;
+    /**
+     * Accessible text for the header logo. Example: INFE Talent.
+     */
+    logoAlt?: string | null;
+    /**
+     * Primary navigation shown in the desktop and mobile header.
+     */
+    navigation?:
+      | {
+          label: string;
+          url: string;
+          newTab?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+    cta?: {
+      enabled?: boolean | null;
+      label?: string | null;
+      url?: string | null;
+      variant?: ('primary' | 'secondary') | null;
+      newTab?: boolean | null;
+    };
+    stickyEnabled?: boolean | null;
+  };
+  footer?: {
+    /**
+     * Optional footer logo if the footer layout uses a logo.
+     */
+    logo?: (number | null) | Media;
+    logoAlt?: string | null;
+    /**
+     * Optional footer brand description.
+     */
+    description?: string | null;
+    navigationColumns?:
+      | {
+          title: string;
+          links?:
+            | {
+                label: string;
+                url: string;
+                newTab?: boolean | null;
+                id?: string | null;
+              }[]
+            | null;
+          id?: string | null;
+        }[]
+      | null;
+    contact?: {
+      email?: string | null;
+      phone?: string | null;
+      address?: string | null;
+      ukPhone?: string | null;
+      usPhone?: string | null;
+      ausPhone?: string | null;
+    };
+    socialLinks?:
+      | {
+          platformName: string;
+          url: string;
+          /**
+           * Optional icon key, e.g. linkedin, facebook, instagram.
+           */
+          iconName?: string | null;
+          newTab?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+    cta?: {
+      enabled?: boolean | null;
+      label?: string | null;
+      url?: string | null;
+      variant?: ('primary' | 'secondary') | null;
+      newTab?: boolean | null;
+    };
+    copyright?: string | null;
+  };
   footerPartners?:
     | {
         image: number | Media;
         label: string;
         url?: string | null;
+        newTab?: boolean | null;
         id?: string | null;
       }[]
     | null;
+  /**
+   * Legacy fallback. Header navigation uses Header > Header navigation links first.
+   */
+  primaryNavigation?:
+    | {
+        label: string;
+        url: string;
+        newTab?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Legacy fallback. Footer uses Footer > Footer navigation columns first.
+   */
+  footerNavigation?:
+    | {
+        label: string;
+        url: string;
+        newTab?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Legacy fallback. Footer copyright uses Footer > Copyright first.
+   */
   copyright?: string | null;
+  /**
+   * Legacy fallback. Footer contact uses Footer > Contact first.
+   */
   contact?: {
     officeAddress?: string | null;
     ukPhone?: string | null;
@@ -2329,10 +2589,14 @@ export interface SiteSetting {
     ausPhone?: string | null;
     email?: string | null;
   };
+  /**
+   * Legacy/shared social links. Header icons use these if footer social links are empty.
+   */
   socialLinks?:
     | {
         label: string;
         url: string;
+        newTab?: boolean | null;
         id?: string | null;
       }[]
     | null;
@@ -2365,19 +2629,79 @@ export interface SiteSetting {
 export interface SiteSettingsSelect<T extends boolean = true> {
   brandName?: T;
   logo?: T;
-  primaryNavigation?:
+  header?:
     | T
     | {
-        label?: T;
-        url?: T;
-        id?: T;
+        logo?: T;
+        logoAlt?: T;
+        navigation?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+              newTab?: T;
+              id?: T;
+            };
+        cta?:
+          | T
+          | {
+              enabled?: T;
+              label?: T;
+              url?: T;
+              variant?: T;
+              newTab?: T;
+            };
+        stickyEnabled?: T;
       };
-  footerNavigation?:
+  footer?:
     | T
     | {
-        label?: T;
-        url?: T;
-        id?: T;
+        logo?: T;
+        logoAlt?: T;
+        description?: T;
+        navigationColumns?:
+          | T
+          | {
+              title?: T;
+              links?:
+                | T
+                | {
+                    label?: T;
+                    url?: T;
+                    newTab?: T;
+                    id?: T;
+                  };
+              id?: T;
+            };
+        contact?:
+          | T
+          | {
+              email?: T;
+              phone?: T;
+              address?: T;
+              ukPhone?: T;
+              usPhone?: T;
+              ausPhone?: T;
+            };
+        socialLinks?:
+          | T
+          | {
+              platformName?: T;
+              url?: T;
+              iconName?: T;
+              newTab?: T;
+              id?: T;
+            };
+        cta?:
+          | T
+          | {
+              enabled?: T;
+              label?: T;
+              url?: T;
+              variant?: T;
+              newTab?: T;
+            };
+        copyright?: T;
       };
   footerPartners?:
     | T
@@ -2385,6 +2709,23 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         image?: T;
         label?: T;
         url?: T;
+        newTab?: T;
+        id?: T;
+      };
+  primaryNavigation?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        newTab?: T;
+        id?: T;
+      };
+  footerNavigation?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        newTab?: T;
         id?: T;
       };
   copyright?: T;
@@ -2402,6 +2743,7 @@ export interface SiteSettingsSelect<T extends boolean = true> {
     | {
         label?: T;
         url?: T;
+        newTab?: T;
         id?: T;
       };
   seo?:

@@ -26,33 +26,36 @@ export function BlogCard({
   const href = `/blogs/${post.slug || ''}`
   const isHome = variant === 'home'
   const image = showImage ? (
-    <div className={isHome ? 'relative h-[178px] overflow-hidden' : 'relative h-[205px] overflow-hidden'}>
+    <div className={isHome ? 'relative h-[279px] overflow-hidden' : 'relative h-[205px] overflow-hidden'}>
       <OptimizedImage
         media={post.featuredImage}
         altFallback={post.title}
-        sizes="(min-width: 1024px) 33vw, 100vw"
+        sizes={isHome ? '(min-width: 1024px) 479px, 100vw' : '(min-width: 1024px) 33vw, 100vw'}
         className="object-cover transition duration-500 group-hover:scale-105"
       />
     </div>
   ) : null
+  const formattedDate = post.publishedAt
+    ? new Intl.DateTimeFormat('en', { month: 'short', day: '2-digit', year: 'numeric' }).format(new Date(post.publishedAt))
+    : null
 
   return (
-    <article className={cn('group border border-neutral-border bg-brand-background', className)}>
+    <article className={cn('group border border-[#CCCCCC] bg-[#FFF8EE] tracking-[0.84px] transition hover:bg-[#FCA62B]', isHome && 'lg:h-[652px]', className)}>
       {imagePosition === 'top' ? image : null}
-      <div className={isHome ? 'space-y-[12px] p-[24px]' : 'space-y-3 p-5 md:p-6'}>
+      <div className={isHome ? 'flex h-[373px] flex-col items-start p-[48px]' : 'space-y-3 p-5 md:p-6'}>
         {post.publishedAt ? (
-          <time className={isHome ? 'text-body12 leading-[18px] tracking-[0px] text-neutral-muted' : 'text-body12 text-neutral-muted'} dateTime={post.publishedAt}>
-            {new Intl.DateTimeFormat('en', { dateStyle: 'medium' }).format(new Date(post.publishedAt))}
+          <time className={isHome ? 'text-[16px] font-[400] leading-[28px] tracking-[0px] text-[#555555]' : 'text-body12 text-neutral-muted'} dateTime={post.publishedAt}>
+            {isHome ? formattedDate : new Intl.DateTimeFormat('en', { dateStyle: 'medium' }).format(new Date(post.publishedAt))}
           </time>
         ) : null}
-        <h3 className={isHome ? 'text-h4 font-extrabold leading-[28px] tracking-[0px] text-neutral-dark' : 'text-h5 font-extrabold leading-[26px] text-neutral-dark md:text-h4 md:leading-[28px]'}>{post.title}</h3>
-        {showExcerpt ? <p className={isHome ? 'line-clamp-3 text-body14 leading-[22px] tracking-[0px] text-neutral-muted' : 'line-clamp-3 text-body12 leading-[18px] text-neutral-muted md:text-body14 md:leading-[22px]'}>{post.excerpt}</p> : null}
+        <h3 className={isHome ? 'mt-[16px] line-clamp-3 max-w-[382px] text-[28px] font-[800] capitalize leading-[38px] tracking-[-0.84px] text-[#000000]' : 'text-h5 font-extrabold leading-[26px] text-neutral-dark md:text-h4 md:leading-[28px]'}>{post.title}</h3>
+        {showExcerpt ? <p className={isHome ? 'mt-[16px] line-clamp-2 max-w-[382px] text-[16px] font-[400] leading-[28px] tracking-[0px] text-[#555555]' : 'line-clamp-3 text-body12 leading-[18px] text-neutral-muted md:text-body14 md:leading-[22px]'}>{post.excerpt}</p> : null}
         <Link
           href={href as Route}
-          className={isHome ? 'inline-flex items-center gap-[8px] text-link14 font-extrabold uppercase leading-[20px] tracking-[1px] text-brand-primary' : 'inline-flex items-center gap-2 text-link14 font-extrabold uppercase tracking-[0.8px] text-brand-primary'}
+          className={isHome ? 'mt-[24px] inline-flex items-center gap-[10px] text-[14px] font-[800] uppercase leading-[24px] tracking-[0.84px] text-[#262164] ' : 'inline-flex items-center gap-2 text-link14 font-extrabold uppercase tracking-[0.8px] text-brand-primary'}
           aria-label={`Read more about ${post.title}`}
         >
-          Read More <ArrowRight size={isHome ? 16 : 18} aria-hidden="true" />
+          Read More <ArrowRight size={isHome ? 22 : 18} strokeWidth={isHome ? 1.8 : 2} aria-hidden="true" />
         </Link>
       </div>
       {imagePosition === 'bottom' ? image : null}

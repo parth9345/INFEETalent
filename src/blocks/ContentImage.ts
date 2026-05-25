@@ -24,6 +24,13 @@ export const ContentImageBlock: Block = {
     },
     ...sectionIntroFields({ includeDescription: false }),
     {
+      name: 'highlight',
+      type: 'text',
+      admin: {
+        description: 'Optional word or phrase within the heading to emphasize with a gradient underline.',
+      },
+    },
+    {
       name: 'body',
       type: 'richText',
       required: true,
@@ -53,20 +60,41 @@ export const ContentImageBlock: Block = {
       type: 'select',
       defaultValue: 'left',
       options: [
-        {
-          label: 'Left',
-          value: 'left',
-        },
-        {
-          label: 'Right',
-          value: 'right',
-        },
+        { label: 'Left', value: 'left' },
+        { label: 'Right', value: 'right' },
       ],
       admin: {
         description: 'Controls whether the image group appears before or after the text on desktop.',
       },
     },
     linkFields('action', 'Action'),
+    linkFields('primaryAction', 'Primary action (dark variant)'),
+    linkFields('secondaryAction', 'Secondary action (dark variant)'),
+    {
+      name: 'stats',
+      type: 'array',
+      maxRows: 4,
+      admin: {
+        description: 'Optional stats shown as overlay badges on the image in the dark background variant.',
+      },
+      fields: [
+        { name: 'value', type: 'text', required: true },
+        { name: 'label', type: 'text', required: true },
+      ],
+    },
+    {
+      name: 'overlayCard',
+      type: 'group',
+      label: 'Image overlay card',
+      admin: {
+        description: 'Optional profile card displayed on the image in the dark background variant.',
+      },
+      fields: [
+        { name: 'name', type: 'text' },
+        { name: 'role', type: 'text' },
+        { name: 'company', type: 'text' },
+      ],
+    },
     sectionSettingsField({ defaultBackground: 'soft', defaultSpacing: 'standard' }),
   ],
 }

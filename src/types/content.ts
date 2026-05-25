@@ -4,6 +4,19 @@ export type Link = {
   newTab?: boolean
 }
 
+export type SiteCTA = Link & {
+  enabled?: boolean
+  variant?: 'primary' | 'secondary'
+}
+
+export type FooterSocialLink = {
+  platformName?: string
+  label?: string
+  url?: string
+  iconName?: string
+  newTab?: boolean
+}
+
 export type SectionSettings = {
   adminTitle?: string
   anchorId?: string
@@ -18,6 +31,7 @@ export type MediaLike =
       alt?: string
       url?: string
       filename?: string
+      mimeType?: string
       sizes?: Record<string, { url?: string }>
     }
   | number
@@ -109,9 +123,33 @@ export type ContactMethodItem = {
 export type SiteSettingsContent = {
   brandName?: string
   logo?: MediaLike
+  header?: {
+    logo?: MediaLike
+    logoAlt?: string
+    navigation?: Link[]
+    cta?: SiteCTA
+    stickyEnabled?: boolean
+  }
+  footer?: {
+    logo?: MediaLike
+    logoAlt?: string
+    description?: string
+    navigationColumns?: { title?: string; links?: Link[] }[]
+    contact?: {
+      email?: string
+      phone?: string
+      address?: string
+      ukPhone?: string
+      usPhone?: string
+      ausPhone?: string
+    }
+    socialLinks?: FooterSocialLink[]
+    cta?: SiteCTA
+    copyright?: string
+  }
   primaryNavigation?: Link[]
   footerNavigation?: Link[]
-  footerPartners?: { image?: MediaLike; label?: string; url?: string }[]
+  footerPartners?: { image?: MediaLike; label?: string; newTab?: boolean; url?: string }[]
   copyright?: string
   contact?: {
     officeAddress?: string
@@ -133,7 +171,7 @@ type BlockBase<T extends string> = {
 
 export type PageBlock =
   | (BlockBase<'hero'> & {
-      variant?: 'split' | 'centered'
+      variant?: 'split' | 'centered' | 'textOnly' | 'darkSplit'
       eyebrow?: string
       heading: string
       highlight?: string
@@ -142,6 +180,7 @@ export type PageBlock =
       secondaryAction?: Link
       media?: MediaLike
       badgeLabel?: string
+      imagePosition?: 'left' | 'right'
       featureCard?: {
         image?: MediaLike
         name?: string
@@ -153,17 +192,27 @@ export type PageBlock =
       }
       stats?: { value: string; label: string }[]
     })
-  | (BlockBase<'statsStrip'> & { items?: { value: string; label: string }[] })
+  | (BlockBase<'statsStrip'> & {
+      layout?: 'strip' | 'cards'
+      heading?: string
+      description?: string
+      items?: { value: string; label: string; icon?: string }[]
+    })
   | (BlockBase<'contentImage'> & {
       layout?: 'overlap' | 'split'
       eyebrow?: string
       heading: string
+      highlight?: string
       body?: unknown
       bodyText?: string[]
       media?: MediaLike
       mediaSecondary?: MediaLike
       imagePosition?: 'left' | 'right'
       action?: Link
+      primaryAction?: Link
+      secondaryAction?: Link
+      stats?: { value: string; label: string }[]
+      overlayCard?: { name?: string; role?: string; company?: string }
     })
   | (BlockBase<'servicesGrid'> & {
       eyebrow?: string
@@ -197,7 +246,7 @@ export type PageBlock =
       heading: string
       description?: string
       items?: MaybeRelation<TestimonialItem>[]
-      display?: 'featured' | 'grid' | 'slider'
+      display?: 'featured' | 'grid'
       featuredMedia?: MediaLike
       showRatings?: boolean
     })
@@ -257,6 +306,13 @@ export type PageBlock =
       showFilters?: boolean
       emptyState?: string
       action?: Link
+    })
+  | (BlockBase<'advantage'> & {
+      eyebrow?: string
+      heading: string
+      highlight?: string
+      description?: string
+      items?: { icon?: string; title: string; description: string }[]
     })
 
 export type PageContent = {

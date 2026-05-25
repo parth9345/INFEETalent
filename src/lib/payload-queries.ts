@@ -15,9 +15,47 @@ import type {
 } from '@/types/content'
 
 const collectionLimit = 100
+const shouldLogPayloadErrors = process.env.NODE_ENV !== 'production'
+
+const logPayloadQueryError = (context: string, error: unknown) => {
+  if (!shouldLogPayloadErrors) {
+    return
+  }
+
+  if (error instanceof Error) {
+    console.error(`[Payload query] ${context}`, {
+      message: error.message,
+      name: error.name,
+      stack: error.stack,
+    })
+    return
+  }
+
+  console.error(`[Payload query] ${context}`, error)
+}
 
 const getDefaultSiteSettings = (): SiteSettingsContent => ({
   brandName: siteConfig.name,
+  header: {
+    navigation: primaryNavigation,
+    stickyEnabled: true,
+  },
+  footer: {
+    navigationColumns: [
+      {
+        title: 'Quick Links',
+        links: primaryNavigation,
+      },
+    ],
+    contact: {
+      address: '2972 Westheimer Rd. Santa Ana, Illinois 85486',
+      ukPhone: siteConfig.phones.uk,
+      usPhone: siteConfig.phones.us,
+      ausPhone: siteConfig.phones.aus,
+      email: siteConfig.contactEmail,
+    },
+    copyright: `Copyright 2026 ${siteConfig.name}. All rights reserved.`,
+  },
   primaryNavigation,
   footerNavigation: primaryNavigation,
   contact: {
@@ -53,7 +91,8 @@ const findPublishedBySlug = async <T>({
     })
 
     return (result.docs[0] as T | undefined) || null
-  } catch {
+  } catch (error) {
+    logPayloadQueryError(`find ${collection} by slug "${slug}"`, error)
     return null
   }
 }
@@ -80,7 +119,8 @@ const findPublished = async <T>({
     })
 
     return result.docs as T[]
-  } catch {
+  } catch (error) {
+    logPayloadQueryError(`find ${collection} list`, error)
     return []
   }
 }
@@ -157,7 +197,8 @@ export const getSiteSettings = unstable_cache(
       const payload = await getPayload()
       const settings = (await payload.findGlobal({ slug: 'site-settings', depth: 2 })) as SiteSettingsContent | null | undefined
       return settings || getDefaultSiteSettings()
-    } catch {
+    } catch (error) {
+      logPayloadQueryError('find global site-settings', error)
       return getDefaultSiteSettings()
     }
   },
@@ -168,6 +209,10 @@ export const getSiteSettings = unstable_cache(
 export const getNavigation = unstable_cache(
   async () => {
     const settings = await getSiteSettings()
+    if (settings.header?.navigation?.length) {
+      return settings.header.navigation
+    }
+
     return settings.primaryNavigation?.length ? settings.primaryNavigation : primaryNavigation
   },
   ['navigation'],
@@ -177,6 +222,12 @@ export const getNavigation = unstable_cache(
 export const getFooterNavigation = unstable_cache(
   async () => {
     const settings = await getSiteSettings()
+    const firstFooterColumn = settings.footer?.navigationColumns?.find((column) => column.links?.length)
+
+    if (firstFooterColumn?.links?.length) {
+      return firstFooterColumn.links
+    }
+
     return settings.footerNavigation?.length ? settings.footerNavigation : await getNavigation()
   },
   ['footer-navigation'],

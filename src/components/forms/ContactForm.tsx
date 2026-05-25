@@ -17,10 +17,10 @@ export function ContactForm({ heading = 'Get in touch today!', description, sour
   const isHome = variant === 'home'
 
   return (
-    <form action={submitContact} className={cn('bg-brand-primary text-neutral-white', isHome ? 'p-[28px]' : 'p-5 md:p-7', className)}>
-      <h2 className={isHome ? 'text-center text-h2 font-extrabold capitalize leading-[38px] tracking-[0px]' : 'text-center text-h3 font-extrabold capitalize md:text-h2'}>{heading}</h2>
+    <form action={submitContact} className={cn('bg-brand-primary text-neutral-white', isHome ? 'min-h-[657px] bg-[linear-gradient(113deg,#050948_0%,#121967_58%,#243C91_100%)] p-[40px]' : 'p-5 md:p-7', className)}>
+      <h2 className={isHome ? 'text-center text-[40px] font-[800] capitalize leading-[55px] tracking-[-1.2px] text-[#FFFFFF]' : 'text-center text-h3 font-extrabold capitalize md:text-h2'}>{heading}</h2>
       {description ? <p className={isHome ? 'mx-auto mt-[12px] max-w-xl text-center text-body14 leading-[22px] text-neutral-white/75' : 'mx-auto mt-3 max-w-xl text-center text-body12 leading-[18px] text-neutral-white/75 md:text-body14 md:leading-[22px]'}>{description}</p> : null}
-      <div className={isHome ? 'mt-[28px] grid gap-[14px] md:grid-cols-2' : 'mt-6 grid gap-4 md:grid-cols-2'}>
+      <div className={isHome ? 'mt-[24px] grid gap-[24px] md:grid-cols-2 md:gap-x-[32px]' : 'mt-6 grid gap-4 md:grid-cols-2'}>
         <Field name="fullName" label="Full name" placeholder="Full Name*" variant={variant} />
         <Field type="email" name="email" label="Email address" placeholder="Email address*" variant={variant} />
         <Field name="company" label="Company name" placeholder="Company name*" variant={variant} />
@@ -28,7 +28,7 @@ export function ContactForm({ heading = 'Get in touch today!', description, sour
       </div>
       <select
         name="source"
-        className={isHome ? 'mt-[14px] h-[42px] w-full bg-neutral-white/10 px-[16px] text-body14 leading-[22px] text-neutral-white outline-none transition placeholder:text-neutral-white/80 focus:bg-neutral-white/15' : 'mt-4 h-11 w-full bg-neutral-white/10 px-4 text-body14 text-neutral-white outline-none transition placeholder:text-neutral-white/80 focus:bg-neutral-white/15'}
+        className={isHome ? 'mt-[24px] h-[60px] w-full bg-[#FFFFFF]/[0.08] px-[24px] text-[16px] font-[400] leading-[28px] text-[#FFFFFF] outline-none transition placeholder:text-[#FFFFFF] focus:bg-[#FFFFFF]/[0.12]' : 'mt-4 h-11 w-full bg-neutral-white/10 px-4 text-body14 text-neutral-white outline-none transition placeholder:text-neutral-white/80 focus:bg-neutral-white/15'}
         defaultValue=""
         aria-label="Communication channel"
       >
@@ -46,9 +46,9 @@ export function ContactForm({ heading = 'Get in touch today!', description, sour
         aria-label="Message"
         placeholder="Message"
         rows={isHome ? 6 : 5}
-        className={isHome ? 'mt-[14px] h-[128px] w-full resize-none bg-neutral-white/10 px-[16px] py-[14px] text-body14 leading-[22px] text-neutral-white outline-none transition placeholder:text-neutral-white/80 focus:bg-neutral-white/15' : 'mt-4 w-full resize-none bg-neutral-white/10 px-4 py-3 text-body14 text-neutral-white outline-none transition placeholder:text-neutral-white/80 focus:bg-neutral-white/15'}
+        className={isHome ? 'mt-[24px] h-[172px] w-full resize-none bg-[#FFFFFF]/[0.08] px-[24px] py-[16px] text-[16px] font-[400] leading-[28px] text-[#FFFFFF] outline-none transition placeholder:text-[#FFFFFF] focus:bg-[#FFFFFF]/[0.12]' : 'mt-4 w-full resize-none bg-neutral-white/10 px-4 py-3 text-body14 text-neutral-white outline-none transition placeholder:text-neutral-white/80 focus:bg-neutral-white/15'}
       />
-      <Button type="submit" size={isHome ? 'sm' : 'md'} className={isHome ? 'mt-[14px] w-full' : 'mt-4 w-full'}>
+      <Button type="submit" size={isHome ? 'md' : 'md'} className={isHome ? 'mt-[24px] h-[50px] w-full border-[0px] bg-[#FCA62B] px-[0px] text-[14px] font-[700] leading-[24px] tracking-[0.84px] text-[#262164] hover:bg-[#FCA62B]' : 'mt-4 w-full'}>
         Submit
       </Button>
     </form>
@@ -77,7 +77,7 @@ function Field({
       name={name}
       aria-label={label}
       placeholder={placeholder}
-      className={isHome ? 'h-[42px] bg-neutral-white/10 px-[16px] text-body14 leading-[22px] text-neutral-white outline-none transition placeholder:text-neutral-white/80 focus:bg-neutral-white/15' : 'h-11 bg-neutral-white/10 px-4 text-body14 text-neutral-white outline-none transition placeholder:text-neutral-white/80 focus:bg-neutral-white/15'}
+      className={isHome ? 'h-[60px] bg-[#FFFFFF]/[0.08] px-[24px] text-[16px] font-[400] leading-[28px] text-[#FFFFFF] outline-none transition placeholder:text-[#FFFFFF] focus:bg-[#FFFFFF]/[0.12]' : 'h-11 bg-neutral-white/10 px-4 text-body14 text-neutral-white outline-none transition placeholder:text-neutral-white/80 focus:bg-neutral-white/15'}
     />
   )
 }

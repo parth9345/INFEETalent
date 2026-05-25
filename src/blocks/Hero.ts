@@ -17,6 +17,8 @@ export const HeroBlock: Block = {
       options: [
         { label: 'Split content and image', value: 'split' },
         { label: 'Centered content', value: 'centered' },
+        { label: 'Text-only split (no image)', value: 'textOnly' },
+        { label: 'Dark split with image collage', value: 'darkSplit' },
       ],
       admin: {
         description: 'Choose the hero composition. Split matches the primary Figma homepage layout.',
@@ -54,6 +56,19 @@ export const HeroBlock: Block = {
     },
     linkFields('primaryAction', 'Primary action'),
     linkFields('secondaryAction', 'Secondary action'),
+    {
+      name: 'imagePosition',
+      type: 'select',
+      defaultValue: 'right',
+      options: [
+        { label: 'Right (default)', value: 'right' },
+        { label: 'Left', value: 'left' },
+      ],
+      admin: {
+        description: 'Controls whether the image collage appears on the left or right. Only used by darkSplit variant.',
+        condition: (data) => data.variant === 'darkSplit',
+      },
+    },
     {
       name: 'media',
       type: 'upload',

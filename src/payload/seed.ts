@@ -10,7 +10,6 @@ import {
   careers,
   faqs,
   homePageFallback,
-  primaryNavigation,
   services,
   teamMembers,
   testimonials,
@@ -36,9 +35,21 @@ const mimeTypes: Record<string, string> = {
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',
+  '.svg': 'image/svg+xml',
   '.webp': 'image/webp',
   '.pdf': 'application/pdf',
 }
+
+const footerPartnerLabels = [
+  'GDPR Approved',
+  'ISO 27001:2022',
+  'ISO 27701',
+  'ISO 9001:2015',
+  'TUV SUD ISO 14001',
+  'Cyber Essentials',
+  'HIPAA Compliant',
+  'AICPA SOC 2',
+]
 
 const localFilePath = (publicPath: string) => path.join(rootDir, 'public', publicPath.replace(/^\//, ''))
 
@@ -152,6 +163,7 @@ async function run() {
   const payload = (await getPayload()) as any
 
   const media = {
+    logo: await ensureMedia('INFE Talent logo', figmaAssets.logo),
     hero: await ensureMedia('Hero interview', figmaAssets.heroInterview),
     aboutTall: await ensureMedia('About office tall', figmaAssets.aboutOfficeTall),
     aboutSide: await ensureMedia('About office side', figmaAssets.aboutOfficeSide),
@@ -159,7 +171,9 @@ async function run() {
       figmaAssets.insights.map((asset, index) => ensureMedia(`Insight ${index + 1}`, asset)),
     ),
     partners: await Promise.all(
-      figmaAssets.partners.map((asset, index) => ensureMedia(`Partner certification ${index + 1}`, asset)),
+      figmaAssets.partners.map((asset, index) =>
+        ensureMedia(footerPartnerLabels[index] || `Partner certification ${index + 1}`, asset),
+      ),
     ),
     awards: await Promise.all(figmaAssets.awards.map((asset, index) => ensureMedia(`Award ${index + 1}`, asset))),
   }
@@ -208,7 +222,7 @@ async function run() {
     ),
   )
 
-  const teamDocs = await Promise.all(
+  await Promise.all(
     teamMembers.map((member, index) =>
       upsert('team-members', formatSlug(member.slug || member.name), {
         ...member,
@@ -311,33 +325,146 @@ async function run() {
     layout: [
       {
         blockType: 'hero',
-        variant: 'centered',
-        eyebrow: 'About INFE Talent',
-        heading: 'If It Is About People, We Make It Possible.',
+        variant: 'textOnly',
+        heading: "We Don't Just Fill Positions. We Fulfil Possibilities.",
+        highlight: 'We Fulfil Possibilities.',
         description:
-          'INFE Talent helps staffing firms build dependable offshore recruitment delivery across sourcing, screening, submissions, coordination, and onboarding.',
-        primaryAction: { label: 'Talk To Us', url: '/contact' },
-        secondaryAction: { label: 'Explore Services', url: '/services' },
+          "For over 20 years, INFE Talent has been the trusted offshore recruitment partner that transforms staffing challenges into global growth opportunities. When it's about people, we make it possible.",
+      },
+      {
+        blockType: 'hero',
+        variant: 'darkSplit',
+        imagePosition: 'left',
+        heading: 'The Bridge Between Ambition And Achievement.',
+        highlight: 'Achievement.',
+        description:
+          "In 2001, while the world was still discovering the potential of offshore partnerships, we had a different vision. We believed that distance shouldn't diminish quality, and that offshore could mean enhancement rather than replacement.\n\nToday, INFE Talent stands as proof that when you combine global talent with local understanding, extraordinary things happen. We are not just a service provider; we are the catalyst for your business's next chapter.",
         media: media.hero.id,
+        featureCard: {
+          image: media.aboutTall.id,
+        },
+        stats: [
+          { value: '3000+', label: 'Professionals Joined' },
+          { value: '20+', label: 'Years of Experience' },
+        ],
+      },
+      {
+        blockType: 'statsStrip',
+        layout: 'cards',
+        heading: 'Global Impact Stats',
+        description: 'Measurable outcomes from offshore recruitment delivery teams built for scale.',
+        items: [
+          { icon: 'Globe', value: '15+', label: 'Countries Covered' },
+          { icon: 'Users', value: '10,000+', label: 'Placements Delivered' },
+          { icon: 'Building2', value: '200+', label: 'Staffing Firms Served' },
+          { icon: 'BarChart3', value: '98%', label: 'Client Retention Rate' },
+          { icon: 'Briefcase', value: '9+', label: 'Recruitment Verticals' },
+        ],
       },
       {
         blockType: 'contentImage',
-        layout: 'overlap',
-        eyebrow: 'Our Story',
-        heading: 'A Recruitment Operations Partner Built For Scale.',
+        layout: 'split',
+        imagePosition: 'right',
+        settings: { background: 'blue' },
+        heading: 'Turning People Into The Possible',
+        highlight: 'Possible',
         body: richTextFromPlain(
-          'We combine recruiting process discipline with flexible offshore delivery teams, helping partners increase coverage without losing quality.\nOur teams work as an extension of your recruitment operation, with clear reporting, repeatable workflows, and an emphasis on candidate experience.',
+          'Every staffing firm has a recruitment ceiling — the point where capacity limits growth. We remove that ceiling.\n\nOur embedded offshore teams source, screen, coordinate, and support onboarding so your internal recruiters stay focused on client conversations and placements that matter.',
         ),
         media: media.aboutTall.id,
-        mediaSecondary: media.aboutSide.id,
-        action: { label: 'Contact Us', url: '/contact' },
+        primaryAction: { label: 'Get Started', url: '/contact' },
+        secondaryAction: { label: 'Our Services', url: '/services' },
+        overlayCard: {
+          name: 'INFE Talent Partner',
+          role: 'Offshore Delivery Lead',
+          company: 'INFE Talent',
+        },
       },
       {
-        blockType: 'team',
-        eyebrow: 'Our Team',
-        heading: 'Experienced Operators Behind Every Delivery Model.',
-        description: 'Meet the specialist teams that keep sourcing, coordination, and client communication moving.',
-        members: teamDocs.map((member) => member.id),
+        blockType: 'industries',
+        eyebrow: 'OUR EXPERTISE',
+        heading: 'Specialised Recruitment Across 10+ Verticals',
+        description:
+          'INFE Talent delivers offshore sourcing and recruitment support across the sectors that matter most to our partners.',
+        primaryAction: { label: 'Explore Services', url: '/services' },
+        secondaryAction: { label: 'Contact Us', url: '/contact' },
+        items: [
+          { label: 'Healthcare & Allied Health' },
+          { label: 'Information Technology' },
+          { label: 'Finance & Banking' },
+          { label: 'Engineering & Infrastructure' },
+          { label: 'Professional Services' },
+          { label: 'Sales & Commercial' },
+          { label: 'Construction & Property' },
+          { label: 'Executive & Leadership' },
+          { label: 'Supply Chain & Logistics' },
+          { label: 'Government & Public Sector' },
+        ],
+      },
+      {
+        blockType: 'testimonials',
+        eyebrow: 'WHAT PARTNERS SAY',
+        heading: 'Built On Trust. Proven By Results.',
+        description:
+          'Hear from the staffing leaders who rely on INFE Talent for consistent offshore recruitment delivery.',
+        items: testimonialDocs.map((t) => t.id),
+        display: 'grid',
+      },
+      {
+        blockType: 'awards',
+        heading: 'Recognised For Delivery Excellence.',
+        description: 'Industry recognition for the standards we hold in offshore recruitment partnership and service delivery.',
+        items: [
+          { title: 'Best Offshore Recruitment Partner', description: '2024 Staffing Industry Awards', image: media.awards[0]?.id },
+          { title: 'Global Delivery Excellence', description: '2023 RPO Leadership Award', image: media.awards[1]?.id },
+          { title: 'Top 10 Offshore Staffing Firm', description: '2023 SIA Recognition', image: media.awards[2]?.id },
+          { title: 'Innovation In Recruitment', description: '2022 HRD Awards Asia-Pacific', image: media.awards[3]?.id },
+          { title: 'Best Employer Certification', description: '2022 Great Place To Work', image: media.awards[4]?.id },
+        ],
+      },
+      {
+        blockType: 'advantage',
+        eyebrow: 'WHY INFE TALENT',
+        heading: 'The INFE Talent Advantage',
+        highlight: 'Advantage',
+        description:
+          'We are more than an outsourcing vendor. INFE Talent is a recruitment delivery partner built for long-term operational excellence.',
+        items: [
+          {
+            icon: 'Globe',
+            title: 'Global Reach, Local Expertise',
+            description: 'Delivery teams that understand hiring markets across the USA, UK, APAC, and Australia.',
+          },
+          {
+            icon: 'ShieldCheck',
+            title: 'Compliance-Ready Workflows',
+            description: 'Structured credentialing and compliance processes built for regulated recruitment environments.',
+          },
+          {
+            icon: 'Users',
+            title: 'Embedded Team Model',
+            description: 'Offshore teams that operate as an extension of your internal recruitment operation, not a bolt-on service.',
+          },
+          {
+            icon: 'Briefcase',
+            title: 'Proven Across 9+ Verticals',
+            description: 'Specialist recruitment support across healthcare, IT, finance, engineering, and executive search.',
+          },
+        ],
+      },
+      {
+        blockType: 'contact',
+        eyebrow: "LET'S CONNECT",
+        heading: 'Ready To Make The Impossible, Possible?',
+        description:
+          'Tell us about your recruitment goals. We will design a tailored offshore delivery model that fits your team, timeline, and targets.',
+        formHeading: 'Start Your Partnership Journey',
+        contactMethods: [
+          { label: 'UK', value: '+44 203 878 3559', url: 'tel:+442038783559' },
+          { label: 'US', value: '+1 614 266 3317', url: 'tel:+16142663317' },
+          { label: 'AUS', value: '+61 740 620 017', url: 'tel:+61740620017' },
+          { label: 'Email', value: 'info@infetalent.com', url: 'mailto:info@infetalent.com' },
+        ],
       },
     ],
     seo: {
@@ -458,16 +585,90 @@ async function run() {
     _status: 'published',
   })
 
+  const headerNavigation = [
+    { label: 'About Us', url: '/about', newTab: false },
+    { label: 'Services', url: '/services', newTab: false },
+    { label: 'Insights', url: '/blogs', newTab: false },
+    { label: 'Careers', url: '/careers', newTab: false },
+    { label: 'Testimonials', url: '/#testimonials', newTab: false },
+    { label: 'Contact Us', url: '/contact', newTab: false },
+  ]
+  const footerContact = {
+    address: '2972 Westheimer Rd. Santa Ana, Illinois 85486',
+    phone: '+44 203 878 3559',
+    ukPhone: '+44 203 878 3559',
+    usPhone: '+1 614 266 3317',
+    ausPhone: '+61 740 620 017',
+    email: 'info@infetalent.com',
+  }
+  const socialLinks: { iconName: string; newTab: boolean; platformName: string; url: string }[] = [
+    {
+      platformName: 'LinkedIn',
+      url: 'https://www.linkedin.com/company/infe-talent',
+      iconName: 'linkedin',
+      newTab: true,
+    },
+    {
+      platformName: 'Facebook',
+      url: 'https://www.facebook.com/infetalent',
+      iconName: 'facebook',
+      newTab: true,
+    },
+    {
+      platformName: 'Instagram',
+      url: 'https://www.instagram.com/infetalent',
+      iconName: 'instagram',
+      newTab: true,
+    },
+  ]
+
   await payload.updateGlobal({
     slug: 'site-settings',
     data: {
-      primaryNavigation,
-      footerNavigation: primaryNavigation,
+      brandName: 'INFE Talent',
+      logo: media.logo.id,
+      header: {
+        logo: media.logo.id,
+        logoAlt: 'INFE Talent',
+        navigation: headerNavigation,
+        cta: {
+          enabled: true,
+          label: 'Get Started',
+          url: '/contact',
+          variant: 'primary',
+          newTab: false,
+        },
+        stickyEnabled: true,
+      },
+      footer: {
+        logo: media.logo.id,
+        logoAlt: 'INFE Talent',
+        description: 'Offshore recruitment support for staffing teams across the USA, UK, APAC, and Australia.',
+        navigationColumns: [
+          {
+            title: 'Quick Links',
+            links: headerNavigation,
+          },
+        ],
+        contact: footerContact,
+        socialLinks,
+        cta: {
+          enabled: false,
+          label: 'Contact Us',
+          url: '/contact',
+          variant: 'primary',
+          newTab: false,
+        },
+        copyright: 'Copyright 2026 INFE Talent. All rights reserved.',
+      },
+      primaryNavigation: headerNavigation,
+      footerNavigation: headerNavigation,
       footerPartners: media.partners.map((partner, index) => ({
         image: partner.id,
-        label: `Partner certification ${index + 1}`,
+        label: footerPartnerLabels[index] || `Partner certification ${index + 1}`,
+        newTab: false,
       })),
-      copyright: '© 2026 INFE Talent. All rights reserved.',
+      copyright: 'Copyright 2026 INFE Talent. All rights reserved.',
       contact: {
         officeAddress: '2972 Westheimer Rd. Santa Ana, Illinois 85486',
         ukPhone: '+44 203 878 3559',
@@ -475,6 +676,11 @@ async function run() {
         ausPhone: '+61 740 620 017',
         email: 'info@infetalent.com',
       },
+      socialLinks: socialLinks.map(({ platformName, url, newTab }) => ({
+        label: platformName,
+        url,
+        newTab,
+      })),
     },
     overrideAccess: true,
   })

@@ -90,7 +90,7 @@ html {
 body {
   min-height: 100vh;
   overflow-x: hidden;
-  background: #FFFFFF;
+  background: #fff8ee;
   font-family: var(--font-manrope), Manrope, Arial, sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

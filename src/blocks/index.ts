@@ -1,3 +1,4 @@
+import { AdvantageBlock } from './Advantage'
 import { AwardsBlock } from './Awards'
 import { BlogListingBlock } from './BlogListing'
 import { CareerBlock } from './Career'
@@ -15,6 +16,7 @@ import { TestimonialsBlock } from './Testimonials'
 
 export const blocks = [
   HeroBlock,
+  AdvantageBlock,
   StatsStripBlock,
   ContentImageBlock,
   ServicesGridBlock,
