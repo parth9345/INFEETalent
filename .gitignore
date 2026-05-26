@@ -9,7 +9,6 @@ payload.db-*
 *.sqlite-*
 .env
 .env*.local
-public/media
 *.log
 *.err
 tsconfig.tsbuildinfo
