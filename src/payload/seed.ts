@@ -6,7 +6,6 @@ import { fileURLToPath } from 'node:url'
 import { getPayload } from './getPayload'
 import { figmaAssets } from '@/lib/assets'
 import {
-  blogs,
   careers,
   faqs,
   homePageFallback,
@@ -55,6 +54,123 @@ const localFilePath = (publicPath: string) => path.join(rootDir, 'public', publi
 
 const metaTitle = (title: string) => title.slice(0, 70)
 const metaDescription = (description: string) => description.slice(0, 170)
+
+const seedBlogs = [
+  {
+    title: 'How Recruitment Management Helps Companies Hire Faster',
+    slug: 'how-recruitment-management-helps-companies-hire-faster',
+    excerpt:
+      'Recruitment management gives hiring teams clearer ownership, stronger pipelines, and faster decisions across high-volume roles.',
+    category: 'Offshore Strategy',
+    authorName: 'INFE Talent Team',
+    publishedAt: '2026-05-08T00:00:00.000Z',
+    readTime: '6 min read',
+    featured: true,
+    body:
+      'Recruitment management helps companies hire faster by turning scattered activity into a repeatable delivery rhythm. When job intake, sourcing, screening, submission tracking, interview coordination, and follow-up are managed through one operating model, hiring teams spend less time chasing updates and more time making decisions.\n\nA dedicated recruitment management function also improves pipeline visibility. Recruiters can see which roles need more sourcing coverage, which candidates are moving, and which hiring managers need action. That visibility shortens delays before they become missed opportunities.\n\nFor staffing firms and growing businesses, the strongest results usually come from pairing local client ownership with offshore delivery capacity. This gives teams extended coverage, consistent sourcing output, and better control over daily recruitment execution.\n\nThe outcome is not just speed. Recruitment management improves quality because every candidate moves through a clearer qualification path, every role has accountable owners, and every stakeholder has better information before the next step.',
+    seo: {
+      metaTitle: 'How Recruitment Management Helps Companies Hire Faster',
+      metaDescription:
+        'Learn how recruitment management improves hiring speed through better sourcing, screening, coordination, and pipeline visibility.',
+      keywords: [{ keyword: 'recruitment management' }, { keyword: 'hire faster' }, { keyword: 'offshore recruitment' }],
+    },
+  },
+  {
+    title: 'Soft Skills That Improve Career Growth',
+    slug: 'soft-skills-that-improve-career-growth',
+    excerpt:
+      'Communication, ownership, adaptability, and problem solving can turn technical capability into long-term career momentum.',
+    category: 'Career Growth',
+    authorName: 'INFE Talent Team',
+    publishedAt: '2026-05-10T00:00:00.000Z',
+    readTime: '5 min read',
+    featured: true,
+    body:
+      'Soft skills shape how people work when job descriptions become real business problems. Technical ability opens the door, but communication, reliability, curiosity, and ownership help professionals grow into trusted contributors.\n\nClear communication is one of the most valuable career skills because it reduces friction. People who explain blockers early, confirm expectations, and share progress clearly make it easier for teams to move quickly.\n\nAdaptability also matters. Modern careers rarely follow a straight line, and the people who keep learning across tools, workflows, and industries build resilience. They can step into new challenges without waiting for perfect conditions.\n\nCareer growth becomes much easier when professionals combine skill with accountability. Hiring managers notice people who take ownership, ask better questions, and follow through when work becomes complex.',
+    seo: {
+      metaTitle: 'Soft Skills That Improve Career Growth',
+      metaDescription:
+        'Explore the soft skills that support career growth, including communication, adaptability, ownership, and problem solving.',
+      keywords: [{ keyword: 'soft skills' }, { keyword: 'career growth' }, { keyword: 'job market' }],
+    },
+  },
+  {
+    title: 'Why Executive Search Matters for Senior Roles',
+    slug: 'why-executive-search-matters-for-senior-roles',
+    excerpt:
+      'Senior hiring requires more than active applicants. Executive search gives companies targeted access to proven leaders.',
+    category: 'Case Studies',
+    authorName: 'INFE Talent Team',
+    publishedAt: '2026-05-12T00:00:00.000Z',
+    readTime: '7 min read',
+    featured: true,
+    body:
+      'Executive search matters because senior roles are rarely filled by waiting for applications. Leadership candidates are often passive, selective, and deeply embedded in their current organizations. Reaching them requires research, discretion, and a credible approach.\n\nA structured executive search process begins with market mapping. Recruiters identify target companies, comparable roles, leadership profiles, and signals that indicate a candidate may be ready for a new opportunity.\n\nThe process also protects confidentiality. Senior mandates can affect teams, clients, and competitors, so candidate engagement must be handled carefully from first outreach through shortlist presentation.\n\nFor businesses hiring leadership talent, executive search creates a stronger decision set. Instead of choosing only from visible applicants, companies can compare qualified leaders across the market and move forward with more confidence.',
+    seo: {
+      metaTitle: 'Why Executive Search Matters for Senior Roles',
+      metaDescription:
+        'Understand why executive search is important for senior hiring, confidential mandates, leadership mapping, and passive candidate engagement.',
+      keywords: [{ keyword: 'executive search' }, { keyword: 'senior roles' }, { keyword: 'leadership hiring' }],
+    },
+  },
+  {
+    title: 'How HR Consulting Supports Business Growth',
+    slug: 'how-hr-consulting-supports-business-growth',
+    excerpt:
+      'HR consulting helps growing teams improve process, compliance, onboarding, and people operations without losing momentum.',
+    category: 'Compliance & Security',
+    authorName: 'INFE Talent Team',
+    publishedAt: '2026-05-14T00:00:00.000Z',
+    readTime: '6 min read',
+    featured: false,
+    body:
+      'Business growth often exposes gaps in people operations. Processes that worked for a small team can become inconsistent when headcount, hiring demand, and compliance requirements increase. HR consulting helps companies create structure before those gaps slow the business down.\n\nConsultants can review onboarding, documentation, policy alignment, workforce reporting, and handoffs between recruitment and HR teams. This makes daily operations clearer for employees and easier to manage for leaders.\n\nStrong HR consulting also supports compliance. As businesses work across regions and employment models, they need reliable documentation and repeatable processes that reduce avoidable risk.\n\nThe best consulting work is practical. It gives teams operating habits they can actually sustain, helping the business grow without creating unnecessary complexity.',
+    seo: {
+      metaTitle: 'How HR Consulting Supports Business Growth',
+      metaDescription:
+        'See how HR consulting supports business growth through better processes, compliance, onboarding, and people operations.',
+      keywords: [{ keyword: 'HR consulting' }, { keyword: 'business growth' }, { keyword: 'people operations' }],
+    },
+  },
+  {
+    title: 'Top Hiring Trends for Modern Businesses',
+    slug: 'top-hiring-trends-for-modern-businesses',
+    excerpt:
+      'Modern hiring is shaped by faster talent cycles, flexible delivery teams, better data, and stronger candidate communication.',
+    category: 'Market Trends',
+    authorName: 'INFE Talent Team',
+    publishedAt: '2026-05-16T00:00:00.000Z',
+    readTime: '5 min read',
+    featured: false,
+    body:
+      'Modern businesses are hiring in a market where speed, quality, and flexibility all matter at the same time. Teams need stronger pipelines, but they also need better candidate communication and more reliable hiring data.\n\nOne trend is the rise of blended delivery models. Companies are combining internal recruiters, specialist partners, offshore sourcers, and recruitment operations support to increase capacity without overloading local teams.\n\nAnother trend is deeper focus on candidate experience. Hiring teams that communicate clearly, reduce delays, and prepare candidates well are more likely to keep strong talent engaged.\n\nData is also becoming more important. Submission quality, response time, interview conversion, source effectiveness, and offer acceptance rates help leaders understand what is working and where to improve.',
+    seo: {
+      metaTitle: 'Top Hiring Trends for Modern Businesses',
+      metaDescription:
+        'Review hiring trends for modern businesses, including flexible recruitment teams, candidate experience, and recruitment data.',
+      keywords: [{ keyword: 'hiring trends' }, { keyword: 'modern businesses' }, { keyword: 'talent acquisition' }],
+    },
+  },
+  {
+    title: 'Career Tips for Freshers Entering the Job Market',
+    slug: 'career-tips-for-freshers-entering-the-job-market',
+    excerpt:
+      'Freshers can stand out by building clarity, interview readiness, practical skills, and a consistent job search routine.',
+    category: 'Career Growth',
+    authorName: 'INFE Talent Team',
+    publishedAt: '2026-05-18T00:00:00.000Z',
+    readTime: '4 min read',
+    featured: false,
+    body:
+      'Entering the job market as a fresher can feel overwhelming, but a clear routine makes the process easier. Start by understanding the roles you want, the skills they require, and the evidence you can show through projects, internships, coursework, or practical examples.\n\nA strong resume should be simple, specific, and honest. Focus on relevant skills, measurable work, and outcomes rather than generic claims. Recruiters move quickly, so clarity matters.\n\nInterview preparation is equally important. Practice explaining your projects, your learning process, and how you solve problems. Employers do not expect freshers to know everything, but they do look for curiosity and accountability.\n\nFinally, stay consistent. A thoughtful job search combines applications, networking, follow-ups, and learning. Small daily progress compounds into better opportunities.',
+    seo: {
+      metaTitle: 'Career Tips for Freshers Entering the Job Market',
+      metaDescription:
+        'Career tips for freshers entering the job market, including resume clarity, interview preparation, practical skills, and search routines.',
+      keywords: [{ keyword: 'career tips' }, { keyword: 'freshers' }, { keyword: 'job market' }],
+    },
+  },
+]
 
 async function ensureMedia(alt: string, publicPath: string) {
   const payload = (await getPayload()) as any
@@ -324,20 +440,60 @@ async function run() {
     ),
   )
 
+  const blogImagePool = [
+    media.insights[0],
+    media.insights[1],
+    media.insights[2],
+    media.hero,
+    media.teamOffice,
+    media.aboutTall,
+  ].filter(Boolean)
   const blogDocs = await Promise.all(
-    blogs.map((blog, index) =>
-      upsert('blogs', blog.slug || blog.title, {
-        ...blog,
-        featuredImage: media.insights[index]?.id,
-        content: richTextFromPlain(blog.excerpt),
+    seedBlogs.map((blog, index) => {
+      const featuredImage = blogImagePool[index % blogImagePool.length]
+      const authorImage = index % 2 === 0 ? media.avatarOne : media.profileCard
+
+      return upsert('blogs', blog.slug || blog.title, {
+        title: blog.title,
+        slug: blog.slug,
+        excerpt: blog.excerpt,
+        category: blog.category,
+        authorName: blog.authorName,
+        authorImage: authorImage?.id,
+        readTime: blog.readTime,
+        featured: blog.featured,
+        publishedAt: blog.publishedAt,
+        featuredImage: featuredImage?.id,
+        content: richTextFromPlain(blog.body),
         seo: {
-          metaTitle: metaTitle(`${blog.title} | INFE Talent`),
-          metaDescription: metaDescription(blog.excerpt),
-          openGraphImage: media.insights[index]?.id,
+          ...blog.seo,
+          metaTitle: metaTitle(blog.seo.metaTitle),
+          metaDescription: metaDescription(blog.seo.metaDescription),
+          openGraphImage: featuredImage?.id,
         },
         _status: 'published',
-      }),
-    ),
+      })
+    }),
+  )
+  const activeBlogSlugs = new Set(seedBlogs.map((blog) => blog.slug))
+  const existingBlogDocs = await payload.find({
+    collection: 'blogs',
+    depth: 0,
+    draft: true,
+    limit: 100,
+  })
+
+  await Promise.all(
+    existingBlogDocs.docs
+      .filter((blog: { id: string | number; slug?: string }) => blog.slug && !activeBlogSlugs.has(blog.slug))
+      .map((blog: { id: string | number }) =>
+        payload.update({
+          collection: 'blogs',
+          id: blog.id,
+          data: { _status: 'draft' },
+          overrideAccess: true,
+        }),
+      ),
   )
 
   await Promise.all(
@@ -691,10 +847,11 @@ async function run() {
     layout: [
       {
         blockType: 'hero',
-        variant: 'centered',
-        eyebrow: 'Blogs',
-        heading: 'Recruitment Insights For Scalable Delivery Teams.',
-        description: 'Read practical thinking on offshore recruitment operations, sourcing strategy, staffing delivery, and hiring market shifts.',
+        variant: 'textOnly',
+        eyebrow: 'Home / Blogs',
+        heading: 'Insights For The Modern Recruitment Leader',
+        highlight: 'Modern Recruitment Leader',
+        description: 'Practical ideas for staffing leaders, HR teams, and growing businesses building better recruitment engines.',
       },
       {
         blockType: 'blogListing',
@@ -704,10 +861,24 @@ async function run() {
         posts: blogDocs.map((blog) => blog.id),
         limit: 9,
       },
+      {
+        blockType: 'contact',
+        eyebrow: 'GET IN TOUCH',
+        heading: "Let's Design Your Offshore Recruitment Engine.",
+        description:
+          'Tell us about your hiring goals. We will come back within one business day with a tailored model and a clear path to scale.',
+        formHeading: 'Get In Touch Today!',
+        contactMethods: [
+          { label: 'UK', value: '+44 203 878 3559', url: 'tel:+442038783559' },
+          { label: 'US', value: '+1 614 266 3317', url: 'tel:+16142663317' },
+          { label: 'AUS', value: '+61 740 620 017', url: 'tel:+61740620017' },
+        ],
+      },
     ],
     seo: {
       metaTitle: 'Recruitment Blogs | INFE Talent',
-      metaDescription: 'Read INFE Talent blogs covering offshore recruitment, staffing support, sourcing strategy, and global delivery operations.',
+      metaDescription:
+        'Read INFE Talent blogs covering recruitment management, offshore strategy, executive search, HR consulting, hiring trends, and career growth.',
       openGraphImage: media.insights[0]?.id,
     },
     _status: 'published',

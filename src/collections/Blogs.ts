@@ -13,7 +13,7 @@ export const Blogs: CollectionConfig = {
   admin: {
     group: 'Content',
     useAsTitle: 'title',
-    defaultColumns: ['title', 'publishedAt', 'slug'],
+    defaultColumns: ['title', 'category', 'publishedAt', 'featured', 'slug'],
   },
   access: {
     create: authenticated,
@@ -41,8 +41,52 @@ export const Blogs: CollectionConfig = {
       required: true,
     },
     {
+      name: 'category',
+      type: 'text',
+      defaultValue: 'Offshore Strategy',
+      admin: {
+        description: 'Used for blog filters, cards, and detail metadata.',
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'authorName',
+      type: 'text',
+      defaultValue: 'INFE Talent Team',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'authorImage',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description: 'Optional author portrait shown on blog detail pages.',
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'readTime',
+      type: 'text',
+      admin: {
+        description: 'Example: 5 min read.',
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'featured',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: {
+        description: 'Featured posts are prioritized in the /blogs featured section.',
+        position: 'sidebar',
+      },
+    },
+    {
       name: 'publishedAt',
       type: 'date',
+      label: 'Published date',
       admin: {
         date: {
           pickerAppearance: 'dayAndTime',

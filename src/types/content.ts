@@ -70,6 +70,11 @@ export type BlogItem = {
   title: string
   slug?: string
   excerpt: string
+  category?: string
+  authorName?: string
+  authorImage?: MediaLike
+  readTime?: string
+  featured?: boolean
   publishedAt?: string
   featuredImage?: MediaLike
   content?: unknown

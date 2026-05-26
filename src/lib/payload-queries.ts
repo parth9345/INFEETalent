@@ -143,9 +143,63 @@ export const getBlogs = unstable_cache(
   { revalidate: 60 },
 )
 
+export const getFeaturedBlogs = unstable_cache(
+  async (limit = 5): Promise<BlogItem[]> => {
+    try {
+      const payload = await getPayload()
+      const result = await payload.find({
+        collection: 'blogs',
+        depth: 2,
+        draft: false,
+        limit,
+        sort: '-publishedAt',
+        where: {
+          featured: {
+            equals: true,
+          },
+        },
+      })
+
+      return result.docs as BlogItem[]
+    } catch (error) {
+      logPayloadQueryError('find featured blogs list', error)
+      return []
+    }
+  },
+  ['featured-blogs'],
+  { revalidate: 60 },
+)
+
 export const getBlogBySlug = unstable_cache(
   async (slug: string): Promise<BlogItem | null> => findPublishedBySlug<BlogItem>({ collection: 'blogs', slug }),
   ['blog-by-slug'],
+  { revalidate: 60 },
+)
+
+export const getRelatedBlogs = unstable_cache(
+  async (slug: string, category?: string, limit = 3): Promise<BlogItem[]> => {
+    try {
+      const payload = await getPayload()
+      const result = await payload.find({
+        collection: 'blogs',
+        depth: 2,
+        draft: false,
+        limit: collectionLimit,
+        sort: '-publishedAt',
+      })
+      const normalizedCategory = category?.trim().toLowerCase()
+      const docs = (result.docs as BlogItem[]).filter((post) => post.slug !== slug)
+      const sameCategory = normalizedCategory
+        ? docs.filter((post) => post.category?.trim().toLowerCase() === normalizedCategory)
+        : []
+
+      return (sameCategory.length ? sameCategory : docs).slice(0, limit)
+    } catch (error) {
+      logPayloadQueryError(`find related blogs for "${slug}"`, error)
+      return []
+    }
+  },
+  ['related-blogs'],
   { revalidate: 60 },
 )
 

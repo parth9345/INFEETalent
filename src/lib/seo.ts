@@ -163,8 +163,7 @@ export const blogPostingSchema = (post: BlogItem, path: string): JsonLdObject =>
     dateModified: post.updatedAt || post.publishedAt,
     author: {
       '@type': 'Organization',
-      '@id': absoluteUrl('/#organization'),
-      name: siteConfig.name,
+      name: post.authorName || siteConfig.name,
     },
     publisher: {
       '@id': absoluteUrl('/#organization'),

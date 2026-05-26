@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 
 import { JsonLd } from '@/components/seo/JsonLd'
 import { BlogDetail } from '@/components/sections/BlogDetail'
-import { getBlogBySlug } from '@/lib/payload-queries'
+import { getBlogBySlug, getRelatedBlogs } from '@/lib/payload-queries'
 import { blogPostingSchema, breadcrumbSchema, buildMetadata } from '@/lib/seo'
 import type { PageContent } from '@/types/content'
 
@@ -39,9 +39,11 @@ export default async function BlogDetailPage({ params }: PageProps) {
     notFound()
   }
 
+  const relatedPosts = await getRelatedBlogs(slug, post.category, 3)
+
   return (
     <>
-      <BlogDetail post={post} />
+      <BlogDetail post={post} relatedPosts={relatedPosts} />
       <JsonLd
         data={[
           blogPostingSchema(post, `/blogs/${slug}`),

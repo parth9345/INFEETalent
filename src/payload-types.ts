@@ -1271,6 +1271,23 @@ export interface Blog {
   title: string;
   slug: string;
   excerpt: string;
+  /**
+   * Used for blog filters, cards, and detail metadata.
+   */
+  category?: string | null;
+  authorName?: string | null;
+  /**
+   * Optional author portrait shown on blog detail pages.
+   */
+  authorImage?: (number | null) | Media;
+  /**
+   * Example: 5 min read.
+   */
+  readTime?: string | null;
+  /**
+   * Featured posts are prioritized in the /blogs featured section.
+   */
+  featured?: boolean | null;
   publishedAt?: string | null;
   featuredImage: number | Media;
   content: {
@@ -2151,6 +2168,11 @@ export interface BlogsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   excerpt?: T;
+  category?: T;
+  authorName?: T;
+  authorImage?: T;
+  readTime?: T;
+  featured?: T;
   publishedAt?: T;
   featuredImage?: T;
   content?: T;
