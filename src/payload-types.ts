@@ -1103,6 +1103,43 @@ export interface Service {
     };
     [k: string]: unknown;
   } | null;
+  /**
+   * Short bullet points shown on listing rows and service detail pages.
+   */
+  benefits?:
+    | {
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Optional service delivery steps shown on service detail pages.
+   */
+  process?:
+    | {
+        title: string;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Optional related services. If left empty, the frontend will show other services.
+   */
+  relatedServices?: (number | Service)[] | null;
+  /**
+   * Optional call-to-action link. Leave blank to hide this button.
+   */
+  cta?: {
+    /**
+     * Button text shown to visitors.
+     */
+    label?: string | null;
+    /**
+     * Use a relative path like /contact, an anchor like #contact, or a full URL.
+     */
+    url?: string | null;
+    newTab?: boolean | null;
+  };
   seo?: {
     /**
      * Recommended length: 50-60 characters.
@@ -1137,8 +1174,24 @@ export interface Testimonial {
   company: string;
   quote: string;
   rating?: number | null;
+  /**
+   * Choose video when this testimonial should render with a play overlay.
+   */
+  testimonialType?: ('text' | 'video') | null;
+  /**
+   * Optional hosted video URL used by video testimonial cards.
+   */
+  videoUrl?: string | null;
   avatar?: (number | null) | Media;
+  /**
+   * Optional thumbnail image for video testimonials. Falls back to the avatar.
+   */
+  videoThumbnail?: (number | null) | Media;
   featured?: boolean | null;
+  /**
+   * Lower numbers appear earlier on the testimonials page.
+   */
+  sortOrder?: number | null;
   seo?: {
     /**
      * Recommended length: 50-60 characters.
@@ -2131,6 +2184,27 @@ export interface ServicesSelect<T extends boolean = true> {
   icon?: T;
   featuredImage?: T;
   content?: T;
+  benefits?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
+  process?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  relatedServices?: T;
+  cta?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        newTab?: T;
+      };
   seo?:
     | T
     | {
@@ -2160,8 +2234,12 @@ export interface TestimonialsSelect<T extends boolean = true> {
   company?: T;
   quote?: T;
   rating?: T;
+  testimonialType?: T;
+  videoUrl?: T;
   avatar?: T;
+  videoThumbnail?: T;
   featured?: T;
+  sortOrder?: T;
   seo?:
     | T
     | {

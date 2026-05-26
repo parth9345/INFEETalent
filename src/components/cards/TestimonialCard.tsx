@@ -1,6 +1,8 @@
 import { Quote, Star } from 'lucide-react'
 
+import { VideoTestimonialTile } from '@/components/sections/VideoTestimonialTile'
 import { OptimizedImage } from '@/components/ui/OptimizedImage'
+import { figmaAssets } from '@/lib/assets'
 import { cn } from '@/lib/utils'
 import type { TestimonialItem } from '@/types/content'
 
@@ -9,12 +11,56 @@ type TestimonialCardProps = {
   showRating?: boolean
   tone?: 'light' | 'dark'
   className?: string
-  variant?: 'default' | 'home'
+  variant?: 'default' | 'home' | 'review'
 }
 
 export function TestimonialCard({ item, showRating = false, tone = 'dark', className, variant = 'default' }: TestimonialCardProps) {
   const hasAvatar = Boolean(item.avatar)
   const isHome = variant === 'home'
+  const isReview = variant === 'review'
+  const isVideo = item.testimonialType === 'video'
+  const media = item.videoThumbnail || item.avatar
+
+  if (isReview) {
+    return (
+      <article
+        className={cn(
+          'group border border-[#CCCCCC] bg-[#FFF8EE] text-[#151515] transition duration-300 hover:border-[#2C368D]',
+          isVideo ? 'overflow-hidden' : 'p-[34px]',
+          className,
+        )}
+      >
+        {isVideo ? (
+          <VideoTestimonialTile
+            media={media}
+            fallbackSrc={figmaAssets.testimonialVideo}
+            alt={`${item.name} testimonial`}
+            videoSrc={item.videoUrl || undefined}
+            className="h-[354px] min-h-[354px] [border-width:0px]"
+          />
+        ) : (
+          <Quote className="rotate-180 text-[#FCA62B]" size={31} strokeWidth={2.2} aria-hidden="true" />
+        )}
+        {isVideo ? null : (
+          <div>
+            {showRating && item.rating ? (
+              <span className="mt-[18px] flex items-center gap-[4px]" aria-label={`${item.rating} out of 5 stars`}>
+                {Array.from({ length: Math.min(5, Math.max(1, item.rating)) }).map((_, index) => (
+                  <Star key={index} className="fill-[#FCA62B] text-[#FCA62B]" size={14} aria-hidden="true" />
+                ))}
+              </span>
+            ) : null}
+            <p className="mt-[25px] text-[16px] font-[600] leading-[26px] tracking-[0px] text-[#151515]">{item.quote}</p>
+            <p className="mt-[28px] border-t border-[#CCCCCC] pt-[24px] text-[14px] font-[400] leading-[22px] tracking-[0px] text-[#151515]">
+              <strong className="font-[800]">{item.name}</strong>
+              {item.role ? `, ${item.role}` : ''}
+              {item.company ? <span className="text-[#555555]">, {item.company}</span> : null}
+            </p>
+          </div>
+        )}
+      </article>
+    )
+  }
 
   return (
     <article

@@ -57,6 +57,10 @@ export type ServiceItem = {
   icon?: string
   featuredImage?: MediaLike
   content?: unknown
+  benefits?: { label: string }[]
+  process?: { title: string; description?: string }[]
+  relatedServices?: MaybeRelation<ServiceItem>[]
+  cta?: Link
   seo?: SEOFields
   updatedAt?: string
 }
@@ -81,6 +85,13 @@ export type TestimonialItem = {
   quote: string
   avatar?: MediaLike
   rating?: number
+  testimonialType?: 'text' | 'video'
+  videoUrl?: string
+  videoThumbnail?: MediaLike
+  featured?: boolean
+  sortOrder?: number
+  seo?: SEOFields
+  updatedAt?: string
 }
 
 export type CareerItem = {

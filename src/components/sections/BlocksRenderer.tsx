@@ -1,4 +1,8 @@
 import { AboutSection } from './AboutSection'
+import { AboutBridgeSection } from './about/AboutBridgeSection'
+import { AboutHeroIntroSection } from './about/AboutHeroIntroSection'
+import { AboutPeopleSection } from './about/AboutPeopleSection'
+import { AboutStatsSection } from './about/AboutStatsSection'
 import { AdvantageSection } from './AdvantageSection'
 import { AwardsSection } from './AwardsSection'
 import { CertificationsSection } from './CertificationsSection'
@@ -39,10 +43,26 @@ export function BlocksRenderer({ blocks, variant = 'default' }: BlocksRendererPr
 
         switch (block.blockType) {
           case 'hero':
+            if (variant === 'about' && block.variant === 'textOnly') {
+              return <AboutHeroIntroSection key={key} block={block} />
+            }
+
+            if (variant === 'about' && block.variant === 'darkSplit') {
+              return <AboutBridgeSection key={key} block={block} />
+            }
+
             return <HeroSection key={key} block={block} />
           case 'statsStrip':
+            if (variant === 'about' && block.layout === 'cards') {
+              return <AboutStatsSection key={key} block={block} />
+            }
+
             return <StatsStrip key={key} block={block} isHomepage={isHome} />
           case 'contentImage':
+            if (variant === 'about' && block.settings?.background === 'blue') {
+              return <AboutPeopleSection key={key} block={block} />
+            }
+
             return <AboutSection key={key} block={block} isHomepage={isHome} />
           case 'servicesGrid':
             return <ServicesGridSection key={key} block={block} isHomepage={isHome} />

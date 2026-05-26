@@ -165,6 +165,10 @@ async function run() {
   const media = {
     logo: await ensureMedia('INFE Talent logo', figmaAssets.logo),
     hero: await ensureMedia('Hero interview', figmaAssets.heroInterview),
+    teamOffice: await ensureMedia('Team office collaboration', figmaAssets.teamOffice),
+    profileCard: await ensureMedia('Profile testimonial portrait', figmaAssets.profileCard),
+    avatarOne: await ensureMedia('Client avatar portrait', figmaAssets.avatarOne),
+    testimonialVideo: await ensureMedia('Testimonial video thumbnail', figmaAssets.testimonialVideo),
     aboutTall: await ensureMedia('About office tall', figmaAssets.aboutOfficeTall),
     aboutSide: await ensureMedia('About office side', figmaAssets.aboutOfficeSide),
     insights: await Promise.all(
@@ -177,13 +181,23 @@ async function run() {
     ),
     awards: await Promise.all(figmaAssets.awards.map((asset, index) => ensureMedia(`Award ${index + 1}`, asset))),
   }
+  const serviceImagePool = [
+    media.hero,
+    media.aboutSide,
+    media.aboutTall,
+    media.insights[0],
+    media.insights[1],
+    media.insights[2],
+  ].filter(Boolean)
 
   const serviceDocs = await Promise.all(
-    services.map((service) =>
+    services.map((service, index) =>
       upsert('services', service.slug || service.title, {
         ...service,
-        content: richTextFromPlain(service.summary),
-        seo: {
+        featuredImage: service.featuredImage || serviceImagePool[index % serviceImagePool.length]?.id,
+        content: richTextFromPlain(typeof service.content === 'string' ? service.content : service.summary),
+        cta: service.cta || { label: 'Talk To An Expert', url: '/contact' },
+        seo: service.seo || {
           metaTitle: metaTitle(`${service.title} | INFE Talent`),
           metaDescription: metaDescription(service.summary),
           keywords: [{ keyword: service.title }, { keyword: 'offshore recruitment' }],
@@ -192,19 +206,91 @@ async function run() {
       }),
     ),
   )
+  const activeServiceSlugs = new Set(services.map((service) => service.slug || formatSlug(service.title)))
+  const existingServiceDocs = await payload.find({
+    collection: 'services',
+    depth: 0,
+    draft: true,
+    limit: 100,
+  })
 
-  const testimonialDocs = await Promise.all(
-    testimonials.map((testimonial) =>
-      upsertByField('testimonials', 'name', testimonial.name, {
-          ...testimonial,
-          featured: true,
-          seo: {
-            metaTitle: metaTitle(`${testimonial.name} Testimonial | INFE Talent`),
-            metaDescription: metaDescription(testimonial.quote),
-          },
-          _status: 'published',
+  await Promise.all(
+    existingServiceDocs.docs
+      .filter((service: { id: string | number; slug?: string }) => service.slug && !activeServiceSlugs.has(service.slug))
+      .map((service: { id: string | number }) =>
+        payload.update({
+          collection: 'services',
+          id: service.id,
+          data: { _status: 'draft' },
+          overrideAccess: true,
         }),
+      ),
+  )
+
+  await Promise.all(
+    serviceDocs.map((service, index) =>
+      payload.update({
+        collection: 'services',
+        id: service.id,
+        data: {
+          relatedServices: [
+            serviceDocs[(index + 1) % serviceDocs.length]?.id,
+            serviceDocs[(index + 2) % serviceDocs.length]?.id,
+            serviceDocs[(index + 3) % serviceDocs.length]?.id,
+          ].filter(Boolean),
+        },
+        overrideAccess: true,
+      }),
     ),
+  )
+
+  const testimonialMediaPool = [
+    media.testimonialVideo,
+    media.profileCard,
+    media.avatarOne,
+    media.teamOffice,
+    media.hero,
+    media.aboutTall,
+    media.aboutSide,
+  ].filter(Boolean)
+  const testimonialDocs = await Promise.all(
+    testimonials.map((testimonial, index) => {
+      const avatar = testimonialMediaPool[index % testimonialMediaPool.length]
+      const thumbnail = testimonialMediaPool[(index + 1) % testimonialMediaPool.length]
+
+      return upsertByField('testimonials', 'name', testimonial.name, {
+        ...testimonial,
+        avatar: avatar?.id,
+        videoThumbnail: testimonial.testimonialType === 'video' ? thumbnail?.id || avatar?.id : undefined,
+        videoUrl: testimonial.videoUrl || undefined,
+        sortOrder: testimonial.sortOrder ?? index + 1,
+        seo: {
+          metaTitle: metaTitle(`${testimonial.name} Testimonial | INFE Talent`),
+          metaDescription: metaDescription(testimonial.quote),
+        },
+        _status: 'published',
+      })
+    }),
+  )
+  const activeTestimonialNames = new Set(testimonials.map((testimonial) => testimonial.name))
+  const existingTestimonialDocs = await payload.find({
+    collection: 'testimonials',
+    depth: 0,
+    draft: true,
+    limit: 100,
+  })
+
+  await Promise.all(
+    existingTestimonialDocs.docs
+      .filter((testimonial: { id: string | number; name?: string }) => testimonial.name && !activeTestimonialNames.has(testimonial.name))
+      .map((testimonial: { id: string | number }) =>
+        payload.update({
+          collection: 'testimonials',
+          id: testimonial.id,
+          data: { _status: 'draft' },
+          overrideAccess: true,
+        }),
+      ),
   )
 
   await Promise.all(
@@ -354,11 +440,11 @@ async function run() {
         heading: 'Global Impact Stats',
         description: 'Measurable outcomes from offshore recruitment delivery teams built for scale.',
         items: [
-          { icon: 'Globe', value: '15+', label: 'Countries Covered' },
-          { icon: 'Users', value: '10,000+', label: 'Placements Delivered' },
-          { icon: 'Building2', value: '200+', label: 'Staffing Firms Served' },
-          { icon: 'BarChart3', value: '98%', label: 'Client Retention Rate' },
-          { icon: 'Briefcase', value: '9+', label: 'Recruitment Verticals' },
+          { icon: 'Globe', value: '20+', label: 'Trusted Partners Globally' },
+          { icon: 'Users', value: '3000+', label: 'Team Members operating from global delivery centres' },
+          { icon: 'Building2', value: '50+', label: 'Industries served across US & UK markets' },
+          { icon: 'Globe', value: '3', label: 'State-of-the-art Delivery Centers' },
+          { icon: 'Star', value: '50+', label: 'Net Promoter Score (NPS)' },
         ],
       },
       {
@@ -366,18 +452,22 @@ async function run() {
         layout: 'split',
         imagePosition: 'right',
         settings: { background: 'blue' },
-        heading: 'Turning People Into The Possible',
-        highlight: 'Possible',
+        heading: "If It's About PEOPLE, We Make It POSSIBLE!",
+        highlight: 'PEOPLE',
         body: richTextFromPlain(
-          'Every staffing firm has a recruitment ceiling — the point where capacity limits growth. We remove that ceiling.\n\nOur embedded offshore teams source, screen, coordinate, and support onboarding so your internal recruiters stay focused on client conversations and placements that matter.',
+          "Our mission extends beyond matching resumes to requirements. We're in the business of unlocking human potential-helping talented individuals find meaningful careers while empowering organisations to achieve their boldest ambitions. We measure success in careers transformed and businesses grown.",
         ),
-        media: media.aboutTall.id,
-        primaryAction: { label: 'Get Started', url: '/contact' },
-        secondaryAction: { label: 'Our Services', url: '/services' },
+        media: media.hero.id,
+        mediaSecondary: media.aboutSide.id,
+        primaryAction: { label: 'Consultation Session', url: '/contact' },
+        stats: [
+          { value: '3000+', label: 'Professionals Joined' },
+          { value: '$3,000', label: 'Online Session:' },
+          { value: '$60,000', label: 'Full Month:' },
+        ],
         overlayCard: {
-          name: 'INFE Talent Partner',
-          role: 'Offshore Delivery Lead',
-          company: 'INFE Talent',
+          name: 'Jack Wang',
+          role: 'Full Stack Developer',
         },
       },
       {
@@ -424,31 +514,30 @@ async function run() {
       },
       {
         blockType: 'advantage',
-        eyebrow: 'WHY INFE TALENT',
         heading: 'The INFE Talent Advantage',
         highlight: 'Advantage',
         description:
-          'We are more than an outsourcing vendor. INFE Talent is a recruitment delivery partner built for long-term operational excellence.',
+          'Lorem ipsum dolor sit amet consectetur. Sit habitant interdum dolor scelerisque viverra sed adipiscing. Feugiat viverra libero faucibus platea adipiscing id imperdiet diam.',
         items: [
           {
-            icon: 'Globe',
-            title: 'Global Reach, Local Expertise',
-            description: 'Delivery teams that understand hiring markets across the USA, UK, APAC, and Australia.',
+            icon: 'Headset',
+            title: '24/7 Global Operations',
+            description: 'Uninterrupted service delivery across time zones to accelerate your hiring cycle.',
           },
           {
-            icon: 'ShieldCheck',
-            title: 'Compliance-Ready Workflows',
-            description: 'Structured credentialing and compliance processes built for regulated recruitment environments.',
+            icon: 'FileCheck2',
+            title: 'Strict Compliance',
+            description: 'Fully GDPR, HIPAA, and ISO compliant, ensuring absolute data security for US and UK markets.',
           },
           {
             icon: 'Users',
-            title: 'Embedded Team Model',
-            description: 'Offshore teams that operate as an extension of your internal recruitment operation, not a bolt-on service.',
+            title: 'Scalable Dedicated Teams',
+            description: 'Interview, select, and scale your own dedicated offshore recruiters and sourcers.',
           },
           {
-            icon: 'Briefcase',
-            title: 'Proven Across 9+ Verticals',
-            description: 'Specialist recruitment support across healthcare, IT, finance, engineering, and executive search.',
+            icon: 'HandCoins',
+            title: 'Industry Expertise',
+            description: 'Specialized domain knowledge across Healthcare, IT, Engineering, Finance, and Manufacturing.',
           },
         ],
       },
@@ -481,25 +570,117 @@ async function run() {
     layout: [
       {
         blockType: 'hero',
-        variant: 'centered',
-        eyebrow: 'Services',
-        heading: 'A Complete Offshore Recruitment Ecosystem.',
-        description: 'Select the recruiting workflows you need to strengthen, then scale them with a dedicated offshore delivery model.',
-        primaryAction: { label: 'Get Started', url: '/contact' },
+        variant: 'textOnly',
+        heading: 'Scalable Offshore Recruitment Services For Global Growth',
+        highlight: 'Scalable Offshore Recruitment',
+        description:
+          'Empower your staffing agency with our end-to-end talent acquisition, comprehensive compliance, and dedicated back-office support.',
+        primaryAction: { label: 'Partner With Us', url: '/contact' },
+        secondaryAction: { label: 'Get In Touch', url: '/contact' },
       },
       {
-        blockType: 'servicesGrid',
-        selectionMode: 'manual',
-        heading: 'Recruitment Support Services Built For Staffing Teams.',
-        description: 'From sourcing to onboarding, every service is designed to improve speed, accuracy, and continuity.',
-        services: serviceDocs.map((service) => service.id),
-        action: { label: 'Talk To Us', url: '/contact' },
+        blockType: 'statsStrip',
+        layout: 'strip',
+        items: [
+          { value: '250+', label: 'Clients Globally' },
+          { value: '20+', label: 'Years Of Experience' },
+          { value: '3000+', label: 'Professionals' },
+          { value: '97%', label: 'NPS Score' },
+        ],
+      },
+      {
+        blockType: 'advantage',
+        heading: 'The INFE Talent Advantage',
+        highlight: 'Advantage',
+        description:
+          'Lorem ipsum dolor sit amet consectetur. Sit habitant interdum dolor scelerisque viverra sed adipiscing. Feugiat viverra libero faucibus platea adipiscing id imperdiet diam.',
+        items: [
+          {
+            icon: 'Headset',
+            title: '24/7 Global Operations',
+            description: 'Uninterrupted service delivery across time zones to accelerate your hiring cycle.',
+          },
+          {
+            icon: 'FileCheck2',
+            title: 'Strict Compliance',
+            description: 'Fully GDPR, HIPAA, and ISO compliant, ensuring absolute data security for US and UK markets.',
+          },
+          {
+            icon: 'Users',
+            title: 'Scalable Dedicated Teams',
+            description: 'Interview, select, and scale your own dedicated offshore recruiters and sourcers.',
+          },
+          {
+            icon: 'HandCoins',
+            title: 'Industry Expertise',
+            description: 'Specialized domain knowledge across Healthcare, IT, Engineering, Finance, and Manufacturing.',
+          },
+        ],
+      },
+      {
+        blockType: 'contact',
+        eyebrow: 'GET IN TOUCH',
+        heading: 'Ready To Transform Your Recruitment Engine?',
+        description:
+          'Tell us about your hiring goals. We will come back within one business day with a tailored model and a clear path to scale.',
+        formHeading: 'Get In Touch Today!',
+        contactMethods: [
+          { label: 'UK', value: '+44 203 878 3559', url: 'tel:+442038783559' },
+          { label: 'US', value: '+1 614 266 3317', url: 'tel:+16142663317' },
+          { label: 'AUS', value: '+61 740 620 017', url: 'tel:+61740620017' },
+        ],
       },
     ],
     seo: {
       metaTitle: 'Offshore Recruitment Services | INFE Talent',
       metaDescription: 'Explore INFE Talent services for recruitment management, sourcing, market mapping, compliance, onboarding, and administrative support.',
       openGraphImage: media.hero.id,
+    },
+    _status: 'published',
+  })
+
+  await upsert('pages', 'testimonials', {
+    title: 'Testimonials',
+    slug: 'testimonials',
+    layout: [
+      {
+        blockType: 'hero',
+        variant: 'textOnly',
+        eyebrow: 'Home / Testimonials',
+        heading: 'Trusted By 3000+ Global Staffing Leaders',
+        highlight: '3000+ Global Staffing',
+        description:
+          'Do not just take our word for it. Hear from the recruitment agencies, MSPs, and global enterprises that have scaled their operations with INFE Talent.',
+      },
+      {
+        blockType: 'statsStrip',
+        layout: 'strip',
+        items: [
+          { value: '250+', label: 'Clients Globally' },
+          { value: '20+', label: 'Years Of Experience' },
+          { value: '3000+', label: 'Professionals' },
+          { value: '97%', label: 'NPS Score' },
+        ],
+      },
+      {
+        blockType: 'contact',
+        eyebrow: 'GET IN TOUCH',
+        heading: "Let's Design Your Offshore Recruitment Engine.",
+        description:
+          'Tell us about your hiring goals. We will come back within one business day with a tailored model and a clear path to scale.',
+        formHeading: 'Get In Touch Today!',
+        contactMethods: [
+          { label: 'UK', value: '+44 203 878 3559', url: 'tel:+442038783559' },
+          { label: 'US', value: '+1 614 266 3317', url: 'tel:+16142663317' },
+          { label: 'AUS', value: '+61 740 620 017', url: 'tel:+61740620017' },
+        ],
+      },
+    ],
+    seo: {
+      metaTitle: 'Testimonials | INFE Talent',
+      metaDescription:
+        'Read testimonials from staffing leaders, recruitment partners, candidates, and corporate clients who work with INFE Talent.',
+      openGraphImage: media.testimonialVideo.id,
     },
     _status: 'published',
   })
@@ -590,7 +771,7 @@ async function run() {
     { label: 'Services', url: '/services', newTab: false },
     { label: 'Insights', url: '/blogs', newTab: false },
     { label: 'Careers', url: '/careers', newTab: false },
-    { label: 'Testimonials', url: '/#testimonials', newTab: false },
+    { label: 'Testimonials', url: '/testimonials', newTab: false },
     { label: 'Contact Us', url: '/contact', newTab: false },
   ]
   const footerContact = {

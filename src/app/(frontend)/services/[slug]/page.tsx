@@ -3,8 +3,9 @@ import { notFound } from 'next/navigation'
 
 import { JsonLd } from '@/components/seo/JsonLd'
 import { ServiceDetail } from '@/components/sections/ServiceDetail'
-import { getServiceBySlug } from '@/lib/payload-queries'
+import { getServiceBySlug, getServices } from '@/lib/payload-queries'
 import { breadcrumbSchema, buildMetadata, serviceSchema } from '@/lib/seo'
+import { relationItems } from '@/lib/utils'
 import type { PageContent } from '@/types/content'
 
 export const revalidate = 60
@@ -30,15 +31,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function ServiceDetailPage({ params }: PageProps) {
   const { slug } = await params
-  const service = await getServiceBySlug(slug)
+  const [service, services] = await Promise.all([getServiceBySlug(slug), getServices(12)])
 
   if (!service) {
     notFound()
   }
 
+  const cmsRelated = relationItems<typeof service>(service.relatedServices)
+  const relatedServices = cmsRelated.length
+    ? cmsRelated
+    : services.filter((item) => item.slug !== service.slug).slice(0, 3)
+
   return (
     <>
-      <ServiceDetail service={service} />
+      <ServiceDetail service={service} relatedServices={relatedServices} />
       <JsonLd
         data={[
           serviceSchema(service, `/services/${slug}`),

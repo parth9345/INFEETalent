@@ -8,7 +8,7 @@ export const Testimonials: CollectionConfig = {
   admin: {
     group: 'Content',
     useAsTitle: 'name',
-    defaultColumns: ['name', 'company', 'featured'],
+    defaultColumns: ['name', 'company', 'testimonialType', 'featured', 'sortOrder'],
   },
   access: {
     create: authenticated,
@@ -50,15 +50,53 @@ export const Testimonials: CollectionConfig = {
       max: 5,
     },
     {
+      name: 'testimonialType',
+      type: 'select',
+      defaultValue: 'text',
+      options: [
+        { label: 'Text', value: 'text' },
+        { label: 'Video', value: 'video' },
+      ],
+      admin: {
+        description: 'Choose video when this testimonial should render with a play overlay.',
+      },
+    },
+    {
+      name: 'videoUrl',
+      type: 'text',
+      admin: {
+        condition: (data) => data.testimonialType === 'video',
+        description: 'Optional hosted video URL used by video testimonial cards.',
+      },
+    },
+    {
       name: 'avatar',
       type: 'upload',
       relationTo: 'media',
+    },
+    {
+      name: 'videoThumbnail',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        condition: (data) => data.testimonialType === 'video',
+        description: 'Optional thumbnail image for video testimonials. Falls back to the avatar.',
+      },
     },
     {
       name: 'featured',
       type: 'checkbox',
       defaultValue: false,
       admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'sortOrder',
+      type: 'number',
+      defaultValue: 0,
+      admin: {
+        description: 'Lower numbers appear earlier on the testimonials page.',
         position: 'sidebar',
       },
     },

@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
+import { linkFields } from '@/globals/link'
 import { seoFields } from '@/globals/seo'
 import { slugField } from '@/globals/slug'
 import { authenticated, publishedOrAuthenticated } from '@/payload/access'
@@ -52,6 +53,50 @@ export const Services: CollectionConfig = {
       name: 'content',
       type: 'richText',
     },
+    {
+      name: 'benefits',
+      type: 'array',
+      label: 'Benefits / specialisations',
+      admin: {
+        description: 'Short bullet points shown on listing rows and service detail pages.',
+      },
+      fields: [
+        {
+          name: 'label',
+          type: 'text',
+          required: true,
+        },
+      ],
+    },
+    {
+      name: 'process',
+      type: 'array',
+      label: 'Process / steps',
+      admin: {
+        description: 'Optional service delivery steps shown on service detail pages.',
+      },
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'description',
+          type: 'textarea',
+        },
+      ],
+    },
+    {
+      name: 'relatedServices',
+      type: 'relationship',
+      relationTo: 'services',
+      hasMany: true,
+      admin: {
+        description: 'Optional related services. If left empty, the frontend will show other services.',
+      },
+    },
+    linkFields('cta', 'Service CTA'),
     ...seoFields(),
   ],
 }
