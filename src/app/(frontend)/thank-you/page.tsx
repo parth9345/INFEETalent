@@ -22,7 +22,7 @@ export default function ThankYouPage() {
       <section className="flex min-h-[60vh] items-center bg-brand-background">
         <div className="mx-auto max-w-[900px] px-5 text-center">
           <p className="text-body12 font-extrabold uppercase leading-[18px] tracking-[3px] text-brand-primary">Thank you</p>
-          <h1 className="mt-4 text-h1 font-extrabold leading-[44px] text-neutral-dark">We received your request.</h1>
+          <h1 className="heading-section mt-4 text-h1 font-extrabold leading-[44px] text-neutral-dark">We received your request.</h1>
           <p className="mt-6 text-body18 leading-[30px] text-neutral-muted">
             The INFE Talent team will review it and get back to you within one business day.
           </p>

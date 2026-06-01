@@ -49,7 +49,7 @@ export function SectionHeader({
       ) : null}
       <HeadingTag
         className={cn(
-          'max-w-3xl break-words font-extrabold tracking-[0px]',
+          'heading-section max-w-3xl break-words font-extrabold tracking-[0px]',
           headingClasses[headingLevel],
           tone === 'dark' ? 'text-neutral-white' : 'text-neutral-dark',
           align === 'center' && 'mx-auto',

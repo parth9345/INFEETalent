@@ -53,7 +53,7 @@ function TestimonialsHero({ hero, testimonials }: { hero?: HeroBlock; testimonia
                 {hero.eyebrow}
               </p>
             ) : null}
-            <h1 className="mt-[43px] max-w-[620px] text-[44px] font-[800] leading-[56px] tracking-[0px] text-[#000000] md:text-[60px] md:leading-[74px]">
+            <h1 className="heading-section mt-[43px] max-w-[620px] text-[44px] font-[800] leading-[56px] tracking-[0px] text-[#000000] md:text-[60px] md:leading-[74px]">
               <HighlightInline heading={heading} highlight={highlight} />
             </h1>
           </div>
@@ -89,9 +89,9 @@ function FeaturedTestimonials({ testimonials }: { testimonials: TestimonialItem[
       <Container className="max-w-[1500px] px-[24px] lg:px-[0px]">
         <div>
           <p className="text-[12px] font-[800] uppercase leading-[16px] tracking-[6px] text-[#FCA62B]">Voices</p>
-          <h2 className="relative mt-[24px] max-w-[670px] text-[44px] font-[800] leading-[56px] tracking-[0px] text-[#FFFFFF] md:text-[50px] md:leading-[66px]">
+          <h2 className="heading-section relative mt-[24px] max-w-[670px] text-[44px] font-[800] leading-[56px] tracking-[0px] text-[#FFFFFF] md:text-[50px] md:leading-[66px]">
             <span className="relative z-[1]">Featured Testimonials</span>
-            <span className="absolute bottom-[3px] left-[308px] z-0 h-[16px] w-[220px] bg-[rgba(251,223,45,0.45)]" aria-hidden="true" />
+            <span className="absolute bottom-[3px] left-[308px] z-0 hidden h-[16px] w-[220px] bg-[rgba(251,223,45,0.45)] md:block" aria-hidden="true" />
           </h2>
         </div>
 
@@ -116,7 +116,7 @@ function ClientReviews({ testimonials }: { testimonials: TestimonialItem[] }) {
   return (
     <section id="client-reviews" className=" py-[88px] text-[#151515] lg:pb-[92px] lg:pt-[128px]">
       <Container className="max-w-[1500px] px-[24px] lg:px-[0px]">
-        <h2 className="mx-auto max-w-[760px] text-center text-[38px] font-[800] leading-[48px] tracking-[0px] text-[#000000] md:text-[50px] md:leading-[66px]">
+        <h2 className="heading-section mx-auto max-w-[760px] text-center text-[38px] font-[800] leading-[48px] tracking-[0px] text-[#000000] md:text-[50px] md:leading-[66px]">
           Client Success Stories & Reviews
         </h2>
         <div className="mx-auto mt-[24px] h-[8px] w-[384px] max-w-[72vw] bg-[#FFE029]" aria-hidden="true" />
@@ -208,7 +208,7 @@ function HeroQuoteCard({ item, className }: { className?: string; item: Testimon
 function HeroProofCard() {
   return (
     <article className="flex h-[294px] flex-col justify-center bg-[#FCA62B] px-[36px] text-[#000D6B]">
-      <h2 className="text-[34px] font-[800] leading-[42px] tracking-[0px] text-[#000D6B]">Trusted By 3000+</h2>
+      <h2 className="heading-section text-[34px] font-[800] leading-[42px] tracking-[0px] text-[#000D6B]">Trusted By 3000+</h2>
       <p className="mt-[3px] text-[18px] font-[500] leading-[26px] tracking-[0px] text-[#000D6B]">Global Staffing Leaders</p>
       <div className="mt-[29px] flex -space-x-[8px]">
         {[figmaAssets.avatarOne, figmaAssets.profileCard, figmaAssets.teamOffice].map((avatar) => (

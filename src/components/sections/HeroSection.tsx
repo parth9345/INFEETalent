@@ -20,13 +20,13 @@ export function HeroSection({ block }: { block: HeroBlock }) {
   const splitVisual = centered ? null : <SplitHeroVisual block={block} />
 
   return (
-    <section id={sectionId(block.settings)} className={centered ? sectionClasses(block.settings, { defaultBackground: 'cream', includeSpacing: false }) : 'bg-[#FFF8EE] lg:min-h-[783px]'}>
-      <Container className={centered ? 'grid min-h-[430px] place-items-center py-14 text-center' : 'grid max-w-[1500px] overflow-visible px-[24px] pb-[72px] pt-[56px] md:pb-[84px] md:pt-[64px] lg:grid-cols-[650px_710px] lg:gap-[140px] lg:px-[0px] lg:pb-[0px] lg:pt-[48px]'}>
+    <section id={sectionId(block.settings)} className={centered ? sectionClasses(block.settings, { defaultBackground: 'cream', includeSpacing: false }) : 'bg-[#FFF8EE] xl:min-h-[783px]'}>
+      <Container className={centered ? 'grid min-h-[430px] place-items-center py-14 text-center' : 'grid max-w-[1500px] overflow-visible px-[24px] pb-[72px] pt-[20px] md:pb-[84px] md:pt-[64px] xl:grid-cols-[650px_minmax(0,1fr)] xl:gap-[64px] xl:pb-[0px] xl:pt-[48px] 2xl:grid-cols-[650px_710px] 2xl:gap-[140px] 2xl:px-[0px]'}>
         <div className={centered ? 'mx-auto min-w-0 max-w-4xl' : 'min-w-0 max-w-[650px]'}>
           {centered && block.eyebrow ? (
             <p className="mb-4 text-body12 font-extrabold uppercase leading-[18px] tracking-[3px] text-brand-primary">{block.eyebrow}</p>
           ) : null}
-          <h1 className={centered ? 'break-words text-h1 font-extrabold leading-[44px] tracking-[0px] text-neutral-dark' : 'max-w-[650px] break-words text-[40px] font-[800] leading-[50px] tracking-[0px] text-[#000000] md:text-[44px] md:leading-[58px] lg:text-[50px] lg:leading-[66px]'}>
+          <h1 className={centered ? 'heading-section break-words text-h1 font-extrabold leading-[44px] tracking-[-0.03em] text-neutral-dark' : 'heading-section max-w-[650px] break-words text-[40px] font-[800] leading-[50px] tracking-[0px] text-[#000000] md:text-[44px] md:leading-[58px] lg:text-[50px] lg:leading-[66px]'}>
             {centered ? (
               <>
                 {block.heading}
@@ -36,7 +36,7 @@ export function HeroSection({ block }: { block: HeroBlock }) {
               <SplitHeroHeading heading={block.heading} highlight={block.highlight} />
             )}
           </h1>
-          {block.description ? <p className={centered ? 'mt-6 max-w-[455px] text-body16 leading-[26px] text-neutral-muted' : 'mt-[92px] max-w-[533px] text-[16px] font-[400] leading-[26px] tracking-[0px] text-[#555555] md:mt-[150px] md:text-[18px] md:leading-[30px] lg:mt-[211px]'}>{block.description}</p> : null}
+          {block.description ? <p className={centered ? 'mt-6 max-w-[455px] text-body16 leading-[26px] text-neutral-muted' : 'mt-[92px] max-w-[533px] text-[16px] font-[400] leading-[26px] tracking-[0px] text-[#555555] md:mt-[150px] md:text-[18px] md:leading-[30px] xl:mt-[211px]'}>{block.description}</p> : null}
           <div className={centered ? 'mt-8 flex flex-wrap justify-center gap-4' : 'mt-[29px] flex flex-wrap gap-[16px]'}>
             {block.primaryAction?.url ? (
               <ButtonLink href={block.primaryAction.url} newTab={block.primaryAction.newTab} size="md" className="h-[50px] w-[160px] border-[0px] bg-[#FCA62B] px-[0px] text-[14px] font-[700] leading-[18px] tracking-[0.8px] text-[#000000] hover:bg-[#FCA62B]">
@@ -72,9 +72,9 @@ function SplitHeroVisual({ block }: { block: HeroBlock }) {
   }
 
   return (
-    <div className="relative mt-[48px] min-h-[620px] min-w-0 md:min-h-[650px] lg:mt-[0px] lg:h-[621px] lg:min-h-[621px] lg:w-[756px]">
+    <div className="relative mt-[48px] min-h-[620px] min-w-0 md:min-h-[650px] xl:mt-[0px] xl:h-[621px] xl:min-h-[621px] xl:w-full 2xl:w-[756px]">
       {block.media ? (
-        <div className="relative ml-auto h-[320px] w-full overflow-hidden md:h-[420px] lg:absolute lg:left-[100px] lg:top-[102px] lg:h-[450px] lg:w-[610px]">
+        <div className="relative ml-auto h-[320px] w-full overflow-hidden md:h-[420px] xl:absolute xl:left-auto xl:right-[46px] xl:top-[102px] xl:h-[450px] xl:w-[min(610px,calc(100%-60px))] 2xl:left-[100px] 2xl:right-auto 2xl:w-[610px]">
           <OptimizedImage
             media={block.media}
             altFallback={block.heading}
@@ -86,13 +86,13 @@ function SplitHeroVisual({ block }: { block: HeroBlock }) {
       ) : null}
 
       {block.badgeLabel ? (
-        <div className="absolute right-[16px] top-[16px] flex h-[49px] w-[203px] items-center justify-center bg-[#FCA62B] px-[12px] text-[18px] font-[700] leading-[22px] tracking-[0px] text-[#000D6B] shadow-[0px_12px_28px_rgba(21,21,21,0.08)] lg:left-[536px] lg:top-[70px] lg:right-auto">
+        <div className="absolute right-[16px] top-[16px] flex h-[49px] w-[203px] items-center justify-center bg-[#FCA62B] px-[11px] text-[18px] font-[700] leading-[22px] tracking-[-0.03em] text-[#000D6B] shadow-xl xl:right-[0px] xl:top-[70px] 2xl:left-[536px] 2xl:right-auto">
           {block.badgeLabel}
         </div>
       ) : null}
 
       {hasFeatureCard ? (
-        <div className="absolute left-[0px] top-[248px] h-[279px] w-[204px] bg-[#FFF8EE] shadow-[0px_18px_36px_rgba(21,21,21,0.18)] md:top-[300px] lg:top-[64px]">
+        <div className="absolute left-[0px] top-[248px] h-[279px] w-[204px] bg-[#FFF8EE] shadow-[0px_18px_36px_rgba(21,21,21,0.18)] md:top-[300px] xl:top-[64px]">
           <div className="relative h-[149px] w-[204px] overflow-hidden">
             <OptimizedImage
               media={featureCard?.image}
@@ -104,8 +104,8 @@ function SplitHeroVisual({ block }: { block: HeroBlock }) {
           </div>
           {featureCard?.name || featureCard?.role ? (
             <div className="px-[20px] pt-[22px]">
-              {featureCard.name ? <p className="text-[16px] font-[800] leading-[20px] tracking-[0px] text-[#000000]">{featureCard.name}</p> : null}
-              {featureCard.role ? <p className="mt-[4px] text-[10px] font-[400] leading-[13px] tracking-[0px] text-[#555555]">{featureCard.role}</p> : null}
+              {featureCard.name ? <p className="text-[14.97px] font-[800] leading-[20px] tracking-[-0.03em] text-[#000000]">{featureCard.name}</p> : null}
+              {featureCard.role ? <p className="mt-[4px] text-[10px] font-[400] leading-[13px] tracking-[-0.03em] text-[#555555]">{featureCard.role}</p> : null}
             </div>
           ) : null}
           {featureCard?.primaryLabel && featureCard.primaryValue ? (
@@ -126,7 +126,7 @@ function SplitHeroVisual({ block }: { block: HeroBlock }) {
       ) : null}
 
       {primaryStat || secondaryStat ? (
-        <div className="absolute bottom-[0px] right-[0px] grid w-[174px] gap-[0px] shadow-[0px_18px_36px_rgba(21,21,21,0.24)] lg:left-[582px] lg:top-[470px] lg:right-auto lg:bottom-auto">
+        <div className="absolute bottom-[0px] right-[0px] grid w-[174px] gap-[0px] shadow-[0px_18px_36px_rgba(21,21,21,0.24)] xl:top-[470px] xl:bottom-auto 2xl:left-[582px] 2xl:right-auto">
           {primaryStat ? <SplitHeroStatCard stat={primaryStat} tone="dark" showAvatars /> : null}
           {secondaryStat ? <SplitHeroStatCard stat={secondaryStat} tone="accent" /> : null}
         </div>
@@ -139,16 +139,16 @@ function SplitHeroStatCard({ stat, tone, showAvatars = false }: { showAvatars?: 
   const isAccent = tone === 'accent'
 
   return (
-    <div className={isAccent ? 'flex h-[151px] flex-col bg-[#FCA62B] px-[20px] py-[24px] text-[#000000]' : 'flex h-[151px] flex-col bg-[#18207E] px-[20px] py-[24px] text-[#FFFFFF]'}>
-      <p className="text-[28px] font-[800] leading-[34px] tracking-[0px]">{stat.value}</p>
-      <p className={isAccent ? 'mt-[3px] text-[14px] font-[700] leading-[18px] tracking-[0px]' : 'mt-[3px] text-[14px] font-[400] leading-[18px] tracking-[0px] text-[#FFFFFF]'}>
+    <div className={isAccent ? 'flex h-[151px] flex-col bg-[#FCA62B] px-[20px] py-[24px] text-[#000000]' : 'flex h-[151px] flex-col bg-[linear-gradient(135deg,#050947_0%,#162072_60%,#213791_100%)] px-[20px] py-[24px] text-[#FFFFFF]'}>
+      <p className="text-[25px] font-[800] leading-[34px] tracking-[-0.03em]">{stat.value}</p>
+      <p className={isAccent ? 'mt-[3px] text-[14px] font-[700] leading-[24px] tracking-[0px]' : 'mt-[3px] text-[14px] font-[400] leading-[18px] tracking-[0px] text-[#FFFFFF]'}>
         {stat.label}
       </p>
       {showAvatars ? (
-        <div className="mt-[17px] flex -space-x-[6px]">
-          {[figmaAssets.avatarOne, figmaAssets.profileCard, figmaAssets.teamOffice, figmaAssets.aboutOfficeSide].map((avatar) => (
-            <span key={avatar} className="relative size-[32px] overflow-hidden rounded-[999px] border-[2px] border-[#FFFFFF]">
-              <OptimizedImage src={avatar} alt="" sizes="32px" className="object-cover" />
+        <div className="mt-[17px] flex -space-x-[10px]">
+          {[figmaAssets.avatarOne, figmaAssets.avatarTwo, figmaAssets.avatarThree, figmaAssets.avatarFour].map((avatar) => (
+            <span key={avatar} className="relative size-[41.23px] rounded-[999px]">
+              <OptimizedImage src={avatar} alt="" sizes="41.23px" className="object-cover" />
             </span>
           ))}
         </div>
@@ -167,7 +167,7 @@ function TextOnlyHero({ block }: { block: HeroBlock }) {
               {block.eyebrow}
             </p>
           ) : null}
-          <h1 className="break-words text-[38px] font-[800] leading-[48px] tracking-[-0.5px] text-[#151515] md:text-[50px] md:leading-[62px] lg:text-[60px] lg:leading-[74px]">
+          <h1 className="heading-section break-words text-[38px] font-[800] leading-[48px] tracking-[-0.5px] text-[#151515] md:text-[50px] md:leading-[62px] lg:text-[60px] lg:leading-[74px]">
             <TextOnlyHighlight heading={block.heading} highlight={block.highlight} />
           </h1>
         </div>
@@ -214,7 +214,7 @@ function DarkSplitHero({ block }: { block: HeroBlock }) {
               {block.eyebrow}
             </p>
           ) : null}
-          <h2 className={`${block.eyebrow ? 'mt-[16px]' : ''} max-w-[560px] break-words text-[32px] font-[800] leading-[42px] tracking-[-0.75px] text-[#FFFFFF] md:text-[40px] md:leading-[52px] lg:text-[52px] lg:leading-[66px]`}>
+          <h2 className={`heading-section ${block.eyebrow ? 'mt-[16px]' : ''} max-w-[560px] break-words text-[32px] font-[800] leading-[42px] tracking-[-0.75px] text-[#FFFFFF] md:text-[40px] md:leading-[52px] lg:text-[52px] lg:leading-[66px]`}>
             <HeadingWithGradientHighlight heading={block.heading} highlight={block.highlight} />
           </h2>
           {block.description ? (

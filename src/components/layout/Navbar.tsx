@@ -31,6 +31,7 @@ export async function Navbar() {
   const footerSocialLinks = normalizeFooterSocialLinks(settings?.footer?.socialLinks)
   const legacySocialLinks = normalizeLegacySocialLinks(settings?.socialLinks)
   const socialLinks = footerSocialLinks.length ? footerSocialLinks : legacySocialLinks
+  const headerSocialLinks = socialLinks.filter((item) => !isInstagramLink(item))
   const headerCta = resolveHeaderCTA(header?.cta)
   const logoMedia = header?.logo || settings?.logo
   const logoAlt = header?.logoAlt || settings?.brandName || siteConfig.name
@@ -38,18 +39,19 @@ export async function Navbar() {
 
   return (
     <HeaderShell stickyEnabled={stickyEnabled}>
-      <div className="hidden h-[50px] bg-[#070C4C] text-[#FFFFFF] transition-[margin,opacity] duration-300 group-data-[scrolled=true]/header:mt-[-50px] group-data-[scrolled=true]/header:opacity-0 2xl:block">
+      <div className="hidden h-[50px] bg-[linear-gradient(90deg,#050947_0%,#162072_60%,#213791_100%)] text-[#FFFFFF] transition-[margin,opacity] duration-300 group-data-[scrolled=true]/header:mt-[-50px] group-data-[scrolled=true]/header:opacity-0 2xl:block">
         <Container className="flex h-[50px] max-w-[1790px] items-center justify-between px-[24px] text-[16px] leading-[20px] tracking-[0px] 2xl:px-[0px]">
           <HeaderContactGroup label="Client Inquiry:" ukPhone={ukPhone} usPhone={usPhone} ausPhone={ausPhone} email={email} />
           <HeaderContactGroup label="Job Seekers :" ukPhone={ukPhone} usPhone={usPhone} ausPhone={ausPhone} email={email} />
         </Container>
       </div>
       <Container as="nav" className="relative flex h-[84px] max-w-[1800px] items-center justify-between bg-[#FFF8EE] px-[24px] md:h-[96px] lg:h-[113px] 2xl:px-[0px]">
-        <Link href="/" className="relative h-[58px] w-[84px] shrink-0 md:h-[64px] md:w-[92px] lg:h-[73px] lg:w-[104px]" aria-label="INFE Talent home">
+        <Link href="/" className="relative block h-[58px] w-[84px] shrink-0 md:h-[64px] md:w-[92px] lg:h-[73px] lg:w-[104px]" aria-label="INFE Talent home">
           <OptimizedImage
             media={logoMedia}
             fallbackSrc={figmaAssets.logo}
             altFallback={logoAlt}
+            preferredSizes={[]}
             sizes="(min-width: 1024px) 104px, 84px"
             className="object-contain object-left"
           />
@@ -67,9 +69,9 @@ export async function Navbar() {
               {hasDropdownIndicator(item) ? <ChevronDown size={14} strokeWidth={2} aria-hidden="true" /> : null}
             </Link>
           ))}
-          {socialLinks.length ? (
+          {headerSocialLinks.length ? (
             <div className="flex items-center gap-[24px] pl-[8px] text-[20px] font-[800] leading-[20px] text-[#262164]">
-              {socialLinks.map((item) => (
+              {headerSocialLinks.map((item) => (
                 <a
                   key={`${item.label}-${item.url}`}
                   href={item.url || '#'}
@@ -95,7 +97,7 @@ export async function Navbar() {
             </Button>
           ) : null}
         </div>
-        <MobileNav navigation={navigation} cta={headerCta} socialLinks={socialLinks} />
+        <MobileNav navigation={navigation} cta={headerCta} socialLinks={headerSocialLinks} />
       </Container>
     </HeaderShell>
   )
@@ -151,19 +153,19 @@ function HeaderContactGroup({
   return (
     <div className="flex min-w-0 items-center gap-[12px]">
       <Mail size={20} strokeWidth={2.25} aria-hidden="true" />
-      <span className="font-[700]">{label}</span>
-      <a href={`tel:${ukPhone.replace(/\s/g, '')}`} className="font-[400] transition hover:text-[#FCA62B]">
+      <span className="font-[500]">{label}</span>
+      <a href={`tel:${ukPhone.replace(/\s/g, '')}`} className="font-[300] transition hover:text-[#FCA62B]">
         {ukPhone}
       </a>
       <span className="text-[#FFFFFF]/70" aria-hidden="true">|</span>
-      <a href={`tel:${usPhone.replace(/\s/g, '')}`} className="font-[400] transition hover:text-[#FCA62B]">
+      <a href={`tel:${usPhone.replace(/\s/g, '')}`} className="font-[300] transition hover:text-[#FCA62B]">
         {usPhone}
       </a>
       <span className="text-[#FFFFFF]/70" aria-hidden="true">|</span>
-      <a href={`tel:${ausPhone.replace(/\s/g, '')}`} className="font-[400] transition hover:text-[#FCA62B]">
+      <a href={`tel:${ausPhone.replace(/\s/g, '')}`} className="font-[300] transition hover:text-[#FCA62B]">
         {ausPhone}
       </a>
-      <a href={`mailto:${email}`} className="font-[700] transition hover:text-[#FCA62B]">
+      <a href={`mailto:${email}`} className="font-[500] transition hover:text-[#FCA62B]">
         {email}
       </a>
     </div>
@@ -177,17 +179,15 @@ function hasDropdownIndicator(item: NavLink) {
   return label.includes('service') || label.includes('insight') || label.includes('blog') || url.includes('/services') || url.includes('/blogs')
 }
 
+function isInstagramLink(item: NavLink) {
+  const label = item.label?.toLowerCase() || ''
+  const url = item.url?.toLowerCase() || ''
+
+  return label.includes('instagram') || url.includes('instagram.com')
+}
+
 function socialGlyph(label?: string) {
   const normalized = label?.toLowerCase() || ''
-
-  if (normalized.includes('instagram')) {
-    return (
-      <span className="relative block size-[18px] rounded-[5px] border-[2px] border-current">
-        <span className="absolute left-[4px] top-[4px] size-[6px] rounded-full border-[2px] border-current" />
-        <span className="absolute right-[3px] top-[3px] size-[3px] rounded-full bg-current" />
-      </span>
-    )
-  }
 
   if (normalized.includes('linkedin')) {
     return 'in'

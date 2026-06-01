@@ -109,6 +109,17 @@ img {
   height: auto;
 }
 
+@layer base {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .grid > *,
+  .flex > * {
+    min-width: 0;
+  }
+}
+
 @layer utilities {
   .heading-1 {
     font-size: 35px;
@@ -171,4 +182,38 @@ img {
     font-size: 12px;
     line-height: 18px;
   }
+}
+
+
+
+.primary-cst-btn {
+  transition: 0.5s;
+  color: #262164;
+}
+
+.primary-cst-btn:hover {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.secondary-cst-btn{
+  transition: 0.5s;
+  color: #262164;
+  background-color: transparent;
+}
+.secondary-cst-btn:hover{
+  background-color: #262164;
+  color: #ffffff;
+}
+
+
+
+@media (max-width: 575px) {
+  .heading-section{
+    font-size: 25px;
+    line-height: 35px;
+    font-weight: 800;
+    letter-spacing: -0.75px;
+  }
+
 }

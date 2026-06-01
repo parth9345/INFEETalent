@@ -27,7 +27,7 @@ export function AboutPeopleSection({ block }: { block: ContentImageBlock }) {
     >
       <Container className="grid max-w-[1500px] gap-[48px] px-[24px] lg:grid-cols-[700px_740px] lg:gap-[60px] lg:px-[0px] lg:pt-[137px]">
         <div className="min-w-0 lg:pt-[146px]">
-          <h2 className="max-w-[560px] text-[40px] font-[800] leading-[52px] tracking-[0px] text-[#FFFFFF] md:text-[50px] md:leading-[66px]">
+          <h2 className="heading-section max-w-[560px] text-[40px] font-[800] leading-[52px] tracking-[0px] text-[#FFFFFF] md:text-[50px] md:leading-[66px]">
             <PeopleHeading heading={block.heading} highlight={block.highlight} />
           </h2>
           <div className="mt-[22px] max-w-[704px]">

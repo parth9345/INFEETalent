@@ -67,9 +67,9 @@ function HomeVoices({ block, testimonials }: { block: TestimonialsBlock; testimo
       <Container className="relative max-w-[1500px] px-[24px] lg:px-[0px]">
         <div className="max-w-[672px]">
           {block.eyebrow ? <p className="text-[12px] font-[800] uppercase leading-[16px] tracking-[6px] text-[#FCA62B]">{block.eyebrow}</p> : null}
-          <h2 className="relative mt-[24px] max-w-[672px] text-[50px] font-[800] capitalize leading-[66px] tracking-[-1.5px] text-[#FFFFFF]">
+          <h2 className="heading-section relative mt-[24px] max-w-[672px] text-[50px] font-[800] capitalize leading-[66px] tracking-[-1.5px] text-[#FFFFFF]">
             <span className="relative z-[1]">{block.heading}</span>
-            <span className="absolute bottom-[4px] left-[456px] z-0 h-[23px] w-[125px] bg-gradient-to-t from-[rgba(251,223,45,0.45)] from-[40%] to-[rgba(251,223,45,0)] to-[40%]" aria-hidden="true" />
+            <span className="absolute bottom-[4px] left-[316px] z-0 hidden h-[23px] w-[125px] bg-gradient-to-t from-[rgba(251,223,45,0.45)] from-[40%] to-[rgba(251,223,45,0)] to-[40%] md:block" aria-hidden="true" />
           </h2>
         </div>
 

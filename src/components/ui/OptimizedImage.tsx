@@ -9,6 +9,7 @@ type OptimizedImageProps = Omit<ImageProps, 'src' | 'alt'> & {
   alt?: string
   altFallback?: string
   fallbackSrc?: string
+  preferredSizes?: string[]
 }
 
 export function OptimizedImage({
@@ -18,10 +19,11 @@ export function OptimizedImage({
   altFallback = '',
   fallbackSrc = '',
   fill = true,
+  preferredSizes = ['hero', 'card'],
   sizes = '100vw',
   ...props
 }: OptimizedImageProps) {
-  const resolvedSrc = src || resolveMediaUrl(media, fallbackSrc)
+  const resolvedSrc = src || resolveMediaUrl(media, fallbackSrc, preferredSizes)
 
   if (!resolvedSrc) {
     return null

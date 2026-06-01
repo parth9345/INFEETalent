@@ -26,7 +26,7 @@ export function AboutBridgeSection({ block }: { block: HeroBlock }) {
       <Container className="grid max-w-[1500px] gap-[48px] px-[24px] lg:grid-cols-[690px_650px] lg:gap-[142px] lg:px-[0px] lg:pt-[125px]">
         <BridgeVisual block={block} primaryStat={primaryStat} secondaryStat={secondaryStat} />
         <div className="min-w-0 lg:pt-[113px]">
-          <h2 className="max-w-[650px] text-[40px] font-[800] leading-[52px] tracking-[0px] text-[#FFFFFF] md:text-[50px] md:leading-[66px]">
+          <h2 className="heading-section max-w-[650px] text-[40px] font-[800] leading-[52px] tracking-[0px] text-[#FFFFFF] md:text-[50px] md:leading-[66px]">
             <HeadingHighlight heading={block.heading} highlight={block.highlight} />
           </h2>
           {block.description ? (
@@ -63,7 +63,7 @@ function BridgeVisual({
           <p className="mt-[1px] text-[16px] font-[700] leading-[24px] tracking-[0px] text-[#FFFFFF] md:text-[18px]">
             {primaryStat.label}
           </p>
-          <div className="absolute right-[30px] top-[55px] flex -space-x-[10px]">
+          <div className="absolute right-[30px] top-[55px] hidden -space-x-[10px] sm:flex">
             {avatarImages.map((avatar) => (
               <span key={avatar} className="relative size-[54px] overflow-hidden rounded-full border-[4px] border-[#FFFFFF] bg-[#EAEBF4]">
                 <OptimizedImage src={avatar} alt="" sizes="54px" className="object-cover" />

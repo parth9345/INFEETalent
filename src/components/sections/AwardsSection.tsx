@@ -39,7 +39,7 @@ function AwardsHomeHeader({ title, description }: { title?: string; description?
   return (
     <div className="mb-[64px] max-w-[595px]">
       {title ? (
-        <h2 className="text-[50px] font-[800] leading-[66px] tracking-[-1.5px] text-[#000000]">
+        <h2 className="heading-section text-[50px] font-[800] leading-[66px] tracking-[-1.5px] text-[#000000]">
           {leadingWords ? `${leadingWords} ` : null}
           <span className="relative inline-block">
             <span className="relative z-[1]">{lastWord}</span>

@@ -26,7 +26,7 @@ export function ServiceDetail({ service, relatedServices = [] }: ServiceDetailPr
             <p className="text-[12px] font-[800] uppercase leading-[16px] tracking-[6px] text-[#2C368D]">
               Services
             </p>
-            <h1 className="mt-[18px] max-w-[760px] text-[42px] font-[800] leading-[52px] tracking-[0px] text-[#151515] md:text-[58px] md:leading-[70px]">
+            <h1 className="heading-section mt-[18px] max-w-[760px] text-[42px] font-[800] leading-[52px] tracking-[0px] text-[#151515] md:text-[58px] md:leading-[70px]">
               {service.title}
             </h1>
             <p className="mt-[28px] max-w-[680px] text-[18px] font-[400] leading-[30px] tracking-[0px] text-[#555555]">
@@ -57,7 +57,7 @@ export function ServiceDetail({ service, relatedServices = [] }: ServiceDetailPr
       <section className="bg-[#FFF8EE] py-[72px] lg:py-[104px]">
         <Container className="grid max-w-[1500px] gap-[48px] px-[24px] lg:grid-cols-[900px_420px] lg:gap-[180px] lg:px-[0px]">
           <article className="border border-[#D8D0C8] bg-[#FFFFFF] p-[28px] md:p-[44px]">
-            <h2 className="text-[34px] font-[800] leading-[44px] tracking-[0px] text-[#151515] md:text-[44px] md:leading-[56px]">
+            <h2 className="heading-section text-[34px] font-[800] leading-[44px] tracking-[0px] text-[#151515] md:text-[44px] md:leading-[56px]">
               Service Overview
             </h2>
             <div className="mt-[28px] text-[18px] font-[400] leading-[30px] tracking-[0px] text-[#555555]">
@@ -86,7 +86,7 @@ export function ServiceDetail({ service, relatedServices = [] }: ServiceDetailPr
       {steps.length ? (
         <section className="bg-[#EAEBF4] py-[72px] lg:py-[104px]">
           <Container className="max-w-[1500px] px-[24px] lg:px-[0px]">
-            <h2 className="max-w-[760px] text-[40px] font-[800] leading-[52px] tracking-[0px] text-[#151515] md:text-[50px] md:leading-[66px]">
+            <h2 className="heading-section max-w-[760px] text-[40px] font-[800] leading-[52px] tracking-[0px] text-[#151515] md:text-[50px] md:leading-[66px]">
               How We Work
             </h2>
             <div className="mt-[48px] grid border-l border-t border-[#CCCCCC] md:grid-cols-2 lg:grid-cols-4">
@@ -114,7 +114,7 @@ export function ServiceDetail({ service, relatedServices = [] }: ServiceDetailPr
         <section className="bg-[#FFF8EE] py-[72px] lg:py-[104px]">
           <Container className="max-w-[1500px] px-[24px] lg:px-[0px]">
             <div className="flex flex-wrap items-end justify-between gap-[24px]">
-              <h2 className="max-w-[760px] text-[40px] font-[800] leading-[52px] tracking-[0px] text-[#151515] md:text-[50px] md:leading-[66px]">
+              <h2 className="heading-section max-w-[760px] text-[40px] font-[800] leading-[52px] tracking-[0px] text-[#151515] md:text-[50px] md:leading-[66px]">
                 Related Services
               </h2>
               <ButtonLink

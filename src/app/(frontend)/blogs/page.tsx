@@ -20,7 +20,7 @@ type BlogsPageProps = {
   }>
 }
 
-const BLOGS_PER_PAGE = 3
+const BLOGS_PER_PAGE = 9
 const fallbackBlogPage: PageContent = {
   title: 'Blogs',
   slug: 'blogs',
@@ -124,7 +124,7 @@ function BlogHero({
           <p className="text-[13px] font-[600] uppercase leading-[16px] tracking-[6px] text-[#555555]">
             {hero.eyebrow || 'Home / Blogs'}
           </p>
-          <h1 className="mt-[15px] max-w-[680px] text-[36px] font-[800] leading-[46px] tracking-[0px] text-[#000000] md:text-[48px] md:leading-[66px]">
+          <h1 className="heading-section mt-[15px] max-w-[680px] text-[36px] font-[800] leading-[46px] tracking-[0px] text-[#000000] md:text-[48px] md:leading-[66px]">
             <HighlightedHeading heading={hero.heading} highlight={hero.highlight} />
           </h1>
         </div>
@@ -160,7 +160,7 @@ function FeaturedBlogsSection({ lead, posts }: { lead?: BlogItem; posts: BlogIte
     <section className="bg-[linear-gradient(108deg,#040946_0%,#121967_56%,#243C91_100%)] py-[72px] text-[#FFFFFF] lg:min-h-[1080px] lg:pb-[89px] lg:pt-[103px]">
       <Container className="max-w-[1500px] px-[24px] lg:px-[0px]">
         <p className="text-[13px] font-[800] uppercase leading-[16px] tracking-[6px] text-[#FCA62B]">Featured Blogs</p>
-        <h2 className="mt-[31px] text-[42px] font-[800] leading-[52px] tracking-[0px] md:text-[48px] md:leading-[58px]">
+        <h2 className="heading-section mt-[31px] text-[42px] font-[800] leading-[52px] tracking-[0px] md:text-[48px] md:leading-[58px]">
           Featured{' '}
           <span className="relative inline-block">
             <span className="relative z-[1]">Post</span>
@@ -233,7 +233,8 @@ function FeaturedTextCard({ post }: { post: BlogItem }) {
   const href = post.slug ? `/blogs/${post.slug}` : '/blogs'
 
   return (
-    <article className="group flex min-h-[354px] flex-col border border-[#303877] bg-[linear-gradient(135deg,#171F63_0%,#26308A_100%)] px-[32px] pb-[36px] pt-[38px] transition duration-300 hover:border-[#FCA62B] lg:h-full">
+    <article className="group flex min-h-[354px] flex-col border border-[#303877]
+     bg-[linear-gradient(135deg,#171F63_0%,#26308A_100%)] px-[32px] pb-[36px] pt-[38px] transition duration-300 hover:border-[#FCA62B] lg:h-full">
       <FeaturedDate date={post.publishedAt} />
       <h3 className="mt-[28px] line-clamp-3 text-[28px] font-[800] leading-[38px] tracking-[0px] text-[#FFFFFF]">
         {post.title}
@@ -317,7 +318,7 @@ function BlogGridSection({
             {gridCategories.map((category) => (
               <CategoryChip
                 key={category}
-                href={buildBlogsHref(category, query)}
+                href={buildBlogsHref(category, query)} 
                 active={category.toLowerCase() === activeCategory?.toLowerCase()}
                 variant="gridDark"
               >
@@ -343,14 +344,24 @@ function BlogGridSection({
             </Link>
           </div>
         )}
-        {hasMorePosts ? (
-          <Link
-            href={buildBlogsHref(activeCategory, query, nextPage) as Route}
-            scroll={false}
-            className="mx-auto mt-[64px] flex h-[50px] w-[138px] items-center justify-center border border-[#2C368D] bg-transparent text-[13px] font-[800] uppercase leading-[16px] tracking-[0px] text-[#2C368D] transition hover:border-[#FFFFFF] hover:text-[#FFFFFF]"
-          >
-            Load More
-          </Link>
+        {posts.length ? (
+          hasMorePosts ? (
+            <Link
+              href={buildBlogsHref(activeCategory, query, nextPage) as Route}
+              scroll={false}
+              className="mx-auto mt-[64px] flex h-[50px] w-[138px] items-center justify-center border border-[#2C368D] bg-transparent text-[13px] font-[800] uppercase leading-[16px] tracking-[0px] text-[#2C368D] transition hover:border-[#FFFFFF] hover:text-[#FFFFFF]"
+            >
+              Load More
+            </Link>
+          ) : (
+            <button
+              type="button"
+              disabled
+              className="mx-auto mt-[64px] flex h-[50px] w-[138px] cursor-default items-center justify-center border border-[#2C368D] bg-transparent text-[13px] font-[800] uppercase leading-[16px] tracking-[0px] text-[#2C368D]"
+            >
+              Load More
+            </button>
+          )
         ) : null}
       </Container>
     </section>

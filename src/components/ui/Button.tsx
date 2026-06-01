@@ -8,8 +8,8 @@ export type ButtonVariant = 'primary' | 'secondary'
 export type ButtonSize = 'lg' | 'md' | 'sm'
 
 const variantClasses: Record<ButtonVariant, string> = {
-  primary: 'border-[2px] border-brand-accent bg-brand-accent text-neutral-black hover:border-brand-accent/85 hover:bg-brand-accent/85',
-  secondary: 'border-[2px] border-brand-primary bg-transparent text-brand-primary hover:bg-brand-background',
+  primary: 'primary-cst-btn border-[2px] border-brand-accent bg-brand-accent text-neutral-black hover:border-brand-accent/85 hover:bg-brand-accent/85',
+  secondary: 'secondary-cst-btn border-[2px] border-brand-primary bg-transparent text-brand-primary hover:bg-brand-background',
 }
 
 const sizeClasses: Record<ButtonSize, string> = {

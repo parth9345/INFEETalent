@@ -192,8 +192,11 @@ export const getRelatedBlogs = unstable_cache(
       const sameCategory = normalizedCategory
         ? docs.filter((post) => post.category?.trim().toLowerCase() === normalizedCategory)
         : []
+      const otherPosts = normalizedCategory
+        ? docs.filter((post) => post.category?.trim().toLowerCase() !== normalizedCategory)
+        : docs
 
-      return (sameCategory.length ? sameCategory : docs).slice(0, limit)
+      return [...sameCategory, ...otherPosts].slice(0, limit)
     } catch (error) {
       logPayloadQueryError(`find related blogs for "${slug}"`, error)
       return []

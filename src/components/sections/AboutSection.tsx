@@ -36,12 +36,12 @@ function HomepageAbout({ block, imageFirst }: { block: ContentImageBlock; imageF
       >
         <MediaPair block={block} isHomepage className={!imageFirst ? 'lg:order-2' : undefined} />
         <div className="min-w-0 md:p-[0px] lg:pt-[90px]">
-          <h2 className="mb-[28px] max-w-[630px] text-[42px] font-[800] leading-[52px] tracking-[0px] text-[#000000] md:text-[48px] md:leading-[58px]">
-            <HeadingHighlight heading={block.heading} highlight={block.highlight} />
+          <h2 className="heading-section mb-[0px] max-w-[550px] text-[42px] font-[800] leading-[52px] tracking-[0px] text-[#000000] md:text-[48px] md:leading-[58px]">
+            <HomepageAboutHeading heading={block.heading} highlight={block.highlight} />
           </h2>
-          <div className="h-[10px] w-full max-w-[472px] bg-[#FFE029]" />
+          <div className="h-[10px] w-full max-w-[472px] bg-[#fdeea1]" />
           <div className="mt-[23px]">
-            <RichText value={block.body} fallback={block.bodyText} className="max-w-[630px] space-y-[18px] text-[18px] font-[600] leading-[28px] tracking-[0px] text-[#555555] md:text-[18px]" />
+            <RichText value={block.body} fallback={block.bodyText} className="max-w-[630px] space-y-[18px] text-[18px] font-[400] leading-[28px] tracking-[0px] text-[#555555] md:text-[18px]" />
           </div>
           {block.action?.url ? (
             <ButtonLink
@@ -76,7 +76,7 @@ function DarkAbout({ block, imageFirst }: { block: ContentImageBlock; imageFirst
               {block.eyebrow}
             </p>
           ) : null}
-          <h2 className="mt-[16px] break-words text-[32px] font-[800] leading-[42px] tracking-[-0.5px] text-[#FFFFFF] md:text-[40px] md:leading-[52px] lg:text-[50px] lg:leading-[66px]">
+          <h2 className="heading-section mt-[16px] break-words text-[32px] font-[800] leading-[42px] tracking-[-0.5px] text-[#FFFFFF] md:text-[40px] md:leading-[52px] lg:text-[50px] lg:leading-[66px]">
             <HeadingHighlight heading={block.heading} highlight={block.highlight} />
           </h2>
           <div className="mt-[28px]">
@@ -194,6 +194,24 @@ function HeadingHighlight({ heading, highlight }: { heading: string; highlight?:
   )
 }
 
+function HomepageAboutHeading({ heading, highlight }: { heading: string; highlight?: string | null }) {
+  const lineBreakText = ', We '
+
+  if (heading.includes(lineBreakText)) {
+    const [before, after] = heading.split(lineBreakText)
+
+    return (
+      <>
+        <HeadingHighlight heading={`${before},`} highlight={highlight} />
+        <br />
+        <HeadingHighlight heading={`We ${after}`} highlight={highlight} />
+      </>
+    )
+  }
+
+  return <HeadingHighlight heading={heading} highlight={highlight} />
+}
+
 function MediaPair({ block, isHomepage = false, className }: { block: ContentImageBlock; isHomepage?: boolean; className?: string }) {
   if (block.layout === 'split') {
     return (
@@ -203,6 +221,7 @@ function MediaPair({ block, isHomepage = false, className }: { block: ContentIma
           fallbackSrc={figmaAssets.aboutOfficeTall}
           altFallback="Business people in office"
           sizes="(min-width: 1024px) 700px, 100vw"
+          preferredSizes={isHomepage ? [] : undefined}
           className="object-cover"
         />
       </div>
@@ -217,15 +236,17 @@ function MediaPair({ block, isHomepage = false, className }: { block: ContentIma
           fallbackSrc={figmaAssets.aboutOfficeTall}
           altFallback="Business people in office"
           sizes={isHomepage ? '(min-width: 768px) 340px, 255px' : '340px'}
+          preferredSizes={isHomepage ? [] : undefined}
           className="object-cover"
         />
       </div>
-      <div className={isHomepage ? 'absolute left-[132px] top-[42px] h-[330px] w-[230px] overflow-hidden rounded-[0px] md:left-[360px] md:top-[56px] md:h-[462px] md:w-[340px]' : 'relative mt-11 h-[315px] overflow-hidden'}>
+      <div className={isHomepage ? 'absolute left-[132px] top-[42px] h-[333px] w-[230px] overflow-hidden rounded-[0px] md:left-[360px] md:top-[56px] md:h-[493px] md:w-[340px]' : 'relative mt-11 h-[315px] overflow-hidden'}>
         <OptimizedImage
           media={block.mediaSecondary}
           fallbackSrc={figmaAssets.aboutOfficeSide}
           altFallback="Recruitment professional"
           sizes={isHomepage ? '(min-width: 768px) 340px, 255px' : '340px'}
+          preferredSizes={isHomepage ? [] : undefined}
           className="object-cover"
         />
       </div>

@@ -38,8 +38,6 @@ const defaultPartnerLabels = [
 export async function Footer() {
   const [navigation, settings] = await Promise.all([getFooterNavigation(), getSiteSettings()])
   const footer = settings?.footer
-  const footerLogo = footer?.logo || settings?.logo
-  const footerLogoAlt = footer?.logoAlt || settings?.brandName || siteConfig.name
   const footerColumns = footer?.navigationColumns?.some((column) => column.links?.length)
     ? footer.navigationColumns.filter((column) => column.links?.length)
     : [{ title: 'Quick Links', links: navigation }]
@@ -84,23 +82,11 @@ export async function Footer() {
       </div>
       <div className="grid border-b border-[#CCCCCC] lg:min-h-[424px] lg:grid-cols-2">
         <div className="border-[#CCCCCC] px-[24px] py-[48px] lg:border-r lg:py-[60px] lg:pl-[max(24px,calc((100vw-1500px)/2))] lg:pr-[80px]">
-          {footerLogo || footer?.description ? (
+          {footer?.description ? (
             <div className="mb-[42px] max-w-[520px]">
-              {footerLogo ? (
-                <Link href="/" className="relative block h-[70px] w-[100px]" aria-label={`${footerLogoAlt} home`}>
-                  <OptimizedImage
-                    media={footerLogo}
-                    altFallback={footerLogoAlt}
-                    sizes="100px"
-                    className="object-contain object-left"
-                  />
-                </Link>
-              ) : null}
-              {footer?.description ? (
-                <p className="mt-[20px] text-[16px] font-[400] leading-[26px] tracking-[0px] text-[#555555]">
-                  {footer.description}
-                </p>
-              ) : null}
+              <p className="text-[16px] font-[400] leading-[26px] tracking-[0px] text-[#555555]">
+                {footer.description}
+              </p>
             </div>
           ) : null}
           <div className={footerColumns.length > 1 ? 'grid gap-[40px] md:grid-cols-2' : ''}>
@@ -186,7 +172,7 @@ function FooterPartnerLogoItem({ index, partner }: { index: number; partner: Foo
 
   if (!partner.url) {
     return (
-      <div className="flex h-[92px] w-[92px] items-center justify-center opacity-80 lg:h-[124.415px] lg:w-[124.415px]">
+      <div className="flex h-[92px] w-[92px] items-center justify-center lg:h-[124.415px] lg:w-[124.415px]">
         {content}
       </div>
     )

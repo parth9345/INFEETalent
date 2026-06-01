@@ -2,6 +2,7 @@ import * as Icons from 'lucide-react'
 import { createElement, type ComponentType } from 'react'
 
 import { OptimizedImage } from '@/components/ui/OptimizedImage'
+import { figmaAssets } from '@/lib/assets'
 import { cn } from '@/lib/utils'
 import type { ServiceItem } from '@/types/content'
 
@@ -26,19 +27,15 @@ export function ServiceCard({ service, showIcon = true, className, variant = 'de
   if (variant === 'home') {
     return (
       <article className={cn('group relative min-h-[300px] overflow-hidden border-b border-r border-[#CCCCCC] bg-[#fff8ee] px-[36px] py-[44px] transition duration-300 hover:bg-[#2C368D] md:px-[48px] md:py-[56px] lg:h-[373px] lg:px-[60px] lg:pb-[60px] lg:pt-[67px]', className)}>
-        {service.featuredImage ? (
-          <div className="absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-50">
-            <OptimizedImage
-              media={service.featuredImage}
-              altFallback={service.title}
-              sizes="(min-width: 1024px) 500px, 100vw"
-              className="object-cover"
-            />
-            <div className="absolute inset-0 bg-[#121964]/85" />
-          </div>
-        ) : (
-          <div className="absolute inset-0 bg-[#2C368D] opacity-0 transition duration-300 group-hover:opacity-100" />
-        )}
+        <div className="absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100">
+          <OptimizedImage
+            src={figmaAssets.insights[2]}
+            altFallback={service.title}
+            sizes="(min-width: 1024px) 500px, 100vw"
+            className="object-cover grayscale"
+          />
+        </div>
+        <div className="absolute inset-0 bg-[#000000] opacity-0 transition duration-300 group-hover:opacity-[0.58]" />
         <div className="relative z-[1]">
           {showIcon ? createElement(Icon, { className: 'mb-[24px] text-brand-primary transition duration-300 group-hover:text-[#FFFFFF]', size: 28, strokeWidth: 1.75, 'aria-hidden': true }) : null}
           <h3 className="break-words text-[30px] font-[800] leading-[38px] tracking-[-0.9px] text-[#000000] transition duration-300 group-hover:text-[#FFFFFF]">{service.title}</h3>

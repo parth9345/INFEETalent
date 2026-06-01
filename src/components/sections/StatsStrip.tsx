@@ -38,18 +38,18 @@ export function StatsStrip({ block, isHomepage = false }: { block: StatsBlock; i
   }
 
   if (isHomepage) {
-    const itemPositions = ['lg:left-[140px]', 'lg:left-[578px]', 'lg:left-[1029px]', 'lg:left-[1520px]']
+    const itemPositions = ['2xl:left-[140px]', '2xl:left-[578px]', '2xl:left-[1029px]', '2xl:left-[1520px]']
 
     return (
-      <section className="bg-brand-primary text-neutral-white">
-        <div className="mx-auto grid max-w-[1920px] grid-cols-2 gap-y-[20px] px-[24px] py-[24px] md:grid-cols-4 md:px-[40px] lg:relative lg:block lg:h-[146px] lg:px-[0px] lg:py-[0px]">
+      <section className="bg-[linear-gradient(90deg,#050947_0%,#162072_60%,#213791_100%)] text-neutral-white">
+        <div className="mx-auto grid max-w-[1920px] grid-cols-2 gap-y-[20px] px-[24px] py-[24px] md:grid-cols-4 md:px-[40px] 2xl:relative 2xl:block 2xl:h-[146px] 2xl:px-[0px] 2xl:py-[0px]">
           {block.items?.map((item, index) => (
             <div
               key={`${item.value}-${item.label}`}
-              className={`flex min-w-0 items-center gap-[10px] lg:absolute lg:top-[43px] lg:gap-[14px] ${itemPositions[index] || 'lg:left-[140px]'}`}
+              className={`flex flex-col md:flex-row min-w-0 items-center gap-[10px] md:justify-center 2xl:absolute 2xl:top-[43px] 2xl:justify-start 2xl:gap-[14px] ${itemPositions[index] || '2xl:left-[140px]'}`}
             >
-              <strong className="shrink-0 text-[32px] font-[800] leading-[38px] tracking-[0px] md:text-[38px] md:leading-[46px] lg:text-[50px] lg:leading-[60px]">{item.value}</strong>
-              <span className="min-w-0 text-[13px] font-[700] leading-[18px] tracking-[0px] md:text-[16px] md:leading-[22px] lg:text-[25px] lg:leading-[30px]">{item.label}</span>
+              <strong className="shrink-0 text-[32px] font-[800] leading-[38px] tracking-[0px] md:text-[38px] md:leading-[46px] 2xl:text-[50px] 2xl:leading-[60px]">{item.value}</strong>
+              <span className="min-w-0 text-[13px] font-[700] leading-[18px] tracking-[0px] md:text-[16px] md:leading-[22px] 2xl:text-[25px] 2xl:leading-[30px]">{item.label}</span>
             </div>
           ))}
         </div>
@@ -77,7 +77,7 @@ function StatsCards({ block }: { block: StatsBlock }) {
       <div className="mx-auto max-w-[1500px] px-[24px] lg:px-[0px]">
         {block.heading ? (
           <div className="mb-[48px]">
-            <h2 className="text-[32px] font-[800] leading-[42px] tracking-[-0.75px] text-[#000000] md:text-[40px] md:leading-[52px] lg:text-[50px] lg:leading-[66px]">
+            <h2 className="heading-section text-[32px] font-[800] leading-[42px] tracking-[-0.75px] text-[#000000] md:text-[40px] md:leading-[52px] lg:text-[50px] lg:leading-[66px]">
               {block.heading}
             </h2>
             {block.description ? (

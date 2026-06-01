@@ -13,15 +13,21 @@ type PageProps = {
   params: Promise<{ slug: string }>
 }
 
+const legacyBlogSlugs: Record<string, string> = {
+  'soft-skills-career-growth': 'soft-skills-that-improve-career-growth',
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
-  const post = await getBlogBySlug(slug)
+  const post = await resolveBlogPost(slug)
 
   if (!post) {
     notFound()
   }
 
-  return buildMetadata({ title: post.title, slug, seo: post.seo } as PageContent, `/blogs/${slug}`, {
+  const canonicalSlug = post.slug || slug
+
+  return buildMetadata({ title: post.title, slug: canonicalSlug, seo: post.seo } as PageContent, `/blogs/${canonicalSlug}`, {
     description: post.excerpt,
     image: post.featuredImage,
     imageAlt: post.title,
@@ -33,27 +39,40 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function BlogDetailPage({ params }: PageProps) {
   const { slug } = await params
-  const post = await getBlogBySlug(slug)
+  const post = await resolveBlogPost(slug)
 
   if (!post) {
     notFound()
   }
 
-  const relatedPosts = await getRelatedBlogs(slug, post.category, 3)
+  const canonicalSlug = post.slug || slug
+  const relatedPosts = await getRelatedBlogs(canonicalSlug, post.category, 5)
 
   return (
     <>
       <BlogDetail post={post} relatedPosts={relatedPosts} />
       <JsonLd
         data={[
-          blogPostingSchema(post, `/blogs/${slug}`),
+          blogPostingSchema(post, `/blogs/${canonicalSlug}`),
           breadcrumbSchema([
             { name: 'Home', path: '/' },
             { name: 'Blogs', path: '/blogs' },
-            { name: post.title, path: `/blogs/${slug}` },
+            { name: post.title, path: `/blogs/${canonicalSlug}` },
           ]),
         ]}
       />
     </>
   )
+}
+
+async function resolveBlogPost(slug: string) {
+  const post = await getBlogBySlug(slug)
+
+  if (post) {
+    return post
+  }
+
+  const legacySlug = legacyBlogSlugs[slug]
+
+  return legacySlug ? getBlogBySlug(legacySlug) : null
 }

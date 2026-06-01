@@ -30,7 +30,7 @@ export function AdvantageSection({ block }: { block: AdvantageBlock }) {
     >
       <Container className="max-w-[1500px] px-[24px] lg:px-[0px] lg:pt-[126px]">
         <div className="grid gap-[36px] lg:grid-cols-[500px_572px] lg:gap-[428px]">
-          <h2 className="max-w-[500px] break-words text-[40px] font-[800] leading-[52px] tracking-[0px] text-[#FFFFFF] md:text-[50px] md:leading-[66px]">
+          <h2 className="heading-section max-w-[500px] break-words text-[40px] font-[800] leading-[52px] tracking-[0px] text-[#FFFFFF] md:text-[50px] md:leading-[66px]">
             <HeadingHighlight heading={block.heading} highlight={block.highlight} />
           </h2>
           {block.description ? (

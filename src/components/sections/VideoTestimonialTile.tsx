@@ -62,7 +62,7 @@ export function VideoTestimonialTile({
         className={`group relative block min-h-[320px] w-full cursor-pointer overflow-hidden border border-[#FFFFFF]/10 bg-[#121964] p-[0px] text-left appearance-none focus-visible:outline focus-visible:outline-[2px] focus-visible:outline-offset-[4px] focus-visible:outline-[#FCA62B] ${className || ''}`}
       >
         <OptimizedImage media={media} fallbackSrc={fallbackSrc} altFallback={alt} sizes="(min-width: 1024px) 605px, 100vw" className="object-cover transition duration-500 group-hover:scale-[1.04]" />
-        <span className="absolute inset-0 bg-[#000000]/45 transition duration-300 group-hover:bg-[#000000]/35" />
+        
         <span className="absolute left-1/2 top-1/2 flex size-[94px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#FFFFFF]/30 backdrop-blur-[2px] transition duration-300 group-hover:scale-[1.06] group-hover:bg-[#FFFFFF]/40">
           <span className="flex size-[66px] items-center justify-center rounded-full bg-[#FFFFFF]/45 text-[#FFFFFF]">
             <Play size={34} fill="currentColor" strokeWidth={0} aria-hidden="true" />

@@ -18,7 +18,7 @@ export function ContactForm({ heading = 'Get in touch today!', description, sour
 
   return (
     <form action={submitContact} className={cn('bg-brand-primary text-neutral-white', isHome ? 'min-h-[657px] bg-[linear-gradient(113deg,#050948_0%,#121967_58%,#243C91_100%)] p-[40px]' : 'p-5 md:p-7', className)}>
-      <h2 className={isHome ? 'text-center text-[40px] font-[800] capitalize leading-[55px] tracking-[-1.2px] text-[#FFFFFF]' : 'text-center text-h3 font-extrabold capitalize md:text-h2'}>{heading}</h2>
+      <h2 className={isHome ? 'heading-section text-center text-[40px] font-[800] capitalize leading-[55px] tracking-[-1.2px] text-[#FFFFFF]' : 'heading-section text-center text-h3 font-extrabold capitalize md:text-h2'}>{heading}</h2>
       {description ? <p className={isHome ? 'mx-auto mt-[12px] max-w-xl text-center text-body14 leading-[22px] text-neutral-white/75' : 'mx-auto mt-3 max-w-xl text-center text-body12 leading-[18px] text-neutral-white/75 md:text-body14 md:leading-[22px]'}>{description}</p> : null}
       <div className={isHome ? 'mt-[24px] grid gap-[24px] md:grid-cols-2 md:gap-x-[32px]' : 'mt-6 grid gap-4 md:grid-cols-2'}>
         <Field name="fullName" label="Full name" placeholder="Full Name*" variant={variant} />

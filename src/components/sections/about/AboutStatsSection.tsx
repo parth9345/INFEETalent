@@ -20,7 +20,7 @@ export function AboutStatsSection({ block }: { block: StatsBlock }) {
     <section id={sectionId(block.settings)} className="bg-[#FFF8EE] py-[72px] lg:h-[704px] lg:py-[0px]">
       <Container className="max-w-[1500px] px-[24px] lg:px-[0px] lg:pt-[136px]">
         {block.heading ? (
-          <h2 className="relative inline-block text-[40px] font-[800] leading-[52px] tracking-[0px] text-[#000000] md:text-[50px] md:leading-[66px]">
+          <h2 className="heading-section relative inline-block text-[40px] font-[800] leading-[52px] tracking-[0px] text-[#000000] md:text-[50px] md:leading-[66px]">
             <span className="relative z-[1]">{block.heading}</span>
             <span
               className="absolute bottom-[9px] left-[0px] h-[10px] w-full max-w-[322px] bg-[#FFE02D]"

@@ -11,15 +11,20 @@ type ServicesBlock = Extract<PageBlock, { blockType: 'servicesGrid' }>
 
 export async function ServicesGridSection({ block, isHomepage = false }: { block: ServicesBlock; isHomepage?: boolean }) {
   const selectedItems = relationItems<ServiceItem>(block.services)
-  const items = selectedItems.length ? selectedItems : await getServices(9)
+  const targetCount = isHomepage ? 9 : undefined
+  const items = await resolveServicesGridItems({
+    selectedItems,
+    selectionMode: block.selectionMode,
+    targetCount,
+  })
   const gridClass = isHomepage ? 'md:grid-cols-2 lg:grid-cols-3' : block.columns === '2' ? 'md:grid-cols-2' : 'md:grid-cols-2 lg:grid-cols-3'
 
   return (
-    <section id={sectionId(block.settings)} className={isHomepage ? 'bg-[#fff8ee] py-[80px] lg:py-[120px]' : sectionClasses(block.settings, { defaultBackground: 'cream' })}>
+    <section id={sectionId(block.settings)} className={isHomepage ? 'bg-[#fff8ee] py-[80px] border-y border-[#CCCCCC] lg:py-[120px]' : sectionClasses(block.settings, { defaultBackground: 'cream' })}>
       <Container className={isHomepage ? 'max-w-[1500px] px-[24px] lg:px-[0px]' : undefined}>
         {isHomepage ? (
           <div className="mb-[64px] w-full max-w-[764px]">
-            <h2 className="relative max-w-[563px] text-[50px] font-[800] capitalize leading-[66px] tracking-[-1.5px] text-[#000000]">
+            <h2 className="heading-section relative max-w-[575px] text-[50px] font-[800] capitalize leading-[66px] tracking-[-1.5px] text-[#000000]">
               <span className="relative z-[1]">{block.heading}</span>
               <span className="absolute bottom-[0px] left-[0px] z-0 h-[23px] w-full bg-gradient-to-t from-[rgba(251,223,45,0.4)] from-[40%] to-[rgba(251,223,45,0)] to-[40%]" aria-hidden="true" />
             </h2>
@@ -50,4 +55,32 @@ export async function ServicesGridSection({ block, isHomepage = false }: { block
       </Container>
     </section>
   )
+}
+
+async function resolveServicesGridItems({
+  selectedItems,
+  selectionMode,
+  targetCount,
+}: {
+  selectedItems: ServiceItem[]
+  selectionMode?: 'manual' | 'latest'
+  targetCount?: number
+}) {
+  if (selectionMode === 'latest' || selectedItems.length === 0) {
+    return getServices(targetCount || 9)
+  }
+
+  if (!targetCount || selectedItems.length >= targetCount) {
+    return selectedItems
+  }
+
+  const latestItems = await getServices(targetCount)
+  const selectedKeys = new Set(selectedItems.map(serviceKey))
+  const fillItems = latestItems.filter((service) => !selectedKeys.has(serviceKey(service)))
+
+  return [...selectedItems, ...fillItems].slice(0, targetCount)
+}
+
+function serviceKey(service: ServiceItem) {
+  return service.slug || String(service.id || service.title)
 }

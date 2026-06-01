@@ -44,7 +44,7 @@ function ServicesHero({ hero, services }: { hero?: HeroBlock; services: ServiceI
     <section className="bg-[#FFF8EE] pb-[70px] pt-[92px] text-[#151515] lg:pb-[73px] lg:pt-[96px]">
       <Container className="max-w-[1500px] px-[24px] lg:px-[0px]">
         <div className="grid gap-[44px] lg:grid-cols-[760px_590px] lg:gap-[150px]">
-          <h1 className="max-w-[760px] text-[40px] font-[800] leading-[52px] tracking-[0px] md:text-[50px] md:leading-[66px]">
+          <h1 className="heading-section max-w-[760px] text-[40px] font-[800] leading-[52px] tracking-[0px] md:text-[50px] md:leading-[66px]">
             <HighlightedHeading heading={heading} highlight={highlight} />
           </h1>
           <div className="pt-[1px]">

@@ -20,7 +20,7 @@ export async function InsightsSection({ block, isHomepage = false }: { block: Bl
       <Container className={isHomepage ? 'max-w-[1500px] px-[24px] lg:px-[0px]' : undefined}>
         <div className={isHomepage ? 'mb-[64px] grid gap-[32px] lg:grid-cols-[742px_742px] lg:gap-[16px]' : 'mb-10 grid gap-8 lg:grid-cols-2'}>
           {isHomepage ? (
-            <h2 className="text-[50px] font-[800] leading-[66px] tracking-[-1.5px] text-[#000000]">{block.heading}</h2>
+            <h2 className="heading-section text-[50px] font-[800] leading-[66px] tracking-[-1.5px] text-[#000000]">{block.heading}</h2>
           ) : (
             <SectionHeader eyebrow={block.eyebrow} title={block.heading} />
           )}

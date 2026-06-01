@@ -22,11 +22,11 @@ export function ContactSection({ block, isHomepage = false }: { block: ContactBl
       <Container className={cn('grid', isHomepage ? 'max-w-[1500px] gap-[56px] px-[24px] lg:grid-cols-[726px_726px] lg:gap-[48px] lg:px-[0px]' : 'gap-10 lg:grid-cols-[1fr_520px]')}>
         <div className={cn('min-w-0 flex flex-col justify-between', isHomepage && 'min-h-[657px]')}>
           {isHomepage ? (
-            <div className="max-w-[599px]">
+            <div className="max-w-[645px]">
               {block.eyebrow ? <p className="text-[12px] font-[800] uppercase leading-[16px] tracking-[8px] text-[#2C368D]">{block.eyebrow}</p> : null}
-              <h2 className="relative mt-[16px] max-w-[599px] text-[50px] font-[800] capitalize leading-[66px] tracking-[-1.5px] text-[#000000]">
+              <h2 className="heading-section relative mt-[16px] max-w-[645px] text-[50px] font-[800] capitalize leading-[66px] tracking-[-1.5px] text-[#000000]">
                 <span className="relative z-[1]">{block.heading}</span>
-                <span className="absolute bottom-[4px] left-[200px] z-0 h-[23px] w-[307px] bg-gradient-to-t from-[rgba(251,223,45,0.4)] from-[40%] to-[rgba(251,223,45,0)] to-[40%]" aria-hidden="true" />
+                <span className="absolute bottom-[4px] left-[200px] z-0 hidden h-[23px] w-[307px] bg-gradient-to-t from-[rgba(251,223,45,0.4)] from-[40%] to-[rgba(251,223,45,0)] to-[40%] md:block" aria-hidden="true" />
               </h2>
             </div>
           ) : (

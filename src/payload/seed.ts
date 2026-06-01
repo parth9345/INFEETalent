@@ -940,7 +940,7 @@ async function run() {
   const headerNavigation = [
     { label: 'About Us', url: '/about', newTab: false },
     { label: 'Services', url: '/services', newTab: false },
-    { label: 'Insights', url: '/blogs', newTab: false },
+    { label: 'Blogs', url: '/blogs', newTab: false },
     { label: 'Careers', url: '/careers', newTab: false },
     { label: 'Testimonials', url: '/testimonials', newTab: false },
     { label: 'Contact Us', url: '/contact', newTab: false },

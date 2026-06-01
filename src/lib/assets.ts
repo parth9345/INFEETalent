@@ -1,8 +1,11 @@
 export const figmaAssets = {
   logo: '/figma/logo.png',
   heroInterview: '/figma/hero-interview.webp',
-  profileCard: '/figma/profile-card.webp',
-  avatarOne: '/figma/avatar-one.webp',
+  profileCard: '/figma/profile-card.jpg',
+  avatarOne: '/figma/avatar-one.png',
+  avatarTwo: '/figma/avatar-two.png',
+  avatarThree: '/figma/avatar-three.png',
+  avatarFour: '/figma/avatar-four.png',
   teamOffice: '/figma/team-office.webp',
   aboutOfficeTall: '/figma/about-office-tall.webp',
   aboutOfficeSide: '/figma/about-office-side.webp',
@@ -14,6 +17,14 @@ export const figmaAssets = {
     '/figma/award-5.png',
   ],
   insights: ['/figma/insight-1.webp', '/figma/insight-2.webp', '/figma/insight-3.webp'],
+  certificationsBg: '/figma/certifications-bg.jpg',
+  certificationsLeftGif: '/figma/certifications-left.gif',
+  floatingActions: {
+    call: '/figma/floating-call.svg',
+    whatsapp: '/figma/floating-whatsapp.svg',
+    fileUser: '/figma/floating-file-user.svg',
+    file: '/figma/floating-file.svg',
+  },
   partners: [
     '/media/image 12.png',
     '/media/image 14.svg',
@@ -24,5 +35,5 @@ export const figmaAssets = {
     '/media/image 24.svg',
     '/media/image 26.svg',
   ],
-  testimonialVideo: '/figma/testimonial-video.webp',
+  testimonialVideo: '/figma/testimonial-video.png',
 } as const
