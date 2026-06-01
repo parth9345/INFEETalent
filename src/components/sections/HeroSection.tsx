@@ -21,7 +21,7 @@ export function HeroSection({ block }: { block: HeroBlock }) {
 
   return (
     <section id={sectionId(block.settings)} className={centered ? sectionClasses(block.settings, { defaultBackground: 'cream', includeSpacing: false }) : 'bg-[#FFF8EE] xl:min-h-[783px]'}>
-      <Container className={centered ? 'grid min-h-[430px] place-items-center py-14 text-center' : 'grid max-w-[1500px] overflow-visible px-[24px] pb-[72px] pt-[20px] md:pb-[84px] md:pt-[64px] xl:grid-cols-[650px_minmax(0,1fr)] xl:gap-[64px] xl:pb-[0px] xl:pt-[48px] 2xl:grid-cols-[650px_710px] 2xl:gap-[140px] 2xl:px-[0px]'}>
+      <Container className={centered ? 'grid min-h-[430px] place-items-center py-14 text-center' : 'grid max-w-[1500px] overflow-visible px-[10px] pb-[10px] pt-[20px] md:pb-[84px] md:pt-[64px] xl:grid-cols-[650px_minmax(0,1fr)] xl:gap-[64px] xl:pb-[0px] xl:pt-[48px] 2xl:grid-cols-[650px_710px] 2xl:gap-[140px] 2xl:px-[0px]'}>
         <div className={centered ? 'mx-auto min-w-0 max-w-4xl' : 'min-w-0 max-w-[650px]'}>
           {centered && block.eyebrow ? (
             <p className="mb-4 text-body12 font-extrabold uppercase leading-[18px] tracking-[3px] text-brand-primary">{block.eyebrow}</p>
@@ -36,7 +36,7 @@ export function HeroSection({ block }: { block: HeroBlock }) {
               <SplitHeroHeading heading={block.heading} highlight={block.highlight} />
             )}
           </h1>
-          {block.description ? <p className={centered ? 'mt-6 max-w-[455px] text-body16 leading-[26px] text-neutral-muted' : 'mt-[92px] max-w-[533px] text-[16px] font-[400] leading-[26px] tracking-[0px] text-[#555555] md:mt-[150px] md:text-[18px] md:leading-[30px] xl:mt-[211px]'}>{block.description}</p> : null}
+          {block.description ? <p className={centered ? 'mt-6 max-w-[455px] text-body16 leading-[26px] text-neutral-muted' : 'mt-[20px] max-w-[533px] text-[16px] font-[400] leading-[26px] tracking-[0px] text-[#555555] md:mt-[150px] md:text-[18px] md:leading-[30px] xl:mt-[211px]'}>{block.description}</p> : null}
           <div className={centered ? 'mt-8 flex flex-wrap justify-center gap-4' : 'mt-[29px] flex flex-wrap gap-[16px]'}>
             {block.primaryAction?.url ? (
               <ButtonLink href={block.primaryAction.url} newTab={block.primaryAction.newTab} size="md" className="h-[50px] w-[160px] border-[0px] bg-[#FCA62B] px-[0px] text-[14px] font-[700] leading-[18px] tracking-[0.8px] text-[#000000] hover:bg-[#FCA62B]">
@@ -72,7 +72,7 @@ function SplitHeroVisual({ block }: { block: HeroBlock }) {
   }
 
   return (
-    <div className="relative mt-[48px] min-h-[620px] min-w-0 md:min-h-[650px] xl:mt-[0px] xl:h-[621px] xl:min-h-[621px] xl:w-full 2xl:w-[756px]">
+    <div className="relative mt-[48px] min-h-[300px] min-w-0 md:min-h-[650px] xl:mt-[0px] xl:h-[621px] xl:min-h-[621px] xl:w-full 2xl:w-[756px]">
       {block.media ? (
         <div className="relative ml-auto h-[320px] w-full overflow-hidden md:h-[420px] xl:absolute xl:left-auto xl:right-[46px] xl:top-[102px] xl:h-[450px] xl:w-[min(610px,calc(100%-60px))] 2xl:left-[100px] 2xl:right-auto 2xl:w-[610px]">
           <OptimizedImage
@@ -92,7 +92,7 @@ function SplitHeroVisual({ block }: { block: HeroBlock }) {
       ) : null}
 
       {hasFeatureCard ? (
-        <div className="absolute left-[0px] top-[248px] h-[279px] w-[204px] bg-[#FFF8EE] shadow-[0px_18px_36px_rgba(21,21,21,0.18)] md:top-[300px] xl:top-[64px]">
+        <div className="hidden md:block absolute left-[0px] top-[248px] h-[279px] w-[204px] bg-[#FFF8EE] shadow-[0px_18px_36px_rgba(21,21,21,0.18)] md:top-[300px] xl:top-[64px]">
           <div className="relative h-[149px] w-[204px] overflow-hidden">
             <OptimizedImage
               media={featureCard?.image}
@@ -126,7 +126,7 @@ function SplitHeroVisual({ block }: { block: HeroBlock }) {
       ) : null}
 
       {primaryStat || secondaryStat ? (
-        <div className="absolute bottom-[0px] right-[0px] grid w-[174px] gap-[0px] shadow-[0px_18px_36px_rgba(21,21,21,0.24)] xl:top-[470px] xl:bottom-auto 2xl:left-[582px] 2xl:right-auto">
+        <div className="hidden md:block absolute bottom-[0px] right-[0px] grid w-[174px] gap-[0px] shadow-[0px_18px_36px_rgba(21,21,21,0.24)] xl:top-[470px] xl:bottom-auto 2xl:left-[582px] 2xl:right-auto">
           {primaryStat ? <SplitHeroStatCard stat={primaryStat} tone="dark" showAvatars /> : null}
           {secondaryStat ? <SplitHeroStatCard stat={secondaryStat} tone="accent" /> : null}
         </div>

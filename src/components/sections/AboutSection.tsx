@@ -30,7 +30,7 @@ function HomepageAbout({ block, imageFirst }: { block: ContentImageBlock; imageF
     <section id={sectionId(block.settings, 'about')} className="lg:min-h-[785px]">
       <Container
         className={cn(
-          'grid max-w-[1500px] gap-[48px] px-[24px] pb-[72px] pt-[72px] md:grid-cols-[700px_1fr] md:gap-[72px] md:pb-[96px] md:pt-[96px] lg:grid-cols-[700px_630px] lg:gap-[132px] lg:px-[0px] lg:pb-[91px] lg:pt-[120px]',
+          'grid max-w-[1500px] gap-[20px] px-[10px] pb-[10px] pt-[10px] md:grid-cols-[700px_1fr] md:gap-[72px] md:pb-[96px] md:pt-[96px] lg:grid-cols-[700px_630px] lg:gap-[132px] lg:px-[0px] lg:pb-[91px] lg:pt-[120px]',
           !imageFirst && 'md:grid-cols-[1fr_430px]',
         )}
       >
@@ -230,7 +230,7 @@ function MediaPair({ block, isHomepage = false, className }: { block: ContentIma
 
   return (
     <div className={cn(isHomepage ? 'relative h-[420px] md:h-[574px]' : 'grid grid-cols-2 gap-4', className)}>
-      <div className={isHomepage ? 'absolute left-[0px] top-[0px] h-[420px] w-[250px] overflow-hidden rounded-[0px] md:h-[574px] md:w-[340px]' : 'relative h-[390px] overflow-hidden'}>
+      <div className={isHomepage ? 'absolute left-[0px] top-[0px] h-[420px] w-[300px] overflow-hidden rounded-[0px] md:h-[574px] md:w-[340px]' : 'relative h-[390px] overflow-hidden'}>
         <OptimizedImage
           media={block.media}
           fallbackSrc={figmaAssets.aboutOfficeTall}
@@ -240,7 +240,7 @@ function MediaPair({ block, isHomepage = false, className }: { block: ContentIma
           className="object-cover"
         />
       </div>
-      <div className={isHomepage ? 'absolute left-[132px] top-[42px] h-[333px] w-[230px] overflow-hidden rounded-[0px] md:left-[360px] md:top-[56px] md:h-[493px] md:w-[340px]' : 'relative mt-11 h-[315px] overflow-hidden'}>
+      <div className={isHomepage ? 'hidden md:block absolute left-[132px] top-[42px] h-[333px] w-[230px] overflow-hidden rounded-[0px] md:left-[360px] md:top-[56px] md:h-[493px] md:w-[340px]' : 'relative mt-11 h-[315px] overflow-hidden'}>
         <OptimizedImage
           media={block.mediaSecondary}
           fallbackSrc={figmaAssets.aboutOfficeSide}

@@ -215,5 +215,10 @@ img {
     font-weight: 800;
     letter-spacing: -0.75px;
   }
+  .primary-cst-btn, .secondary-cst-btn{
+    width: 140px;
+    height: 45px;
+    padding-inline: 0px;
+  }
 
 }

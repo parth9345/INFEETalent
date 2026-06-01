@@ -26,7 +26,7 @@ export function ServiceCard({ service, showIcon = true, className, variant = 'de
 
   if (variant === 'home') {
     return (
-      <article className={cn('group relative min-h-[300px] overflow-hidden border-b border-r border-[#CCCCCC] bg-[#fff8ee] px-[36px] py-[44px] transition duration-300 hover:bg-[#2C368D] md:px-[48px] md:py-[56px] lg:h-[373px] lg:px-[60px] lg:pb-[60px] lg:pt-[67px]', className)}>
+      <article className={cn('group relative min-h-[200px] lg:min-h-[300px] overflow-hidden border-b border-r border-[#CCCCCC] bg-[#fff8ee] px-[15px] py-[15px] transition duration-300 hover:bg-[#2C368D] md:px-[48px] md:py-[56px] lg:h-[373px] lg:px-[60px] lg:pb-[60px] lg:pt-[67px]', className)}>
         <div className="absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100">
           <OptimizedImage
             src={figmaAssets.insights[2]}
@@ -38,7 +38,7 @@ export function ServiceCard({ service, showIcon = true, className, variant = 'de
         <div className="absolute inset-0 bg-[#000000] opacity-0 transition duration-300 group-hover:opacity-[0.58]" />
         <div className="relative z-[1]">
           {showIcon ? createElement(Icon, { className: 'mb-[24px] text-brand-primary transition duration-300 group-hover:text-[#FFFFFF]', size: 28, strokeWidth: 1.75, 'aria-hidden': true }) : null}
-          <h3 className="break-words text-[30px] font-[800] leading-[38px] tracking-[-0.9px] text-[#000000] transition duration-300 group-hover:text-[#FFFFFF]">{service.title}</h3>
+          <h3 className="break-words text-[18px] lg:text-[30px] font-[800] leading-[28px] lg:leading-[38px] tracking-[-0.9px] text-[#000000] transition duration-300 group-hover:text-[#FFFFFF]">{service.title}</h3>
           <p className="mt-[16px] max-w-[360px] break-words text-[18px] font-[400] leading-[28px] tracking-[0px] text-[#555555] transition duration-300 group-hover:text-[rgba(255,255,255,0.9)]">{service.summary}</p>
         </div>
       </article>

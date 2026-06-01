@@ -20,10 +20,10 @@ export async function ServicesGridSection({ block, isHomepage = false }: { block
   const gridClass = isHomepage ? 'md:grid-cols-2 lg:grid-cols-3' : block.columns === '2' ? 'md:grid-cols-2' : 'md:grid-cols-2 lg:grid-cols-3'
 
   return (
-    <section id={sectionId(block.settings)} className={isHomepage ? 'bg-[#fff8ee] py-[80px] border-y border-[#CCCCCC] lg:py-[120px]' : sectionClasses(block.settings, { defaultBackground: 'cream' })}>
-      <Container className={isHomepage ? 'max-w-[1500px] px-[24px] lg:px-[0px]' : undefined}>
+    <section id={sectionId(block.settings)} className={isHomepage ? 'bg-[#fff8ee] py-[10px] border-y border-[#CCCCCC] lg:py-[120px]' : sectionClasses(block.settings, { defaultBackground: 'cream' })}>
+      <Container className={isHomepage ? 'max-w-[1500px] px-[10px] lg:px-[0px]' : undefined}>
         {isHomepage ? (
-          <div className="mb-[64px] w-full max-w-[764px]">
+          <div className="mb-[20px] lg:mb-[64px] w-full max-w-[764px]">
             <h2 className="heading-section relative max-w-[575px] text-[50px] font-[800] capitalize leading-[66px] tracking-[-1.5px] text-[#000000]">
               <span className="relative z-[1]">{block.heading}</span>
               <span className="absolute bottom-[0px] left-[0px] z-0 h-[23px] w-full bg-gradient-to-t from-[rgba(251,223,45,0.4)] from-[40%] to-[rgba(251,223,45,0)] to-[40%]" aria-hidden="true" />

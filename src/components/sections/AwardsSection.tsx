@@ -9,7 +9,7 @@ type AwardsBlock = Extract<PageBlock, { blockType: 'awards' }>
 
 export function AwardsSection({ block, isHomepage = false }: { block: AwardsBlock; isHomepage?: boolean }) {
   return (
-    <section className={isHomepage ? 'bg-[#fff8ee] py-[80px] lg:py-[120px]' : 'bg-[#FFF8EE] py-[48px] md:py-[64px]'}>
+    <section className={isHomepage ? 'bg-[#fff8ee] py-[10px] lg:py-[120px]' : 'bg-[#FFF8EE] py-[48px] md:py-[64px]'}>
       <div className={cn('mx-auto px-5 2xl:px-0', isHomepage ? 'max-w-[1500px] px-[24px] lg:px-[0px]' : 'max-w-[1500px]')}>
         {isHomepage ? (
           <AwardsHomeHeader title={block.heading} description={block.description} />
@@ -19,10 +19,10 @@ export function AwardsSection({ block, isHomepage = false }: { block: AwardsBloc
         <div className="grid gap-0 border-l border-t border-[#CCCCCC] sm:grid-cols-2 lg:grid-cols-5">
           {block.items?.map((award) => (
             <article key={award.title} className={cn('group flex flex-col items-center border-b border-r  border-[#CCCCCC] text-center transition duration-300', isHomepage ? 'min-h-[320px] bg-[#FFF8EE] px-[24px] pb-[31px] pt-[24px] hover:bg-[#F2F2F2] lg:h-[384.5px]' : 'min-h-[250px] px-5 py-7')}>
-              <div className={isHomepage ? 'relative h-[220.5px] w-[214.75px] overflow-hidden' : 'relative size-[112px]'}>
+              <div className={isHomepage ? 'relative h-[120px] lg:h-[220.5px] w-[214.75px] overflow-hidden' : 'relative size-[112px]'}>
                 <Image src={resolveMediaUrl(award.image)} alt={resolveMediaAlt(award.image, award.title)} fill sizes={isHomepage ? '215px' : '112px'} className="object-contain transition duration-300 group-hover:scale-[1.04]" />
               </div>
-              <p className={isHomepage ? 'mt-[32px] max-w-[252px] text-[18px] font-[400] leading-[28px] tracking-[0px] text-[#555555] transition duration-300 group-hover:text-[#151515]' : 'mt-6 text-body12 leading-[18px] text-neutral-muted md:text-body14 md:leading-[22px]'}>{award.description}</p>
+              <p className={isHomepage ? 'mt-[15px] lg:mt-[32px] max-w-[252px] text-[18px] font-[400] leading-[28px] tracking-[0px] text-[#555555] transition duration-300 group-hover:text-[#151515]' : 'mt-6 text-body12 leading-[18px] text-neutral-muted md:text-body14 md:leading-[22px]'}>{award.description}</p>
             </article>
           ))}
         </div>
@@ -37,7 +37,7 @@ function AwardsHomeHeader({ title, description }: { title?: string; description?
   const leadingWords = words.join(' ')
 
   return (
-    <div className="mb-[64px] max-w-[595px]">
+    <div className="mb-[20px] max-w-[595px]">
       {title ? (
         <h2 className="heading-section text-[50px] font-[800] leading-[66px] tracking-[-1.5px] text-[#000000]">
           {leadingWords ? `${leadingWords} ` : null}
