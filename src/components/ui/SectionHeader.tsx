@@ -43,7 +43,7 @@ export function SectionHeader({
   return (
     <div className={cn('min-w-0 space-y-3', align === 'center' && 'mx-auto max-w-3xl text-center', className)}>
       {eyebrow ? (
-        <p className={cn('text-body12 font-extrabold uppercase leading-[18px] tracking-[3px]', tone === 'dark' ? 'text-brand-accent' : 'text-brand-primary', eyebrowClassName)}>
+        <p className={cn('eyebrow-title text-body12 font-extrabold uppercase leading-[18px] tracking-[3px]', tone === 'dark' ? 'text-brand-accent' : 'text-brand-primary', eyebrowClassName)}>
           {eyebrow}
         </p>
       ) : null}

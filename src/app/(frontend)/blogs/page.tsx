@@ -121,7 +121,7 @@ function BlogHero({
     <section className="bg-[#FFF8EE] py-[38px] text-[#151515] lg:h-[324px] lg:overflow-hidden lg:py-[0px]">
       <Container className="grid max-w-[1500px] gap-[30px] px-[24px] lg:grid-cols-[690px_520px] lg:gap-[210px] lg:px-[0px] lg:pt-[43px]">
         <div>
-          <p className="text-[13px] font-[600] uppercase leading-[16px] tracking-[6px] text-[#555555]">
+          <p className="eyebrow-title text-[13px] font-[600] uppercase leading-[16px] tracking-[6px] text-[#555555]">
             {hero.eyebrow || 'Home / Blogs'}
           </p>
           <h1 className="heading-section mt-[15px] max-w-[680px] text-[36px] font-[800] leading-[46px] tracking-[0px] text-[#000000] md:text-[48px] md:leading-[66px]">

@@ -52,7 +52,7 @@ export function BlogCard({
     return (
       <article className={cn('group border border-[#CCCCCC] bg-[#FFF8EE] tracking-[0.84px] transition hover:bg-[#FCA62B]', 'lg:h-[652px]', className)}>
         {imagePosition === 'top' ? image : null}
-        <div className="flex h-[373px] flex-col items-start p-[48px]">
+        <div className="flex h-[330px] lg:h-[373px] flex-col items-start p-[15px] lg:p-[48px]">
           {post.publishedAt ? (
             <time className="text-[16px] font-[400] leading-[28px] tracking-[0px] text-[#555555]" dateTime={post.publishedAt}>
               {formattedDate}

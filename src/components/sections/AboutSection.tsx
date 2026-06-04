@@ -72,7 +72,7 @@ function DarkAbout({ block, imageFirst }: { block: ContentImageBlock; imageFirst
         ) : null}
         <div className={cn('min-w-0', imageFirst ? '' : 'lg:order-1')}>
           {block.eyebrow ? (
-            <p className="text-[12px] font-[800] uppercase leading-[16px] tracking-[6px] text-[#FCA62B]">
+            <p className="eyebrow-title text-[12px] font-[800] uppercase leading-[16px] tracking-[6px] text-[#FCA62B]">
               {block.eyebrow}
             </p>
           ) : null}

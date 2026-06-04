@@ -11,7 +11,7 @@ import { siteConfig } from '@/lib/site'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
-const localOrigins = ['http://localhost:3000', 'http://127.0.0.1:3000']
+const localOrigins = ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://192.168.1.9:3000']
 const allowedOrigins = Array.from(new Set([siteConfig.url, ...localOrigins]))
 
 export default buildConfig({

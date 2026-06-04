@@ -23,7 +23,7 @@ const cardPositions = [
   'xl:col-start-3 xl:row-start-2',
 ]
 
-export function AdvantageSection({ block }: { block: AdvantageBlock }) {
+export function AboutAdvantageSection({ block }: { block: AdvantageBlock }) {
   return (
     <section
       id={sectionId(block.settings)}
@@ -43,19 +43,7 @@ export function AdvantageSection({ block }: { block: AdvantageBlock }) {
 
         <div className="relative mt-[44px] grid grid-cols-1 border-l border-t border-[#FFFFFF]/55 sm:grid-cols-2 xl:mt-[34px] xl:h-[631px] xl:grid-cols-3 xl:grid-rows-[315px_316px]">
           <div className="relative hidden border-b border-r border-[#FFFFFF]/55 xl:col-start-2 xl:row-span-2 xl:block">
-            <div
-              className="pointer-events-none absolute left-1/2 top-1/2 h-[134px] w-[250px] -translate-x-1/2 -translate-y-1/2 opacity-[0.12]"
-              aria-hidden="true"
-            >
-              <Image
-                src="/figma/about-advantage-animation.gif"
-                alt=""
-                width={250}
-                height={134}
-                unoptimized
-                className="h-[134px] w-[250px] object-contain"
-              />
-            </div>
+            <CenterGraphic />
           </div>
 
           {block.items?.slice(0, 4).map((item, index) => (
@@ -63,13 +51,13 @@ export function AdvantageSection({ block }: { block: AdvantageBlock }) {
               key={`${item.title}-${index}`}
               className={`group flex min-h-[280px] flex-col border-b border-r border-[#FFFFFF]/55 px-[24px] pb-[32px] pt-[42px] transition duration-300 hover:bg-[#FFFFFF]/[0.04] md:min-h-[300px] md:px-[40px] md:pt-[52px] xl:min-h-0 xl:pb-[0px] xl:pt-[52px] ${cardPositions[index] || ''}`}
             >
-              <div className="h-[76px] w-[90px] text-[#FFFFFF] transition duration-300 group-hover:scale-[1.05]">
+              <div className="h-[76px] w-[92px] text-[#FFFFFF] transition duration-300 group-hover:scale-[1.05]">
                 <AdvantageIcon name={item.icon} />
               </div>
               <h3 className="mt-[32px] text-[22px] font-[800] leading-[28px] tracking-[0px] text-[#FFFFFF] md:text-[24px] md:leading-[30px] xl:mt-[45px]">
                 {item.title}
               </h3>
-              <p className="mt-[18px] max-w-[430px] text-[16px] font-[400] leading-[26px] tracking-[0px] text-[#FFFFFF] md:text-[18px] md:leading-[28px] xl:text-[20px] xl:leading-[30px]">
+              <p className="mt-[18px] max-w-[400px] text-[16px] font-[400] leading-[26px] tracking-[0px] text-[#FFFFFF] md:text-[18px] md:leading-[28px] xl:text-[20px] xl:leading-[30px]">
                 {item.description}
               </p>
             </article>
@@ -92,12 +80,26 @@ function HeadingHighlight({ heading, highlight }: { heading: string; highlight?:
   return (
     <>
       {before}
-      <span className="relative inline">
+      <span className="relative inline-block">
         <span className="relative z-[1]">{highlight}</span>
-        <span className="absolute bottom-[4px] left-[0px] h-[10px] w-full bg-[#8C8D62]" aria-hidden="true" />
+        <span className="absolute bottom-[4px] left-[0px] h-[9px] w-full bg-[#8C8D62]" aria-hidden="true" />
       </span>
       {after}
     </>
+  )
+}
+
+function CenterGraphic() {
+  return (
+    <Image
+      src="/figma/about-advantage-animation.gif"
+      alt=""
+      width={250}
+      height={134}
+      unoptimized
+      className="pointer-events-none absolute left-1/2 top-1/2 h-auto w-[250px] -translate-x-1/2 -translate-y-1/2 opacity-[0.14]"
+      aria-hidden="true"
+    />
   )
 }
 
@@ -119,10 +121,10 @@ function AdvantageIcon({ name }: { name?: string }) {
 
 function ComplianceIcon() {
   return (
-    <span className="relative block h-[82px] w-[88px]" aria-hidden="true">
-      <FileText className="absolute right-[0px] top-[0px] h-[80px] w-[60px]" strokeWidth={1.8} />
-      <ShieldCheck className="absolute bottom-[0px] left-[0px] h-[48px] w-[48px]" strokeWidth={1.8} />
-      <FileCheck2 className="absolute right-[8px] top-[8px] h-[48px] w-[48px] opacity-0" strokeWidth={1.8} />
+    <span className="relative block h-[76px] w-[84px]" aria-hidden="true">
+      <FileText className="absolute right-[0px] top-[0px] h-[70px] w-[54px]" strokeWidth={1.8} />
+      <ShieldCheck className="absolute bottom-[0px] left-[0px] h-[46px] w-[46px]" strokeWidth={1.8} />
+      <FileCheck2 className="absolute right-[8px] top-[8px] h-[46px] w-[46px] opacity-0" strokeWidth={1.8} />
     </span>
   )
 }
@@ -138,9 +140,9 @@ function TeamIcon() {
 
 function IndustryIcon() {
   return (
-    <span className="relative block h-[82px] w-[92px]" aria-hidden="true">
-      <HandCoins className="absolute bottom-[0px] left-[0px] h-[62px] w-[92px]" strokeWidth={1.8} />
-      <Cog className="absolute right-[16px] top-[0px] h-[42px] w-[42px]" strokeWidth={1.8} />
+    <span className="relative block h-[76px] w-[90px]" aria-hidden="true">
+      <HandCoins className="absolute bottom-[0px] left-[0px] h-[60px] w-[90px]" strokeWidth={1.8} />
+      <Cog className="absolute right-[14px] top-[0px] h-[40px] w-[40px]" strokeWidth={1.8} />
     </span>
   )
 }

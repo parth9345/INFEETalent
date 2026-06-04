@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import type { Route } from 'next'
 import { Menu, X } from 'lucide-react'
-import { useEffect, useId, useState } from 'react'
+import { useEffect, useId, useRef, useState, type TouchEvent } from 'react'
 
 import { Button } from '@/components/ui/Button'
 import { cn } from '@/lib/utils'
@@ -18,6 +18,7 @@ type MobileNavProps = {
 export function MobileNav({ navigation, cta, socialLinks = [] }: MobileNavProps) {
   const menuId = useId()
   const [open, setOpen] = useState(false)
+  const ignoreClickAfterTouchRef = useRef(false)
 
   useEffect(() => {
     if (!open) {
@@ -42,25 +43,46 @@ export function MobileNav({ navigation, cta, socialLinks = [] }: MobileNavProps)
   }, [open])
 
   const closeMenu = () => setOpen(false)
+  const toggleMenu = () => setOpen((current) => !current)
+
+  const handleTouchEnd = (event: TouchEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    ignoreClickAfterTouchRef.current = true
+    toggleMenu()
+
+    window.setTimeout(() => {
+      ignoreClickAfterTouchRef.current = false
+    }, 350)
+  }
+
+  const handleClick = () => {
+    if (ignoreClickAfterTouchRef.current) {
+      return
+    }
+
+    toggleMenu()
+  }
 
   return (
     <div className="lg:hidden">
       <button
         type="button"
-        className="inline-flex size-[44px] items-center justify-center border border-[#CCCCCC] bg-[#FFF8EE] text-[#262164] transition hover:border-[#262164] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FCA62B]"
+        className="relative z-[120] inline-flex size-[44px] touch-manipulation cursor-pointer items-center justify-center border border-[#CCCCCC] bg-[#FFF8EE] text-[#262164] transition hover:border-[#262164] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FCA62B]"
         aria-label={open ? 'Close navigation' : 'Open navigation'}
         aria-controls={menuId}
         aria-expanded={open}
-        onClick={() => setOpen((current) => !current)}
+        onClick={handleClick}
+        onTouchEnd={handleTouchEnd}
       >
         {open ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
       </button>
       <div
         id={menuId}
         className={cn(
-          'fixed inset-x-0 top-[82px] z-[90] overflow-hidden border-b border-neutral-border bg-neutral-white px-5 shadow-[0_18px_36px_rgba(21,21,21,0.16)] transition-all duration-300 ease-out lg:hidden',
-          'top-[84px] bg-[#FFF8EE] shadow-[0px_18px_36px_rgba(21,21,21,0.16)] md:top-[96px]',
-          open ? 'max-h-[calc(100dvh-84px)] translate-y-0 opacity-100 md:max-h-[calc(100dvh-96px)]' : 'pointer-events-none max-h-0 -translate-y-2 opacity-0',
+          'fixed inset-x-0 top-[84px] z-[110] border-b border-neutral-border bg-[#FFF8EE] px-5 shadow-[0px_18px_36px_rgba(21,21,21,0.16)] transition-all duration-300 ease-out md:top-[96px] lg:hidden',
+          open
+            ? 'max-h-[calc(100vh-84px)] translate-y-0 overflow-y-auto overscroll-contain opacity-100 md:max-h-[calc(100vh-96px)] supports-[height:100dvh]:max-h-[calc(100dvh-84px)] md:supports-[height:100dvh]:max-h-[calc(100dvh-96px)]'
+            : 'pointer-events-none max-h-0 -translate-y-2 overflow-hidden opacity-0',
         )}
       >
         <nav className="mx-auto grid max-w-[1800px] gap-[0px] py-[20px]" aria-label="Mobile navigation">

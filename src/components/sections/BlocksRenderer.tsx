@@ -1,4 +1,5 @@
 import { AboutSection } from './AboutSection'
+import { AboutAdvantageSection } from './about/AboutAdvantageSection'
 import { AboutBridgeSection } from './about/AboutBridgeSection'
 import { AboutHeroIntroSection } from './about/AboutHeroIntroSection'
 import { AboutPeopleSection } from './about/AboutPeopleSection'
@@ -30,6 +31,7 @@ export function BlocksRenderer({ blocks, variant = 'default' }: BlocksRendererPr
   }
 
   const isHome = variant === 'home'
+  const isAbout = variant === 'about'
   const isAboutStyle = variant === 'home' || variant === 'about'
 
   return (
@@ -67,13 +69,13 @@ export function BlocksRenderer({ blocks, variant = 'default' }: BlocksRendererPr
           case 'servicesGrid':
             return <ServicesGridSection key={key} block={block} isHomepage={isHome} />
           case 'awards':
-            return <AwardsSection key={key} block={block} isHomepage={isAboutStyle} />
+            return <AwardsSection key={key} block={block} isHomepage={isAboutStyle} isAboutPage={isAbout} />
           case 'certifications':
-            return <CertificationsSection key={key} block={block} isHomepage={isAboutStyle} />
+            return <CertificationsSection key={key} block={block} isHomepage={isAboutStyle} isAboutPage={isAbout} />
           case 'industries':
-            return <IndustriesSection key={key} block={block} isHomepage={isAboutStyle} />
+            return <IndustriesSection key={key} block={block} isHomepage={isAboutStyle} isAboutPage={isAbout} />
           case 'testimonials':
-            return <TestimonialsSection key={key} block={block} isHomepage={isAboutStyle} />
+            return <TestimonialsSection key={key} block={block} isHomepage={isAboutStyle} isAboutPage={isAbout} />
           case 'cta':
             return <CTASection key={key} block={block} />
           case 'blogListing':
@@ -83,10 +85,14 @@ export function BlocksRenderer({ blocks, variant = 'default' }: BlocksRendererPr
           case 'faq':
             return <FAQSection key={key} block={block} />
           case 'contact':
-            return <ContactSection key={key} block={block} isHomepage={isAboutStyle} />
+            return <ContactSection key={key} block={block} isHomepage={isAboutStyle} isAboutPage={isAbout} />
           case 'career':
             return <CareerSection key={key} block={block} />
           case 'advantage':
+            if (variant === 'about') {
+              return <AboutAdvantageSection key={key} block={block} />
+            }
+
             return <AdvantageSection key={key} block={block} />
           default:
             return null

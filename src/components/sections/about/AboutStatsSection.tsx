@@ -17,8 +17,8 @@ type StatsBlock = Extract<PageBlock, { blockType: 'statsStrip' }>
 
 export function AboutStatsSection({ block }: { block: StatsBlock }) {
   return (
-    <section id={sectionId(block.settings)} className="bg-[#FFF8EE] py-[72px] lg:h-[704px] lg:py-[0px]">
-      <Container className="max-w-[1500px] px-[24px] lg:px-[0px] lg:pt-[136px]">
+    <section id={sectionId(block.settings)} className="overflow-hidden bg-[#FFF8EE] py-[72px] xl:h-[704px] xl:py-[0px]">
+      <Container className="max-w-[1500px] px-[24px] xl:px-[24px] xl:pt-[136px] 2xl:px-[0px]">
         {block.heading ? (
           <h2 className="heading-section relative inline-block text-[40px] font-[800] leading-[52px] tracking-[0px] text-[#000000] md:text-[50px] md:leading-[66px]">
             <span className="relative z-[1]">{block.heading}</span>
@@ -29,20 +29,20 @@ export function AboutStatsSection({ block }: { block: StatsBlock }) {
           </h2>
         ) : null}
 
-        <div className="mt-[58px] grid border-l border-t border-[#D8D0C8] sm:grid-cols-2 lg:mt-[48px] lg:grid-cols-[repeat(5,300px)]">
+        <div className="mt-[58px] grid border-l border-t border-[#D8D0C8] sm:grid-cols-2 lg:grid-cols-3 xl:mt-[48px] xl:grid-cols-5">
           {block.items?.map((item, index) => {
             return (
               <div
                 key={`${item.value}-${item.label}-${index}`}
-                className="group flex min-h-[260px] flex-col items-center border-b border-r border-[#D8D0C8] px-[30px] pb-[24px] pt-[34px] text-center transition duration-300 hover:bg-[#FFFFFF] lg:h-[333px] lg:min-h-0 lg:pt-[36px]"
+                className="group flex min-h-[240px] flex-col items-center border-b border-r border-[#D8D0C8] px-[22px] pb-[24px] pt-[34px] text-center transition duration-300 hover:bg-[#FFFFFF] md:min-h-[260px] xl:h-[333px] xl:min-h-0 xl:px-[30px] xl:pt-[36px]"
               >
                 <div className="flex h-[58px] w-[82px] items-center justify-center text-[#151515] transition duration-300 group-hover:scale-[1.05] group-hover:text-[#2C368D] lg:h-[72px] lg:w-[88px]">
                   <StatIcon name={item.icon} />
                 </div>
-                <p className="mt-[28px] text-[38px] font-[800] leading-[46px] tracking-[0px] text-[#151515] md:text-[44px] md:leading-[54px] lg:mt-[60px] lg:text-[50px] lg:leading-[60px]">
+                <p className="mt-[28px] text-[38px] font-[800] leading-[46px] tracking-[0px] text-[#151515] md:text-[44px] md:leading-[54px] xl:mt-[60px] xl:text-[50px] xl:leading-[60px]">
                   {item.value}
                 </p>
-                <p className="mt-[18px] max-w-[238px] text-[18px] font-[400] leading-[30px] tracking-[0px] text-[#555555] lg:mt-[34px]">
+                <p className="mt-[18px] max-w-[238px] text-[16px] font-[400] leading-[26px] tracking-[0px] text-[#555555] md:text-[18px] md:leading-[30px] xl:mt-[34px]">
                   {item.label}
                 </p>
               </div>

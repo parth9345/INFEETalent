@@ -21,11 +21,11 @@ export function AboutBridgeSection({ block }: { block: HeroBlock }) {
   return (
     <section
       id={sectionId(block.settings)}
-      className="relative overflow-hidden bg-[linear-gradient(108deg,#050948_0%,#121967_56%,#243C91_100%)] py-[72px] text-[#FFFFFF] lg:h-[814px] lg:py-[0px]"
+      className="relative overflow-hidden bg-[linear-gradient(108deg,#050948_0%,#121967_56%,#243C91_100%)] py-[72px] text-[#FFFFFF] xl:h-[814px] xl:py-[0px]"
     >
-      <Container className="grid max-w-[1500px] gap-[48px] px-[24px] lg:grid-cols-[690px_650px] lg:gap-[142px] lg:px-[0px] lg:pt-[125px]">
+      <Container className="grid max-w-[1500px] gap-[48px] px-[24px] xl:grid-cols-[minmax(0,690px)_minmax(0,650px)] xl:justify-between xl:gap-[48px] xl:px-[24px] xl:pt-[125px] 2xl:gap-[142px] 2xl:px-[0px]">
         <BridgeVisual block={block} primaryStat={primaryStat} secondaryStat={secondaryStat} />
-        <div className="min-w-0 lg:pt-[113px]">
+        <div className="min-w-0 xl:pt-[113px]">
           <h2 className="heading-section max-w-[650px] text-[40px] font-[800] leading-[52px] tracking-[0px] text-[#FFFFFF] md:text-[50px] md:leading-[66px]">
             <HeadingHighlight heading={block.heading} highlight={block.highlight} />
           </h2>
@@ -54,7 +54,7 @@ function BridgeVisual({
   secondaryStat: BridgeStat
 }) {
   return (
-    <div className="grid max-w-[690px] gap-[24px] md:grid-cols-[430px_236px]">
+    <div className="mx-auto grid w-full max-w-[690px] gap-[24px] md:grid-cols-[minmax(0,430px)_236px] xl:mx-0">
       <div className="grid gap-[24px]">
         <div className="relative flex h-[160px] w-full max-w-[430px] flex-col justify-center border border-[#FFFFFF]/10 bg-[#FFFFFF]/[0.04] px-[34px]">
           <p className="text-[42px] font-[800] leading-[50px] tracking-[0px] text-[#FFFFFF] md:text-[50px] md:leading-[60px]">

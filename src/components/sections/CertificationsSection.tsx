@@ -7,10 +7,18 @@ import type { PageBlock } from '@/types/content'
 
 type CertificationsBlock = Extract<PageBlock, { blockType: 'certifications' }>
 
-export function CertificationsSection({ block, isHomepage = false }: { block: CertificationsBlock; isHomepage?: boolean }) {
+export function CertificationsSection({
+  block,
+  isHomepage = false,
+  isAboutPage = false,
+}: {
+  block: CertificationsBlock
+  isHomepage?: boolean
+  isAboutPage?: boolean
+}) {
   if (isHomepage) {
     return (
-      <section className="relative h-auto min-h-[542px] overflow-hidden bg-[#050946] py-[80px] text-[#FFFFFF] lg:h-[542px] lg:py-[120px]">
+      <section className={isAboutPage ? 'relative h-auto min-h-[542px] overflow-hidden bg-[#050946] py-[64px] text-[#FFFFFF] md:py-[80px] xl:py-[120px]' : 'relative h-auto min-h-[542px] overflow-hidden bg-[#050946] py-[80px] text-[#FFFFFF] lg:h-[542px] lg:py-[120px]'}>
         <Image
           src={figmaAssets.certificationsBg}
           alt=""
@@ -19,10 +27,10 @@ export function CertificationsSection({ block, isHomepage = false }: { block: Ce
           className="object-cover"
           priority
         />
-        <div className="relative mx-auto grid max-w-[1500px] gap-[60px] px-[24px] lg:grid-cols-[572px_726px] lg:gap-[202px] lg:px-[0px]">
+        <div className={isAboutPage ? 'relative mx-auto grid max-w-[1500px] gap-[48px] px-[24px] xl:grid-cols-[minmax(0,572px)_minmax(0,726px)] xl:justify-between xl:gap-[48px] 2xl:gap-[202px] 2xl:px-[0px]' : 'relative mx-auto grid max-w-[1500px] gap-[60px] px-[24px] lg:grid-cols-[572px_726px] lg:gap-[202px] lg:px-[0px]'}>
           <div className="min-w-0">
-            <h2 className="heading-section text-[50px] font-[800] leading-[66px] tracking-[-1.5px] text-[#FFFFFF]">{block.heading}</h2>
-            <div className="relative mt-[102px] h-[133.97px] w-[250px]" aria-hidden="true">
+            <h2 className={isAboutPage ? 'heading-section text-[36px] font-[800] leading-[46px] tracking-[0px] text-[#FFFFFF] md:text-[44px] md:leading-[58px] xl:text-[50px] xl:leading-[66px] xl:tracking-[-1.5px]' : 'heading-section text-[50px] font-[800] leading-[66px] tracking-[-1.5px] text-[#FFFFFF]'}>{block.heading}</h2>
+            <div className={isAboutPage ? 'relative mt-[48px] h-[133.97px] w-[250px] md:mt-[72px] xl:mt-[102px]' : 'relative mt-[102px] h-[133.97px] w-[250px]'} aria-hidden="true">
               <Image
                 src={figmaAssets.certificationsLeftGif}
                 alt=""
@@ -34,9 +42,9 @@ export function CertificationsSection({ block, isHomepage = false }: { block: Ce
               />
             </div>
           </div>
-          <div className="grid self-start pt-[22px] sm:grid-cols-2 sm:gap-x-[36px] sm:gap-y-[48px] lg:gap-x-[72px] lg:gap-y-[48px]">
+          <div className={isAboutPage ? 'grid gap-y-[24px] self-start pt-[0px] sm:grid-cols-2 sm:gap-x-[36px] sm:gap-y-[40px] xl:gap-x-[72px] xl:gap-y-[48px] xl:pt-[22px]' : 'grid self-start pt-[22px] sm:grid-cols-2 sm:gap-x-[36px] sm:gap-y-[48px] lg:gap-x-[72px] lg:gap-y-[48px]'}>
             {block.items?.map((item) => (
-              <a key={item.label} href={item.url || '#'} className="group flex min-h-[34px] items-center gap-[18px] text-[22px] font-[600] leading-[34px] tracking-[-0.03em] text-[#FFFFFF] transition duration-300 hover:translate-x-[4px] hover:text-[#FCA62B]">
+              <a key={item.label} href={item.url || '#'} className={isAboutPage ? 'group flex min-h-[34px] items-center gap-[18px] text-[18px] font-[600] leading-[28px] tracking-[0px] text-[#FFFFFF] transition duration-300 hover:translate-x-[4px] hover:text-[#FCA62B] md:text-[20px] md:leading-[32px] xl:text-[22px] xl:leading-[34px] xl:tracking-[-0.03em]' : 'group flex min-h-[34px] items-center gap-[18px] text-[22px] font-[600] leading-[34px] tracking-[-0.03em] text-[#FFFFFF] transition duration-300 hover:translate-x-[4px] hover:text-[#FCA62B]'}>
                 <BadgeCheck size={34} strokeWidth={1.8} className="shrink-0 text-[#FFFFFF] transition duration-300 group-hover:text-[#FCA62B]" aria-hidden="true" />
                 {item.label}
               </a>

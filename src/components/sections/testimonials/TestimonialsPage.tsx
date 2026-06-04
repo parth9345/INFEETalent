@@ -49,7 +49,7 @@ function TestimonialsHero({ hero, testimonials }: { hero?: HeroBlock; testimonia
         <div className="flex min-h-[590px] flex-col justify-between">
           <div>
             {hero?.eyebrow ? (
-              <p className="text-[12px] font-[800] uppercase leading-[16px] tracking-[6px] text-[#151515]">
+              <p className="eyebrow-title text-[12px] font-[800] uppercase leading-[16px] tracking-[6px] text-[#151515]">
                 {hero.eyebrow}
               </p>
             ) : null}

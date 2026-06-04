@@ -24,7 +24,7 @@ export function HeroSection({ block }: { block: HeroBlock }) {
       <Container className={centered ? 'grid min-h-[430px] place-items-center py-14 text-center' : 'grid max-w-[1500px] overflow-visible px-[10px] pb-[10px] pt-[20px] md:pb-[84px] md:pt-[64px] xl:grid-cols-[650px_minmax(0,1fr)] xl:gap-[64px] xl:pb-[0px] xl:pt-[48px] 2xl:grid-cols-[650px_710px] 2xl:gap-[140px] 2xl:px-[0px]'}>
         <div className={centered ? 'mx-auto min-w-0 max-w-4xl' : 'min-w-0 max-w-[650px]'}>
           {centered && block.eyebrow ? (
-            <p className="mb-4 text-body12 font-extrabold uppercase leading-[18px] tracking-[3px] text-brand-primary">{block.eyebrow}</p>
+            <p className="eyebrow-title mb-4 text-body12 font-extrabold uppercase leading-[18px] tracking-[3px] text-brand-primary">{block.eyebrow}</p>
           ) : null}
           <h1 className={centered ? 'heading-section break-words text-h1 font-extrabold leading-[44px] tracking-[-0.03em] text-neutral-dark' : 'heading-section max-w-[650px] break-words text-[40px] font-[800] leading-[50px] tracking-[0px] text-[#000000] md:text-[44px] md:leading-[58px] lg:text-[50px] lg:leading-[66px]'}>
             {centered ? (
@@ -163,7 +163,7 @@ function TextOnlyHero({ block }: { block: HeroBlock }) {
       <Container className="grid max-w-[1500px] gap-[48px] px-[24px] lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-[120px] lg:px-[0px]">
         <div>
           {block.eyebrow ? (
-            <p className="mb-[16px] text-[12px] font-[800] uppercase leading-[16px] tracking-[6px] text-[#2C368D]">
+            <p className="eyebrow-title mb-[16px] text-[12px] font-[800] uppercase leading-[16px] tracking-[6px] text-[#2C368D]">
               {block.eyebrow}
             </p>
           ) : null}
@@ -210,7 +210,7 @@ function DarkSplitHero({ block }: { block: HeroBlock }) {
         ) : null}
         <div className="min-w-0 flex-1">
           {block.eyebrow ? (
-            <p className="text-[12px] font-[800] uppercase leading-[16px] tracking-[6px] text-[#FCA62B]">
+            <p className="eyebrow-title text-[12px] font-[800] uppercase leading-[16px] tracking-[6px] text-[#FCA62B]">
               {block.eyebrow}
             </p>
           ) : null}

@@ -207,6 +207,15 @@ img {
 }
 
 
+.heading-section {
+  font-weight: 700;
+}
+
+.eyebrow-title {
+    --tw-tracking: 3px;
+    letter-spacing: 3px;
+}
+
 
 @media (max-width: 575px) {
   .heading-section{
@@ -219,6 +228,19 @@ img {
     width: 140px;
     height: 45px;
     padding-inline: 0px;
+  }
+
+  /* About Page */
+
+   .heading-section br{
+    display: none;
+   }
+
+  .heading-section span {
+    all: unset;
+    /* height: 30px;
+    bottom: 0px;
+    top: 0px; */
   }
 
 }
