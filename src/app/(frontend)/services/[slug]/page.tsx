@@ -43,7 +43,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     : services.filter((item) => item.slug !== service.slug).slice(0, 3)
 
   return (
-    <>
+    <div className="page-service-detail">
       <ServiceDetail service={service} relatedServices={relatedServices} />
       <JsonLd
         data={[
@@ -55,6 +55,6 @@ export default async function ServiceDetailPage({ params }: PageProps) {
           ]),
         ]}
       />
-    </>
+    </div>
   )
 }

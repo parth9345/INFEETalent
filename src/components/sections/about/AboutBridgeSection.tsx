@@ -2,6 +2,7 @@ import { Container } from '@/components/ui/Container'
 import { OptimizedImage } from '@/components/ui/OptimizedImage'
 import { figmaAssets } from '@/lib/assets'
 import { sectionId } from '@/lib/sections'
+import { cn } from '@/lib/utils'
 import type { PageBlock } from '@/types/content'
 
 type HeroBlock = Extract<PageBlock, { blockType: 'hero' }>
@@ -14,14 +15,14 @@ const avatarImages = [
   figmaAssets.aboutOfficeSide,
 ]
 
-export function AboutBridgeSection({ block }: { block: HeroBlock }) {
+export function AboutBridgeSection({ block, className }: { block: HeroBlock; className?: string }) {
   const primaryStat = block.stats?.[0] || { value: '3000+', label: 'Professionals Joined' }
   const secondaryStat = block.stats?.[1] || { value: '20+', label: 'Years of Experience' }
 
   return (
     <section
       id={sectionId(block.settings)}
-      className="relative overflow-hidden bg-[linear-gradient(108deg,#050948_0%,#121967_56%,#243C91_100%)] py-[72px] text-[#FFFFFF] xl:h-[814px] xl:py-[0px]"
+      className={cn('relative overflow-hidden bg-[linear-gradient(108deg,#050948_0%,#121967_56%,#243C91_100%)] py-[72px] text-[#FFFFFF] xl:h-[814px] xl:py-[0px]', className)}
     >
       <Container className="grid max-w-[1500px] gap-[48px] px-[24px] xl:grid-cols-[minmax(0,690px)_minmax(0,650px)] xl:justify-between xl:gap-[48px] xl:px-[24px] xl:pt-[125px] 2xl:gap-[142px] 2xl:px-[0px]">
         <BridgeVisual block={block} primaryStat={primaryStat} secondaryStat={secondaryStat} />

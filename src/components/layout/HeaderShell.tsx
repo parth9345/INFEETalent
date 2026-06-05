@@ -6,10 +6,9 @@ import { cn } from '@/lib/utils'
 
 type HeaderShellProps = {
   children: ReactNode
-  stickyEnabled?: boolean
 }
 
-export function HeaderShell({ children, stickyEnabled = true }: HeaderShellProps) {
+export function HeaderShell({ children }: HeaderShellProps) {
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
@@ -25,8 +24,8 @@ export function HeaderShell({ children, stickyEnabled = true }: HeaderShellProps
     <header
       data-scrolled={scrolled ? 'true' : 'false'}
       className={cn(
-        'group/header z-[100] bg-[#FFF8EE] transition-shadow duration-300',
-        stickyEnabled ? 'sticky top-0' : 'relative',
+        'group/header z-[100] bg-[#FFF8EE] transition-shadow duration-300 site-header',
+        'relative',
         scrolled && 'shadow-[0px_10px_30px_rgba(21,21,21,0.12)]',
       )}
     >

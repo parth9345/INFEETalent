@@ -12,6 +12,7 @@ import Image from 'next/image'
 
 import { Container } from '@/components/ui/Container'
 import { sectionId } from '@/lib/sections'
+import { cn } from '@/lib/utils'
 import type { PageBlock } from '@/types/content'
 
 type AdvantageBlock = Extract<PageBlock, { blockType: 'advantage' }>
@@ -23,11 +24,11 @@ const cardPositions = [
   'xl:col-start-3 xl:row-start-2',
 ]
 
-export function AboutAdvantageSection({ block }: { block: AdvantageBlock }) {
+export function AboutAdvantageSection({ block, className }: { block: AdvantageBlock; className?: string }) {
   return (
     <section
       id={sectionId(block.settings)}
-      className="relative overflow-hidden bg-[linear-gradient(108deg,#050948_0%,#121967_56%,#243C91_100%)] py-[72px] text-[#FFFFFF] xl:h-[1040px] xl:py-[0px]"
+      className={cn('relative overflow-hidden bg-[linear-gradient(108deg,#050948_0%,#121967_56%,#243C91_100%)] py-[72px] text-[#FFFFFF] xl:h-[1040px] xl:py-[0px]', className)}
     >
       <Container className="max-w-[1500px] px-[24px] xl:px-[24px] xl:pt-[126px] 2xl:px-[0px]">
         <div className="grid gap-[36px] xl:grid-cols-[minmax(0,500px)_minmax(0,572px)] xl:justify-between xl:gap-[48px]">

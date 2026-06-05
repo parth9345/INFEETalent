@@ -42,40 +42,41 @@ export function BlocksRenderer({ blocks, variant = 'default' }: BlocksRendererPr
         }
 
         const key = block.id || `${block.blockType}-${index}`
+        const className = getSectionClassName(block, variant)
 
         switch (block.blockType) {
           case 'hero':
             if (variant === 'about' && block.variant === 'textOnly') {
-              return <AboutHeroIntroSection key={key} block={block} />
+              return <AboutHeroIntroSection key={key} block={block} className={className} />
             }
 
             if (variant === 'about' && block.variant === 'darkSplit') {
-              return <AboutBridgeSection key={key} block={block} />
+              return <AboutBridgeSection key={key} block={block} className={className} />
             }
 
-            return <HeroSection key={key} block={block} />
+            return <HeroSection key={key} block={block} className={className} />
           case 'statsStrip':
             if (variant === 'about' && block.layout === 'cards') {
-              return <AboutStatsSection key={key} block={block} />
+              return <AboutStatsSection key={key} block={block} className={className} />
             }
 
-            return <StatsStrip key={key} block={block} isHomepage={isHome} />
+            return <StatsStrip key={key} block={block} isHomepage={isHome} className={className} />
           case 'contentImage':
             if (variant === 'about' && block.settings?.background === 'blue') {
-              return <AboutPeopleSection key={key} block={block} />
+              return <AboutPeopleSection key={key} block={block} className={className} />
             }
 
-            return <AboutSection key={key} block={block} isHomepage={isHome} />
+            return <AboutSection key={key} block={block} isHomepage={isHome} className={className} />
           case 'servicesGrid':
-            return <ServicesGridSection key={key} block={block} isHomepage={isHome} />
+            return <ServicesGridSection key={key} block={block} isHomepage={isHome} className={className} />
           case 'awards':
-            return <AwardsSection key={key} block={block} isHomepage={isAboutStyle} isAboutPage={isAbout} />
+            return <AwardsSection key={key} block={block} isHomepage={isAboutStyle} isAboutPage={isAbout} className={className} />
           case 'certifications':
-            return <CertificationsSection key={key} block={block} isHomepage={isAboutStyle} isAboutPage={isAbout} />
+            return <CertificationsSection key={key} block={block} isHomepage={isAboutStyle} isAboutPage={isAbout} className={className} />
           case 'industries':
-            return <IndustriesSection key={key} block={block} isHomepage={isAboutStyle} isAboutPage={isAbout} />
+            return <IndustriesSection key={key} block={block} isHomepage={isAboutStyle} isAboutPage={isAbout} className={className} />
           case 'testimonials':
-            return <TestimonialsSection key={key} block={block} isHomepage={isAboutStyle} isAboutPage={isAbout} />
+            return <TestimonialsSection key={key} block={block} isHomepage={isAboutStyle} isAboutPage={isAbout} className={className} />
           case 'cta':
             return <CTASection key={key} block={block} />
           case 'blogListing':
@@ -85,19 +86,75 @@ export function BlocksRenderer({ blocks, variant = 'default' }: BlocksRendererPr
           case 'faq':
             return <FAQSection key={key} block={block} />
           case 'contact':
-            return <ContactSection key={key} block={block} isHomepage={isAboutStyle} isAboutPage={isAbout} />
+            return <ContactSection key={key} block={block} isHomepage={isAboutStyle} isAboutPage={isAbout} className={className} />
           case 'career':
             return <CareerSection key={key} block={block} />
           case 'advantage':
             if (variant === 'about') {
-              return <AboutAdvantageSection key={key} block={block} />
+              return <AboutAdvantageSection key={key} block={block} className={className} />
             }
 
-            return <AdvantageSection key={key} block={block} />
+            return <AdvantageSection key={key} block={block} className={className} />
           default:
             return null
         }
       })}
     </>
   )
+}
+
+function getSectionClassName(block: PageBlock, variant: BlocksRendererProps['variant']) {
+  if (variant === 'home') {
+    switch (block.blockType) {
+      case 'hero':
+        return 'home-hero-section'
+      case 'statsStrip':
+        return 'home-impact-stats-section'
+      case 'contentImage':
+        return 'home-about-section'
+      case 'servicesGrid':
+        return 'home-services-section'
+      case 'industries':
+        return 'home-industries-section'
+      case 'testimonials':
+        return 'home-testimonials-section'
+      case 'awards':
+        return 'home-awards-section'
+      case 'advantage':
+        return 'home-advantage-section'
+      case 'contact':
+        return 'home-contact-section'
+      case 'certifications':
+        return 'home-certifications-section'
+      default:
+        return undefined
+    }
+  }
+
+  if (variant === 'about') {
+    switch (block.blockType) {
+      case 'hero':
+        return block.variant === 'darkSplit' ? 'about-bridge-section' : 'about-hero-section'
+      case 'statsStrip':
+        return 'about-impact-stats-section'
+      case 'contentImage':
+        return block.settings?.background === 'blue' ? 'about-people-section' : undefined
+      case 'industries':
+        return 'about-recruitment-verticals-section'
+      case 'testimonials':
+        return 'about-testimonials-section'
+      case 'awards':
+        return 'about-awards-section'
+      case 'advantage':
+        return 'about-advantage-section'
+      case 'contact':
+        return 'about-contact-section'
+      case 'certifications':
+        return 'about-certifications-section'
+      default:
+        return undefined
+    }
+  }
+
+  return undefined
 }

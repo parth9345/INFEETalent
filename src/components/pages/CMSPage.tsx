@@ -21,11 +21,12 @@ export async function CMSPage({ page: providedPage, path, slug }: CMSPageProps) 
   const pagePath = path || (slug === 'home' ? '/' : `/${slug}`)
 
   const variant = slug === 'home' ? 'home' : slug === 'about' ? 'about' : 'default'
+  const pageClassName = slug === 'home' ? 'page-home' : slug === 'about' ? 'page-about' : `page-${slug}`
 
   return (
-    <>
+    <div className={pageClassName}>
       <BlocksRenderer blocks={page.layout} variant={variant} />
       <PageStructuredData page={page} path={pagePath} />
-    </>
+    </div>
   )
 }

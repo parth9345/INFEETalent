@@ -18,8 +18,8 @@ export const metadata: Metadata = buildMetadata(
 
 export default function ThankYouPage() {
   return (
-    <>
-      <section className="flex min-h-[60vh] items-center bg-brand-background">
+    <div className="page-thank-you">
+      <section className="flex min-h-[60vh] items-center bg-brand-background thank-you-hero-section thank-you-content-section thank-you-cta-section">
         <div className="mx-auto max-w-[900px] px-5 text-center">
           <p className="text-body12 font-extrabold uppercase leading-[18px] tracking-[3px] text-brand-primary">Thank you</p>
           <h1 className="heading-section mt-4 text-h1 font-extrabold leading-[44px] text-neutral-dark">We received your request.</h1>
@@ -37,6 +37,6 @@ export default function ThankYouPage() {
           { name: 'Thank You', path: '/thank-you' },
         ])}
       />
-    </>
+    </div>
   )
 }

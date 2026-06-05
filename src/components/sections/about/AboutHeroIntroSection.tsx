@@ -1,12 +1,13 @@
 import { Container } from '@/components/ui/Container'
 import { sectionId } from '@/lib/sections'
+import { cn } from '@/lib/utils'
 import type { PageBlock } from '@/types/content'
 
 type HeroBlock = Extract<PageBlock, { blockType: 'hero' }>
 
-export function AboutHeroIntroSection({ block }: { block: HeroBlock }) {
+export function AboutHeroIntroSection({ block, className }: { block: HeroBlock; className?: string }) {
   return (
-    <section id={sectionId(block.settings)} className="overflow-hidden bg-[#FFF8EE] lg:min-h-[292px]">
+    <section id={sectionId(block.settings)} className={cn('overflow-hidden bg-[#FFF8EE] lg:min-h-[292px]', className)}>
       <Container className="grid max-w-[1500px] gap-[32px] px-[24px] pb-[52px] pt-[48px] md:gap-[40px] md:pb-[56px] md:pt-[50px] xl:grid-cols-[minmax(0,724px)_minmax(0,570px)] xl:justify-between xl:gap-[48px] xl:px-[24px] 2xl:gap-[206px] 2xl:px-[0px]">
         <div className="min-w-0">
           <h1 className="heading-section max-w-[724px] break-words text-[40px] font-[800] leading-[50px] tracking-[0px] text-[#000000] md:text-[50px] md:leading-[66px]">

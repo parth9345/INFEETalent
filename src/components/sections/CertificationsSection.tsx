@@ -11,14 +11,16 @@ export function CertificationsSection({
   block,
   isHomepage = false,
   isAboutPage = false,
+  className,
 }: {
   block: CertificationsBlock
   isHomepage?: boolean
   isAboutPage?: boolean
+  className?: string
 }) {
   if (isHomepage) {
     return (
-      <section className={isAboutPage ? 'relative h-auto min-h-[542px] overflow-hidden bg-[#050946] py-[64px] text-[#FFFFFF] md:py-[80px] xl:py-[120px]' : 'relative h-auto min-h-[542px] overflow-hidden bg-[#050946] py-[80px] text-[#FFFFFF] lg:h-[542px] lg:py-[120px]'}>
+      <section className={cn(isAboutPage ? 'relative h-auto min-h-[542px] overflow-hidden bg-[#050946] py-[64px] text-[#FFFFFF] md:py-[80px] xl:py-[120px]' : 'relative h-auto min-h-[542px] overflow-hidden bg-[#050946] py-[80px] text-[#FFFFFF] lg:h-[542px] lg:py-[120px]', className)}>
         <Image
           src={figmaAssets.certificationsBg}
           alt=""
@@ -56,7 +58,7 @@ export function CertificationsSection({
   }
 
   return (
-    <section className="relative overflow-hidden bg-brand-primary py-[48px] text-neutral-white md:py-[56px]">
+    <section className={cn('relative overflow-hidden bg-brand-primary py-[48px] text-neutral-white md:py-[56px]', className)}>
       <div className="absolute right-0 top-0 h-full w-1/2 opacity-20 [background-image:radial-gradient(circle_at_center,white_1px,transparent_1px)] [background-size:24px_24px]" />
       <div className="relative mx-auto grid max-w-[1500px] gap-10 px-5 lg:grid-cols-[1fr_1.1fr] 2xl:px-0">
         <div>

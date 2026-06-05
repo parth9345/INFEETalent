@@ -35,17 +35,16 @@ export async function Navbar() {
   const headerCta = resolveHeaderCTA(header?.cta)
   const logoMedia = header?.logo || settings?.logo
   const logoAlt = header?.logoAlt || settings?.brandName || siteConfig.name
-  const stickyEnabled = header?.stickyEnabled ?? true
 
   return (
-    <HeaderShell stickyEnabled={stickyEnabled}>
-      <div className="hidden h-[50px] bg-[linear-gradient(90deg,#050947_0%,#162072_60%,#213791_100%)] text-[#FFFFFF] transition-[margin,opacity] duration-300 group-data-[scrolled=true]/header:mt-[-50px] group-data-[scrolled=true]/header:opacity-0 2xl:block">
+    <HeaderShell>
+      <div className="hidden h-[50px] bg-[linear-gradient(90deg,#050947_0%,#162072_60%,#213791_100%)] text-[#FFFFFF] transition-[margin,opacity] duration-300 group-data-[scrolled=true]/header:mt-[-50px] group-data-[scrolled=true]/header:opacity-0 2xl:block site-header-topbar">
         <Container className="flex h-[50px] max-w-[1790px] items-center justify-between px-[24px] text-[16px] leading-[20px] tracking-[0px] 2xl:px-[0px]">
           <HeaderContactGroup label="Client Inquiry:" ukPhone={ukPhone} usPhone={usPhone} ausPhone={ausPhone} email={email} />
           <HeaderContactGroup label="Job Seekers :" ukPhone={ukPhone} usPhone={usPhone} ausPhone={ausPhone} email={email} />
         </Container>
       </div>
-      <Container as="nav" className="relative flex h-[84px] max-w-[1800px] items-center justify-between bg-[#FFF8EE] px-[24px] md:h-[96px] lg:h-[113px] 2xl:px-[0px]">
+      <Container as="nav" className="relative flex h-[84px] max-w-[1800px] items-center justify-between bg-[#FFF8EE] px-[24px] md:h-[96px] lg:h-[113px] 2xl:px-[0px] site-navbar">
         <Link href="/" className="relative block h-[58px] w-[84px] shrink-0 md:h-[64px] md:w-[92px] lg:h-[73px] lg:w-[104px]" aria-label="INFE Talent home">
           <OptimizedImage
             media={logoMedia}

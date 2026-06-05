@@ -25,15 +25,15 @@ export function TestimonialsReviewGrid({
 
   return (
     <>
-      <div className="mt-[64px] grid gap-[24px] md:hidden">
+      <div className="testimonials-review-grid testimonials-review-grid-mobile mt-[64px] grid gap-[24px] md:hidden">
         {visibleItems.map((item, index) => (
           <ReviewCardSlot key={`${item.name}-${index}`} item={item} />
         ))}
       </div>
 
-      <div className="mt-[64px] hidden gap-[24px] md:grid md:grid-cols-2 xl:hidden">
+      <div className="testimonials-review-grid testimonials-review-grid-tablet mt-[64px] hidden gap-[24px] md:grid md:grid-cols-2 xl:hidden">
         {tabletColumns.map((column, columnIndex) => (
-          <div key={`tablet-column-${columnIndex}`} className="grid content-start gap-[24px]">
+          <div key={`tablet-column-${columnIndex}`} className="testimonials-review-column grid content-start gap-[24px]">
             {column.map((item, index) => (
               <ReviewCardSlot key={`${item.name}-${columnIndex}-${index}`} item={item} />
             ))}
@@ -41,9 +41,9 @@ export function TestimonialsReviewGrid({
         ))}
       </div>
 
-      <div className="mt-[64px] hidden gap-[24px] xl:grid xl:grid-cols-3">
+      <div className="testimonials-review-grid testimonials-review-grid-desktop mt-[64px] hidden gap-[24px] xl:grid xl:grid-cols-3">
         {desktopColumns.map((column, columnIndex) => (
-          <div key={`desktop-column-${columnIndex}`} className="grid content-start gap-[24px]">
+          <div key={`desktop-column-${columnIndex}`} className="testimonials-review-column grid content-start gap-[24px]">
             {column.map((item, index) => (
               <ReviewCardSlot key={`${item.name}-${columnIndex}-${index}`} item={item} />
             ))}

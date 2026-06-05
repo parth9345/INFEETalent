@@ -12,10 +12,12 @@ export function ContactSection({
   block,
   isHomepage = false,
   isAboutPage = false,
+  className,
 }: {
   block: ContactBlock
   isHomepage?: boolean
   isAboutPage?: boolean
+  className?: string
 }) {
   const contactMethods = block.contactMethods?.length
     ? block.contactMethods
@@ -28,7 +30,7 @@ export function ContactSection({
   const featureLayout = isHomepage || isAboutPage
 
   return (
-    <section id={sectionId(block.settings, 'contact')} className={isAboutPage ? 'border-t border-[#CCCCCC] py-[64px] md:py-[80px] xl:py-[120px]' : isHomepage ? 'border-t border-[#CCCCCC]  py-[80px] lg:py-[120px]' : sectionClasses(block.settings, { defaultBackground: 'cream', className: 'border-t border-neutral-border' })}>
+    <section id={sectionId(block.settings, 'contact')} className={cn(isAboutPage ? 'border-t border-[#CCCCCC] py-[64px] md:py-[80px] xl:py-[120px]' : isHomepage ? 'border-t border-[#CCCCCC]  py-[80px] lg:py-[120px]' : sectionClasses(block.settings, { defaultBackground: 'cream', className: 'border-t border-neutral-border' }), className)}>
       <Container
         className={cn(
           'grid',

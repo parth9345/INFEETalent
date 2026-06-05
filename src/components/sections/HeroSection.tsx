@@ -3,24 +3,25 @@ import { Container } from '@/components/ui/Container'
 import { OptimizedImage } from '@/components/ui/OptimizedImage'
 import { figmaAssets } from '@/lib/assets'
 import { sectionClasses, sectionId } from '@/lib/sections'
+import { cn } from '@/lib/utils'
 import type { PageBlock } from '@/types/content'
 
 type HeroBlock = Extract<PageBlock, { blockType: 'hero' }>
 
-export function HeroSection({ block }: { block: HeroBlock }) {
+export function HeroSection({ block, className }: { block: HeroBlock; className?: string }) {
   if (block.variant === 'textOnly') {
-    return <TextOnlyHero block={block} />
+    return <TextOnlyHero block={block} className={className} />
   }
 
   if (block.variant === 'darkSplit') {
-    return <DarkSplitHero block={block} />
+    return <DarkSplitHero block={block} className={className} />
   }
 
   const centered = block.variant === 'centered'
   const splitVisual = centered ? null : <SplitHeroVisual block={block} />
 
   return (
-    <section id={sectionId(block.settings)} className={centered ? sectionClasses(block.settings, { defaultBackground: 'cream', includeSpacing: false }) : 'bg-[#FFF8EE] xl:min-h-[783px]'}>
+    <section id={sectionId(block.settings)} className={cn(centered ? sectionClasses(block.settings, { defaultBackground: 'cream', includeSpacing: false }) : 'bg-[#FFF8EE] xl:min-h-[783px]', className)}>
       <Container className={centered ? 'grid min-h-[430px] place-items-center py-14 text-center' : 'grid max-w-[1500px] overflow-visible px-[10px] pb-[10px] pt-[20px] md:pb-[84px] md:pt-[64px] xl:grid-cols-[650px_minmax(0,1fr)] xl:gap-[64px] xl:pb-[0px] xl:pt-[48px] 2xl:grid-cols-[650px_710px] 2xl:gap-[140px] 2xl:px-[0px]'}>
         <div className={centered ? 'mx-auto min-w-0 max-w-4xl' : 'min-w-0 max-w-[650px]'}>
           {centered && block.eyebrow ? (
@@ -157,9 +158,9 @@ function SplitHeroStatCard({ stat, tone, showAvatars = false }: { showAvatars?: 
   )
 }
 
-function TextOnlyHero({ block }: { block: HeroBlock }) {
+function TextOnlyHero({ block, className }: { block: HeroBlock; className?: string }) {
   return (
-    <section id={sectionId(block.settings)} className="bg-[#FFF8EE] py-[72px] md:py-[96px] lg:py-[120px]">
+    <section id={sectionId(block.settings)} className={cn('bg-[#FFF8EE] py-[72px] md:py-[96px] lg:py-[120px]', className)}>
       <Container className="grid max-w-[1500px] gap-[48px] px-[24px] lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-[120px] lg:px-[0px]">
         <div>
           {block.eyebrow ? (
@@ -197,11 +198,11 @@ function TextOnlyHero({ block }: { block: HeroBlock }) {
   )
 }
 
-function DarkSplitHero({ block }: { block: HeroBlock }) {
+function DarkSplitHero({ block, className }: { block: HeroBlock; className?: string }) {
   const imageOnLeft = block.imagePosition !== 'right'
 
   return (
-    <section id={sectionId(block.settings)} className="relative overflow-hidden bg-[linear-gradient(108deg,#050948_0%,#121967_56%,#243C91_100%)] py-[64px] text-[#FFFFFF] lg:py-[80px]">
+    <section id={sectionId(block.settings)} className={cn('relative overflow-hidden bg-[linear-gradient(108deg,#050948_0%,#121967_56%,#243C91_100%)] py-[64px] text-[#FFFFFF] lg:py-[80px]', className)}>
       <Container className="max-w-[1500px] px-[24px] lg:flex lg:items-center lg:gap-[72px] lg:px-[0px]">
         {imageOnLeft ? (
           <div className="mb-[48px] min-w-0 shrink-0 lg:mb-[0px] lg:w-[640px]">

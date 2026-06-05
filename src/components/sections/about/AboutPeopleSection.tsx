@@ -4,6 +4,7 @@ import { OptimizedImage } from '@/components/ui/OptimizedImage'
 import { RichText } from '@/components/ui/RichText'
 import { figmaAssets } from '@/lib/assets'
 import { sectionId } from '@/lib/sections'
+import { cn } from '@/lib/utils'
 import type { PageBlock } from '@/types/content'
 
 type ContentImageBlock = Extract<PageBlock, { blockType: 'contentImage' }>
@@ -16,14 +17,14 @@ const avatarImages = [
   figmaAssets.aboutOfficeSide,
 ]
 
-export function AboutPeopleSection({ block }: { block: ContentImageBlock }) {
+export function AboutPeopleSection({ block, className }: { block: ContentImageBlock; className?: string }) {
   const primaryStat = block.stats?.[0]
   const profileStats = block.stats?.slice(1, 3) || []
 
   return (
     <section
       id={sectionId(block.settings, 'about')}
-      className="relative overflow-hidden bg-[linear-gradient(108deg,#050948_0%,#121967_56%,#243C91_100%)] py-[72px] text-[#FFFFFF] xl:h-[814px] xl:py-[0px]"
+      className={cn('relative overflow-hidden bg-[linear-gradient(108deg,#050948_0%,#121967_56%,#243C91_100%)] py-[72px] text-[#FFFFFF] xl:h-[814px] xl:py-[0px]', className)}
     >
       <Container className="grid max-w-[1500px] gap-[48px] px-[24px] xl:grid-cols-[minmax(0,700px)_minmax(0,740px)] xl:justify-between xl:gap-[48px] xl:px-[24px] xl:pt-[137px] 2xl:gap-[60px] 2xl:px-[0px]">
         <div className="min-w-0 xl:pt-[146px]">

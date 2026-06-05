@@ -80,6 +80,7 @@ export function MobileNav({ navigation, cta, socialLinks = [] }: MobileNavProps)
         id={menuId}
         className={cn(
           'fixed inset-x-0 top-[84px] z-[110] border-b border-neutral-border bg-[#FFF8EE] px-5 shadow-[0px_18px_36px_rgba(21,21,21,0.16)] transition-all duration-300 ease-out md:top-[96px] lg:hidden',
+          'site-mobile-menu',
           open
             ? 'max-h-[calc(100vh-84px)] translate-y-0 overflow-y-auto overscroll-contain opacity-100 md:max-h-[calc(100vh-96px)] supports-[height:100dvh]:max-h-[calc(100dvh-84px)] md:supports-[height:100dvh]:max-h-[calc(100dvh-96px)]'
             : 'pointer-events-none max-h-0 -translate-y-2 overflow-hidden opacity-0',

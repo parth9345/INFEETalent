@@ -7,6 +7,7 @@ import { ButtonLink } from '@/components/ui/ButtonLink'
 import { Container } from '@/components/ui/Container'
 import { OptimizedImage } from '@/components/ui/OptimizedImage'
 import { figmaAssets } from '@/lib/assets'
+import { getServicePresentationImage } from '@/lib/service-assets'
 import type { PageBlock, PageContent, ServiceItem } from '@/types/content'
 
 type HeroBlock = Extract<PageBlock, { blockType: 'hero' }>
@@ -19,21 +20,58 @@ type ServicesListingPageProps = {
   services: ServiceItem[]
 }
 
+const servicesPageOrder = new Map(
+  [
+    ['database-management'],
+    ['market-mapping'],
+    ['lead-generation'],
+    ['sourcing'],
+    ['credential-and-compliance-management', 'credential-compliance-management', 'staffing-solutions'],
+    ['onboarding-and-consultant-care', 'onboarding-consultant-care', 'payroll-management'],
+    ['full-cycle-recruitment'],
+    ['administrative-support', 'corporate-training'],
+    ['executive-search-and-leadership-hiring', 'executive-search-leadership-hiring', 'executive-search'],
+  ].flatMap((aliases, index) => aliases.map((alias) => [alias, index] as const)),
+)
+
 export function ServicesListingPage({ page, services }: ServicesListingPageProps) {
   const hero = page.layout?.find((block): block is HeroBlock => block.blockType === 'hero')
   const stats = page.layout?.find((block): block is StatsBlock => block.blockType === 'statsStrip')
   const advantage = page.layout?.find((block): block is AdvantageBlock => block.blockType === 'advantage')
   const contact = page.layout?.find((block): block is ContactBlock => block.blockType === 'contact')
+  const orderedServices = orderServicesForListing(services)
 
   return (
-    <>
-      <ServicesHero hero={hero} services={services} />
+    <div className="page-services">
+      <ServicesHero hero={hero} services={orderedServices} />
       {stats ? <ServicesStats block={stats} /> : null}
-      <ServicesRows services={services} />
-      {advantage ? <AdvantageSection block={advantage} /> : null}
-      {contact ? <ContactSection block={contact} isHomepage /> : null}
-    </>
+      <ServicesRows services={orderedServices} />
+      {advantage ? <AdvantageSection block={advantage} className="services-benefits-section" /> : null}
+      {contact ? <ContactSection block={contact} isHomepage className="services-cta-section" /> : null}
+    </div>
   )
+}
+
+function orderServicesForListing(services: ServiceItem[]) {
+  return [...services].sort((a, b) => {
+    const aIndex = servicesPageOrder.get(serviceOrderKey(a)) ?? Number.MAX_SAFE_INTEGER
+    const bIndex = servicesPageOrder.get(serviceOrderKey(b)) ?? Number.MAX_SAFE_INTEGER
+
+    if (aIndex !== bIndex) {
+      return aIndex - bIndex
+    }
+
+    return String(a.title).localeCompare(String(b.title))
+  })
+}
+
+function serviceOrderKey(service: ServiceItem) {
+  return String(service.slug || service.title)
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, 'and')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
 }
 
 function ServicesHero({ hero, services }: { hero?: HeroBlock; services: ServiceItem[] }) {
@@ -41,19 +79,19 @@ function ServicesHero({ hero, services }: { hero?: HeroBlock; services: ServiceI
   const highlight = hero?.highlight || 'Scalable Offshore Recruitment'
 
   return (
-    <section className="bg-[#FFF8EE] pb-[70px] pt-[92px] text-[#151515] lg:pb-[73px] lg:pt-[96px]">
+    <section className="bg-[#FFF8EE] pb-[70px] pt-[92px] text-[#151515] lg:pb-[73px] lg:pt-[96px] services-hero-section">
       <Container className="max-w-[1500px] px-[24px] lg:px-[0px]">
-        <div className="grid gap-[44px] lg:grid-cols-[760px_590px] lg:gap-[150px]">
+        <div className="services-hero-layout grid gap-[44px] lg:grid-cols-[760px_590px] lg:gap-[150px]">
           <h1 className="heading-section max-w-[760px] text-[40px] font-[800] leading-[52px] tracking-[0px] md:text-[50px] md:leading-[66px]">
             <HighlightedHeading heading={heading} highlight={highlight} />
           </h1>
-          <div className="pt-[1px]">
+          <div className="services-hero-content pt-[1px]">
             {hero?.description ? (
               <p className="max-w-[590px] text-[16px] font-[400] leading-[26px] tracking-[0px] text-[#555555] md:text-[18px] md:leading-[30px]">
                 {hero.description}
               </p>
             ) : null}
-            <div className="mt-[25px] flex flex-wrap gap-[15px]">
+            <div className="services-hero-actions mt-[25px] flex flex-wrap gap-[15px]">
               {hero?.primaryAction?.url ? (
                 <ButtonLink
                   href={hero.primaryAction.url}
@@ -78,7 +116,7 @@ function ServicesHero({ hero, services }: { hero?: HeroBlock; services: ServiceI
         </div>
 
         {services.length ? (
-          <div className="mt-[60px] flex flex-wrap gap-[12px]">
+          <div className="services-hero-tags mt-[60px] flex flex-wrap gap-[12px]">
             {services.map((service) => (
               <Link
                 key={service.slug || service.title}
@@ -97,10 +135,10 @@ function ServicesHero({ hero, services }: { hero?: HeroBlock; services: ServiceI
 
 function ServicesStats({ block }: { block: StatsBlock }) {
   return (
-    <section className="bg-[linear-gradient(108deg,#050948_0%,#121967_56%,#243C91_100%)] text-[#FFFFFF]">
+    <section className="bg-[linear-gradient(108deg,#050948_0%,#121967_56%,#243C91_100%)] text-[#FFFFFF] services-overview-section">
       <div className="mx-auto grid max-w-[1920px] grid-cols-2 gap-y-[20px] px-[24px] py-[24px] md:grid-cols-4 md:px-[40px] lg:h-[146px] lg:px-[0px] lg:py-[0px]">
         {block.items?.slice(0, 4).map((item) => (
-          <div key={`${item.value}-${item.label}`} className="flex items-center justify-center gap-[12px] lg:h-[146px]">
+          <div key={`${item.value}-${item.label}`} className="services-stat-item flex items-center justify-center gap-[12px] lg:h-[146px]">
             <strong className="text-[36px] font-[800] leading-[44px] tracking-[0px] md:text-[50px] md:leading-[60px]">
               {item.value}
             </strong>
@@ -116,29 +154,26 @@ function ServicesStats({ block }: { block: StatsBlock }) {
 
 function ServicesRows({ services }: { services: ServiceItem[] }) {
   return (
-    <section className="bg-[#FFF8EE]">
-      {services.map((service, index) => {
-        const imageFirst = index % 2 === 0
-
-        return (
-          <article key={service.slug || service.title} className="grid border-b border-[#E2D8CC] lg:grid-cols-2">
-            {imageFirst ? <ServiceImage service={service} /> : <ServiceCopy service={service} />}
-            {imageFirst ? <ServiceCopy service={service} /> : <ServiceImage service={service} />}
-          </article>
-        )
-      })}
+    <section className="bg-[#FFF8EE] services-grid-section services-process-section">
+      {services.map((service) => (
+        <article key={service.slug || service.title} className="service-row grid border-b border-[#E2D8CC] lg:grid-cols-2">
+          <ServiceImage service={service} />
+          <ServiceCopy service={service} />
+        </article>
+      ))}
     </section>
   )
 }
 
 function ServiceImage({ service }: { service: ServiceItem }) {
   return (
-    <div className="relative h-[420px] overflow-hidden lg:h-[760px]">
+    <div className="service-row-image relative h-[420px] overflow-hidden lg:h-[760px]">
       <OptimizedImage
-        media={service.featuredImage}
+        media={getServicePresentationImage(service)}
         fallbackSrc={figmaAssets.heroInterview}
         altFallback={service.title}
         sizes="(min-width: 1024px) 50vw, 100vw"
+        loading="eager"
         className="object-cover"
       />
     </div>
@@ -150,7 +185,7 @@ function ServiceCopy({ service }: { service: ServiceItem }) {
   const benefits = service.benefits?.filter((item) => item.label).slice(0, 6) || []
 
   return (
-    <div className="flex min-h-[560px] items-center bg-[#FFF8EE] px-[24px] py-[72px] lg:min-h-[760px] lg:px-[120px] lg:py-[0px]">
+    <div className="service-row-content flex min-h-[560px] items-center bg-[#FFF8EE] px-[24px] py-[72px] lg:min-h-[760px] lg:px-[120px] lg:py-[0px]">
       <div className="max-w-[620px]">
         <h2 className="text-[40px] font-[800] leading-[50px] tracking-[0px] text-[#151515] md:text-[50px] md:leading-[60px]">
           {service.title}

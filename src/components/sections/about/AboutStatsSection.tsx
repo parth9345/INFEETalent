@@ -1,23 +1,22 @@
-import {
-  BadgeCheck,
-  Building2,
-  Cog,
-  Globe2,
-  HandCoins,
-  ShieldCheck,
-  TrendingUp,
-  UsersRound,
-} from 'lucide-react'
+import Image from 'next/image'
 
 import { Container } from '@/components/ui/Container'
 import { sectionId } from '@/lib/sections'
+import { cn } from '@/lib/utils'
 import type { PageBlock } from '@/types/content'
 
 type StatsBlock = Extract<PageBlock, { blockType: 'statsStrip' }>
 
-export function AboutStatsSection({ block }: { block: StatsBlock }) {
+const statIconSources: Record<string, string> = {
+  Building2: '/figma/about-stats-building.png',
+  Globe: '/figma/about-stats-globe-shield.png',
+  Star: '/figma/about-stats-nps.png',
+  Users: '/figma/about-stats-users.png',
+}
+
+export function AboutStatsSection({ block, className }: { block: StatsBlock; className?: string }) {
   return (
-    <section id={sectionId(block.settings)} className="overflow-hidden bg-[#FFF8EE] py-[72px] xl:h-[704px] xl:py-[0px]">
+    <section id={sectionId(block.settings)} className={cn('overflow-hidden bg-[#FFF8EE] py-[72px] xl:h-[704px] xl:py-[0px]', className)}>
       <Container className="max-w-[1500px] px-[24px] xl:px-[24px] xl:pt-[136px] 2xl:px-[0px]">
         {block.heading ? (
           <h2 className="heading-section relative inline-block text-[40px] font-[800] leading-[52px] tracking-[0px] text-[#000000] md:text-[50px] md:leading-[66px]">
@@ -55,53 +54,17 @@ export function AboutStatsSection({ block }: { block: StatsBlock }) {
 }
 
 function StatIcon({ name }: { name?: string }) {
-  if (name === 'Users') {
-    return <UsersTrendIcon />
-  }
+  const src = name ? statIconSources[name] : undefined
 
-  if (name === 'Building2') {
-    return <BuildingCogIcon />
-  }
-
-  if (name === 'Star') {
-    return <HandBadgeIcon />
-  }
-
-  return <GlobeShieldIcon />
-}
-
-function GlobeShieldIcon() {
   return (
-    <span className="relative block h-[58px] w-[70px] lg:h-[72px] lg:w-[82px]" aria-hidden="true">
-      <Globe2 className="absolute left-[0px] top-[0px] h-[50px] w-[50px] lg:h-[62px] lg:w-[62px]" strokeWidth={1.7} />
-      <ShieldCheck className="absolute bottom-[0px] right-[0px] h-[27px] w-[27px] lg:h-[34px] lg:w-[34px]" strokeWidth={1.7} />
-    </span>
-  )
-}
-
-function UsersTrendIcon() {
-  return (
-    <span className="relative block h-[58px] w-[76px] lg:h-[72px] lg:w-[88px]" aria-hidden="true">
-      <TrendingUp className="absolute left-[22px] top-[0px] h-[24px] w-[36px] lg:left-[27px] lg:h-[30px] lg:w-[44px]" strokeWidth={1.7} />
-      <UsersRound className="absolute bottom-[0px] left-[0px] h-[46px] w-[76px] lg:h-[56px] lg:w-[88px]" strokeWidth={1.7} />
-    </span>
-  )
-}
-
-function BuildingCogIcon() {
-  return (
-    <span className="relative block h-[58px] w-[70px] lg:h-[72px] lg:w-[84px]" aria-hidden="true">
-      <Building2 className="absolute bottom-[0px] left-[0px] h-[50px] w-[50px] lg:h-[60px] lg:w-[60px]" strokeWidth={1.7} />
-      <Cog className="absolute right-[0px] top-[0px] h-[29px] w-[29px] lg:h-[36px] lg:w-[36px]" strokeWidth={1.7} />
-    </span>
-  )
-}
-
-function HandBadgeIcon() {
-  return (
-    <span className="relative block h-[58px] w-[76px] lg:h-[72px] lg:w-[90px]" aria-hidden="true">
-      <HandCoins className="absolute bottom-[0px] left-[0px] h-[52px] w-[76px] lg:h-[64px] lg:w-[90px]" strokeWidth={1.7} />
-      <BadgeCheck className="absolute right-[9px] top-[0px] h-[28px] w-[28px] lg:right-[11px] lg:h-[34px] lg:w-[34px]" strokeWidth={1.7} />
+    <span className="relative block h-[58px] w-[82px] lg:h-[72px] lg:w-[88px]" aria-hidden="true">
+      <Image
+        src={src || statIconSources.Globe}
+        alt=""
+        fill
+        sizes="(min-width: 1024px) 88px, 82px"
+        className="object-contain"
+      />
     </span>
   )
 }

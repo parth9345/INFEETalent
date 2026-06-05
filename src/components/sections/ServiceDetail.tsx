@@ -6,6 +6,7 @@ import { Container } from '@/components/ui/Container'
 import { OptimizedImage } from '@/components/ui/OptimizedImage'
 import { RichText } from '@/components/ui/RichText'
 import { figmaAssets } from '@/lib/assets'
+import { getServicePresentationImage } from '@/lib/service-assets'
 import type { ServiceItem } from '@/types/content'
 
 type ServiceDetailProps = {
@@ -20,9 +21,18 @@ export function ServiceDetail({ service, relatedServices = [] }: ServiceDetailPr
 
   return (
     <>
-      <section className="bg-[#FFF8EE] pb-[72px] pt-[92px] text-[#151515] lg:pb-[96px] lg:pt-[112px]">
-        <Container className="grid max-w-[1500px] gap-[56px] px-[24px] lg:grid-cols-[760px_620px] lg:gap-[120px] lg:px-[0px]">
-          <div>
+      <section className="bg-[#FFF8EE] pb-[72px] pt-[92px] text-[#151515] lg:pb-[96px] lg:pt-[112px] service-detail-hero-section service-detail-cta-section">
+        <Container className="grid max-w-[1500px] gap-[56px] px-[24px] lg:grid-cols-[620px_760px] lg:gap-[120px] lg:px-[0px]">
+          <div className="service-detail-hero-image relative h-[420px] overflow-hidden lg:h-[520px]">
+            <OptimizedImage
+              media={getServicePresentationImage(service)}
+              fallbackSrc={figmaAssets.heroInterview}
+              altFallback={service.title}
+              sizes="(min-width: 1024px) 620px, 100vw"
+              className="object-cover"
+            />
+          </div>
+          <div className="service-detail-hero-content">
             <p className="text-[12px] font-[800] uppercase leading-[16px] tracking-[6px] text-[#2C368D]">
               Services
             </p>
@@ -42,19 +52,10 @@ export function ServiceDetail({ service, relatedServices = [] }: ServiceDetailPr
               </ButtonLink>
             ) : null}
           </div>
-          <div className="relative h-[420px] overflow-hidden lg:h-[520px]">
-            <OptimizedImage
-              media={service.featuredImage}
-              fallbackSrc={figmaAssets.heroInterview}
-              altFallback={service.title}
-              sizes="(min-width: 1024px) 620px, 100vw"
-              className="object-cover"
-            />
-          </div>
         </Container>
       </section>
 
-      <section className="bg-[#FFF8EE] py-[72px] lg:py-[104px]">
+      <section className="bg-[#FFF8EE] py-[72px] lg:py-[104px] service-detail-content-section">
         <Container className="grid max-w-[1500px] gap-[48px] px-[24px] lg:grid-cols-[900px_420px] lg:gap-[180px] lg:px-[0px]">
           <article className="border border-[#D8D0C8] bg-[#FFFFFF] p-[28px] md:p-[44px]">
             <h2 className="heading-section text-[34px] font-[800] leading-[44px] tracking-[0px] text-[#151515] md:text-[44px] md:leading-[56px]">
@@ -66,7 +67,7 @@ export function ServiceDetail({ service, relatedServices = [] }: ServiceDetailPr
           </article>
 
           {benefits.length ? (
-            <aside className="h-fit border border-[#D8D0C8] bg-[#FFFFFF] p-[28px] md:p-[36px]">
+            <aside className="h-fit border border-[#D8D0C8] bg-[#FFFFFF] p-[28px] md:p-[36px] service-detail-benefits-section">
               <h2 className="text-[28px] font-[800] leading-[36px] tracking-[0px] text-[#151515]">
                 Key Benefits
               </h2>
@@ -84,7 +85,7 @@ export function ServiceDetail({ service, relatedServices = [] }: ServiceDetailPr
       </section>
 
       {steps.length ? (
-        <section className="bg-[#EAEBF4] py-[72px] lg:py-[104px]">
+        <section className="bg-[#EAEBF4] py-[72px] lg:py-[104px] service-detail-process-section">
           <Container className="max-w-[1500px] px-[24px] lg:px-[0px]">
             <h2 className="heading-section max-w-[760px] text-[40px] font-[800] leading-[52px] tracking-[0px] text-[#151515] md:text-[50px] md:leading-[66px]">
               How We Work
@@ -111,7 +112,7 @@ export function ServiceDetail({ service, relatedServices = [] }: ServiceDetailPr
       ) : null}
 
       {relatedServices.length ? (
-        <section className="bg-[#FFF8EE] py-[72px] lg:py-[104px]">
+        <section className="bg-[#FFF8EE] py-[72px] lg:py-[104px] service-detail-related-section">
           <Container className="max-w-[1500px] px-[24px] lg:px-[0px]">
             <div className="flex flex-wrap items-end justify-between gap-[24px]">
               <h2 className="heading-section max-w-[760px] text-[40px] font-[800] leading-[52px] tracking-[0px] text-[#151515] md:text-[50px] md:leading-[66px]">
@@ -128,7 +129,7 @@ export function ServiceDetail({ service, relatedServices = [] }: ServiceDetailPr
             </div>
             <div className="mt-[48px] grid border-l border-t border-[#CCCCCC] md:grid-cols-3">
               {relatedServices.slice(0, 3).map((related) => (
-                <ServiceCard key={related.slug || related.title} service={related} />
+                <ServiceCard key={related.slug || related.title} service={related} className="service-card" showAction />
               ))}
             </div>
           </Container>

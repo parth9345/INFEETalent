@@ -12,9 +12,9 @@ export function CareerDetail({ career }: { career: CareerItem }) {
 
   return (
     <>
-      <section className="border-b border-[#CCCCCC] bg-[#FFF8EE] text-[#151515]">
-        <Container className="flex max-w-[1500px] flex-col gap-[40px] px-[24px] py-[64px] lg:h-[372px] lg:flex-row lg:items-start lg:justify-between lg:px-[0px] lg:pb-[0px] lg:pt-[72px]">
-          <div>
+      <section className="border-b border-[#CCCCCC] bg-[#FFF8EE] text-[#151515] career-detail-hero-section career-detail-cta-section">
+        <Container className="career-detail-hero-layout flex max-w-[1500px] flex-col gap-[40px] px-[24px] py-[64px] lg:h-[372px] lg:flex-row lg:items-start lg:justify-between lg:px-[0px] lg:pb-[0px] lg:pt-[72px]">
+          <div className="career-detail-hero-copy">
             <p className="text-[12px] font-[800] uppercase leading-[16px] tracking-[4.8px] text-[#555555]">
               HOME / CAREERS / {truncateBreadcrumb(career.title)}
             </p>
@@ -22,7 +22,7 @@ export function CareerDetail({ career }: { career: CareerItem }) {
               <span className="bg-[#FCE88B] px-[3px]">{titleParts.highlight}</span>
               {titleParts.suffix ? <span> - {titleParts.suffix}</span> : null}
             </h1>
-            <div className="mt-[29px] flex flex-wrap gap-x-[34px] gap-y-[12px] text-[16px] font-[400] leading-[24px] tracking-[0px] text-[#555555]">
+            <div className="career-detail-meta mt-[29px] flex flex-wrap gap-x-[34px] gap-y-[12px] text-[16px] font-[400] leading-[24px] tracking-[0px] text-[#555555]">
               <span className="inline-flex items-center gap-[14px]">
                 <MapPin size={18} strokeWidth={2} className="text-[#151515]" aria-hidden="true" /> {career.location}
               </span>
@@ -33,26 +33,26 @@ export function CareerDetail({ career }: { career: CareerItem }) {
               ) : null}
             </div>
           </div>
-          <Button href="#apply" className="h-[50px] w-[135px] border-[0px] bg-[#FCA62B] px-[0px] text-[12px] font-[800] leading-[16px] tracking-[0.48px] text-[#262164] hover:bg-[#FCA62B]/88 lg:mt-[89px]">
+          <Button href="#apply" className="primary-cst-btn career-detail-apply-button h-[50px] w-[135px] border-[0px] bg-[#FCA62B] px-[0px] text-[12px] font-[800] leading-[16px] tracking-[0.48px] text-[#262164] hover:bg-[#FCA62B]/88 lg:mt-[89px]">
             Apply Now
           </Button>
         </Container>
       </section>
 
-      <section className="bg-[#FFF8EE] py-[84px] text-[#151515] lg:py-[120px]">
-        <Container className="grid max-w-[1500px] gap-[56px] px-[24px] lg:grid-cols-[858px_577px] lg:gap-[65px] lg:px-[0px]">
-          <div className="border-l border-t border-[#CCCCCC]">
+      <section className="bg-[#FFF8EE] py-[84px] text-[#151515] lg:py-[120px] career-detail-content-section career-detail-requirements-section career-detail-process-section career-detail-related-section">
+        <Container className="career-detail-content-layout grid max-w-[1500px] gap-[56px] px-[24px] lg:grid-cols-[858px_577px] lg:gap-[65px] lg:px-[0px]">
+          <div className="career-detail-panels border-l border-t border-[#CCCCCC]">
             <DetailPanel title="Job Title" text={career.title} />
             <DetailPanel title="Reports To" text="Team Leader / Assistant Operations Manager" />
             {detailSections.map((detail, index) => (
-              <div key={`${detail.heading}-${index}`} className="border-b border-r border-[#CCCCCC] px-[30px] py-[31px]">
+              <div key={`${detail.heading}-${index}`} className="career-detail-panel border-b border-r border-[#CCCCCC] px-[30px] py-[31px]">
                 <h2 className="text-[20px] font-[800] leading-[28px] tracking-[0px] text-[#151515]">{detail.heading}</h2>
                 <CareerRichText value={detail.content} fallback={detail.fallback} list={detail.list} />
               </div>
             ))}
           </div>
 
-          <CareerForm careerId={career.id} careerTitle={career.title} />
+          <CareerForm careerId={career.id} careerTitle={career.title} className="career-detail-application-section career-application-form" />
         </Container>
       </section>
     </>
@@ -61,7 +61,7 @@ export function CareerDetail({ career }: { career: CareerItem }) {
 
 function DetailPanel({ title, text }: { title: string; text: string }) {
   return (
-    <div className="border-b border-r border-[#CCCCCC] px-[30px] py-[31px]">
+    <div className="career-detail-panel border-b border-r border-[#CCCCCC] px-[30px] py-[31px]">
       <h2 className="text-[20px] font-[800] leading-[28px] tracking-[0px] text-[#151515]">{title}</h2>
       <p className="mt-[18px] text-[16px] font-[400] leading-[26px] tracking-[0px] text-[#555555]">{text}</p>
     </div>

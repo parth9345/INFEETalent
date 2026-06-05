@@ -1,6 +1,7 @@
 import * as Icons from 'lucide-react'
 import { createElement, type ComponentType } from 'react'
 
+import { ButtonLink } from '@/components/ui/ButtonLink'
 import { OptimizedImage } from '@/components/ui/OptimizedImage'
 import { figmaAssets } from '@/lib/assets'
 import { cn } from '@/lib/utils'
@@ -17,11 +18,12 @@ const iconFor = (name?: string): IconComponent => {
 type ServiceCardProps = {
   service: ServiceItem
   showIcon?: boolean
+  showAction?: boolean
   className?: string
   variant?: 'default' | 'home'
 }
 
-export function ServiceCard({ service, showIcon = true, className, variant = 'default' }: ServiceCardProps) {
+export function ServiceCard({ service, showIcon = true, showAction = false, className, variant = 'default' }: ServiceCardProps) {
   const Icon = iconFor(service.icon)
 
   if (variant === 'home') {
@@ -46,10 +48,15 @@ export function ServiceCard({ service, showIcon = true, className, variant = 'de
   }
 
   return (
-    <article className={cn('min-h-[170px] border-b border-r border-neutral-border bg-brand-background p-6 transition duration-300 hover:bg-neutral-white md:p-7', className)}>
+    <article className={cn('flex min-h-[170px] flex-col border-b border-r border-neutral-border bg-brand-background p-6 transition duration-300 hover:bg-neutral-white md:p-7', className)}>
       {showIcon ? createElement(Icon, { className: 'mb-6 text-brand-primary', size: 24, strokeWidth: 1.8, 'aria-hidden': true }) : null}
       <h3 className="break-words text-h6 font-extrabold text-neutral-dark md:text-h5">{service.title}</h3>
       <p className="mt-3 break-words text-body12 leading-[18px] text-neutral-muted md:text-body14 md:leading-[22px]">{service.summary}</p>
+      {showAction && service.slug ? (
+        <ButtonLink href={`/services/${service.slug}`} size="sm" className="mt-6 w-fit">
+          Read More
+        </ButtonLink>
+      ) : null}
     </article>
   )
 }

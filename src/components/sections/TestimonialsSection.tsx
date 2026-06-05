@@ -8,7 +8,7 @@ import { VideoTestimonialTile } from '@/components/sections/VideoTestimonialTile
 import { figmaAssets } from '@/lib/assets'
 import { getTestimonials } from '@/lib/payload-queries'
 import { sectionClasses, sectionId } from '@/lib/sections'
-import { relationItems } from '@/lib/utils'
+import { cn, relationItems } from '@/lib/utils'
 import type { PageBlock, TestimonialItem } from '@/types/content'
 
 type TestimonialsBlock = Extract<PageBlock, { blockType: 'testimonials' }>
@@ -17,17 +17,19 @@ export async function TestimonialsSection({
   block,
   isHomepage = false,
   isAboutPage = false,
+  className,
 }: {
   block: TestimonialsBlock
   isHomepage?: boolean
   isAboutPage?: boolean
+  className?: string
 }) {
   const selectedItems = relationItems<TestimonialItem>(block.items)
   const testimonials = selectedItems.length ? selectedItems : await getTestimonials(4)
   const gridOnly = block.display === 'grid'
 
   return (
-    <section id={sectionId(block.settings)} className={isHomepage ? 'bg-[#080D4D] text-[#FFFFFF]' : sectionClasses(block.settings, { defaultBackground: 'blue' })}>
+    <section id={sectionId(block.settings)} className={cn(isHomepage ? 'bg-[#080D4D] text-[#FFFFFF]' : sectionClasses(block.settings, { defaultBackground: 'blue' }), className)}>
       {isHomepage ? <HomeVoices block={block} testimonials={testimonials} isAboutPage={isAboutPage} /> : null}
       {!isHomepage ? (
       <Container className={gridOnly ? 'space-y-10' : 'grid gap-10 lg:grid-cols-[0.8fr_1fr]'}>

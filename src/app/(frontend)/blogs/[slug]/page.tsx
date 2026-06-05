@@ -46,10 +46,10 @@ export default async function BlogDetailPage({ params }: PageProps) {
   }
 
   const canonicalSlug = post.slug || slug
-  const relatedPosts = await getRelatedBlogs(canonicalSlug, post.category, 5)
+  const relatedPosts = await getRelatedBlogs(canonicalSlug, post.category, 4)
 
   return (
-    <>
+    <div className="page-blog-detail">
       <BlogDetail post={post} relatedPosts={relatedPosts} />
       <JsonLd
         data={[
@@ -61,7 +61,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
           ]),
         ]}
       />
-    </>
+    </div>
   )
 }
 

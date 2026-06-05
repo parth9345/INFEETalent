@@ -45,17 +45,19 @@ export function IndustriesSection({
   block,
   isHomepage = false,
   isAboutPage = false,
+  className,
 }: {
   block: IndustriesBlock
   isHomepage?: boolean
   isAboutPage?: boolean
+  className?: string
 }) {
   const midpoint = Math.ceil((block.items?.length || 0) / 2)
   const columns = [block.items?.slice(0, midpoint) || [], block.items?.slice(midpoint) || []]
   const featureLayout = isHomepage || isAboutPage
 
   return (
-    <section className={isAboutPage ? 'bg-[#fff8ee] py-[64px] md:py-[80px] xl:py-[120px]' : isHomepage ? 'bg-[#fff8ee] py-[80px] lg:py-[120px]' : 'bg-brand-background py-[48px] md:py-[64px]'}>
+    <section className={cn(isAboutPage ? 'bg-[#fff8ee] py-[64px] md:py-[80px] xl:py-[120px]' : isHomepage ? 'bg-[#fff8ee] py-[80px] lg:py-[120px]' : 'bg-brand-background py-[48px] md:py-[64px]', className)}>
       <div
         className={cn(
           'mx-auto grid px-5 2xl:px-0',

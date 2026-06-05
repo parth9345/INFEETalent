@@ -72,15 +72,15 @@ export async function Footer() {
       }))
 
   return (
-    <footer className="border-t border-[#CCCCCC]">
-      <div className="flex min-h-[252px] items-center justify-center border-b border-[#CCCCCC] px-[24px] py-[64px]">
+    <footer className="border-t border-[#CCCCCC] site-footer">
+      <div className="flex min-h-[252px] items-center justify-center border-b border-[#CCCCCC] px-[24px] py-[64px] site-footer-logo-strip">
         <div className="grid w-full max-w-[1500px] grid-cols-2 items-center justify-items-center gap-x-[24px] gap-y-[28px] sm:grid-cols-3 md:flex md:flex-wrap md:justify-center md:gap-[40px] lg:gap-[72.097px]">
           {partnerLogos.map((partner, index) => (
             <FooterPartnerLogoItem key={`${partner.label || 'partner'}-${index}`} partner={partner} index={index} />
           ))}
         </div>
       </div>
-      <div className="grid border-b border-[#CCCCCC] lg:min-h-[424px] lg:grid-cols-2">
+      <div className="grid border-b border-[#CCCCCC] lg:min-h-[424px] lg:grid-cols-2 site-footer-main">
         <div className="border-[#CCCCCC] px-[24px] py-[48px] lg:border-r lg:py-[60px] lg:pl-[max(24px,calc((100vw-1500px)/2))] lg:pr-[80px]">
           {footer?.description ? (
             <div className="mb-[42px] max-w-[520px]">
@@ -149,7 +149,7 @@ export async function Footer() {
           </div>
         </div>
       </div>
-      <Container className="flex h-[60px] max-w-[1500px] items-center px-[24px] text-[18px] font-[400] leading-[28px] tracking-[0px] text-[#555555] lg:px-[0px]">
+      <Container className="flex h-[60px] max-w-[1500px] items-center px-[24px] text-[18px] font-[400] leading-[28px] tracking-[0px] text-[#555555] lg:px-[0px] site-footer-bottom">
         <p>{copyright}</p>
       </Container>
     </footer>

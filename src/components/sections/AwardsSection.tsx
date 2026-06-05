@@ -11,15 +11,17 @@ export function AwardsSection({
   block,
   isHomepage = false,
   isAboutPage = false,
+  className,
 }: {
   block: AwardsBlock
   isHomepage?: boolean
   isAboutPage?: boolean
+  className?: string
 }) {
   const featureLayout = isHomepage || isAboutPage
 
   return (
-    <section className={isAboutPage ? 'bg-[#fff8ee] py-[64px] md:py-[80px] xl:py-[120px]' : isHomepage ? 'bg-[#fff8ee] py-[10px] lg:py-[120px]' : 'bg-[#FFF8EE] py-[48px] md:py-[64px]'}>
+    <section className={cn(isAboutPage ? 'bg-[#fff8ee] py-[64px] md:py-[80px] xl:py-[120px]' : isHomepage ? 'bg-[#fff8ee] py-[10px] lg:py-[120px]' : 'bg-[#FFF8EE] py-[48px] md:py-[64px]', className)}>
       <div className={cn('mx-auto px-5 2xl:px-0', isAboutPage ? 'max-w-[1500px] px-[24px] 2xl:px-[0px]' : isHomepage ? 'max-w-[1500px] px-[24px] lg:px-[0px]' : 'max-w-[1500px]')}>
         {featureLayout ? (
           <AwardsHomeHeader title={block.heading} description={block.description} isAboutPage={isAboutPage} />

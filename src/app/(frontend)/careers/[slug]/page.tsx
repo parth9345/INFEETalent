@@ -35,9 +35,9 @@ export default async function CareerDetailPage({ params }: PageProps) {
   }
 
   return (
-    <>
+    <div className="page-career-detail">
       <CareerDetail career={career} />
       <JsonLd data={careerBreadcrumbSchema(career, `/careers/${slug}`)} />
-    </>
+    </div>
   )
 }

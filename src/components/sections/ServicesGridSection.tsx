@@ -9,7 +9,7 @@ import type { PageBlock, ServiceItem } from '@/types/content'
 
 type ServicesBlock = Extract<PageBlock, { blockType: 'servicesGrid' }>
 
-export async function ServicesGridSection({ block, isHomepage = false }: { block: ServicesBlock; isHomepage?: boolean }) {
+export async function ServicesGridSection({ block, isHomepage = false, className }: { block: ServicesBlock; isHomepage?: boolean; className?: string }) {
   const selectedItems = relationItems<ServiceItem>(block.services)
   const targetCount = isHomepage ? 9 : undefined
   const items = await resolveServicesGridItems({
@@ -20,7 +20,7 @@ export async function ServicesGridSection({ block, isHomepage = false }: { block
   const gridClass = isHomepage ? 'md:grid-cols-2 lg:grid-cols-3' : block.columns === '2' ? 'md:grid-cols-2' : 'md:grid-cols-2 lg:grid-cols-3'
 
   return (
-    <section id={sectionId(block.settings)} className={isHomepage ? 'bg-[#fff8ee] py-[10px] border-y border-[#CCCCCC] lg:py-[120px]' : sectionClasses(block.settings, { defaultBackground: 'cream' })}>
+    <section id={sectionId(block.settings)} className={cn(isHomepage ? 'bg-[#fff8ee] py-[10px] border-y border-[#CCCCCC] lg:py-[120px]' : sectionClasses(block.settings, { defaultBackground: 'cream' }), className)}>
       <Container className={isHomepage ? 'max-w-[1500px] px-[10px] lg:px-[0px]' : undefined}>
         {isHomepage ? (
           <div className="mb-[20px] lg:mb-[64px] w-full max-w-[764px]">

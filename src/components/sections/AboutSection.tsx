@@ -10,24 +10,24 @@ import type { PageBlock } from '@/types/content'
 
 type ContentImageBlock = Extract<PageBlock, { blockType: 'contentImage' }>
 
-export function AboutSection({ block, isHomepage = false }: { block: ContentImageBlock; isHomepage?: boolean }) {
+export function AboutSection({ block, isHomepage = false, className }: { block: ContentImageBlock; isHomepage?: boolean; className?: string }) {
   const imageFirst = block.imagePosition !== 'right'
   const isDark = !isHomepage && block.settings?.background === 'blue'
 
   if (isHomepage) {
-    return <HomepageAbout block={block} imageFirst={imageFirst} />
+    return <HomepageAbout block={block} imageFirst={imageFirst} className={className} />
   }
 
   if (isDark) {
-    return <DarkAbout block={block} imageFirst={imageFirst} />
+    return <DarkAbout block={block} imageFirst={imageFirst} className={className} />
   }
 
-  return <DefaultAbout block={block} imageFirst={imageFirst} />
+  return <DefaultAbout block={block} imageFirst={imageFirst} className={className} />
 }
 
-function HomepageAbout({ block, imageFirst }: { block: ContentImageBlock; imageFirst: boolean }) {
+function HomepageAbout({ block, imageFirst, className }: { block: ContentImageBlock; imageFirst: boolean; className?: string }) {
   return (
-    <section id={sectionId(block.settings, 'about')} className="lg:min-h-[785px]">
+    <section id={sectionId(block.settings, 'about')} className={cn('lg:min-h-[785px]', className)}>
       <Container
         className={cn(
           'grid max-w-[1500px] gap-[20px] px-[10px] pb-[10px] pt-[10px] md:grid-cols-[700px_1fr] md:gap-[72px] md:pb-[96px] md:pt-[96px] lg:grid-cols-[700px_630px] lg:gap-[132px] lg:px-[0px] lg:pb-[91px] lg:pt-[120px]',
@@ -59,9 +59,9 @@ function HomepageAbout({ block, imageFirst }: { block: ContentImageBlock; imageF
   )
 }
 
-function DarkAbout({ block, imageFirst }: { block: ContentImageBlock; imageFirst: boolean }) {
+function DarkAbout({ block, imageFirst, className }: { block: ContentImageBlock; imageFirst: boolean; className?: string }) {
   return (
-    <section id={sectionId(block.settings, 'about')} className="relative overflow-hidden bg-[linear-gradient(108deg,#050948_0%,#121967_56%,#243C91_100%)] py-[72px] text-[#FFFFFF] lg:py-[96px]">
+    <section id={sectionId(block.settings, 'about')} className={cn('relative overflow-hidden bg-[linear-gradient(108deg,#050948_0%,#121967_56%,#243C91_100%)] py-[72px] text-[#FFFFFF] lg:py-[96px]', className)}>
       <Container
         className={cn(
           'grid max-w-[1500px] items-center gap-[48px] px-[24px] lg:grid-cols-2 lg:gap-[72px] lg:px-[0px]',
@@ -144,9 +144,9 @@ function DarkImageCol({ block }: { block: ContentImageBlock }) {
   )
 }
 
-function DefaultAbout({ block, imageFirst }: { block: ContentImageBlock; imageFirst: boolean }) {
+function DefaultAbout({ block, imageFirst, className }: { block: ContentImageBlock; imageFirst: boolean; className?: string }) {
   return (
-    <section id={sectionId(block.settings, 'about')} className={sectionClasses(block.settings, { defaultBackground: 'soft' })}>
+    <section id={sectionId(block.settings, 'about')} className={cn(sectionClasses(block.settings, { defaultBackground: 'soft' }), className)}>
       <Container
         className={cn(
           'grid items-center gap-10 lg:grid-cols-[520px_1fr]',

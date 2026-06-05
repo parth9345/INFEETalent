@@ -25,7 +25,7 @@ export function TestimonialCard({ item, showRating = false, tone = 'dark', class
     return (
       <article
         className={cn(
-          'group border border-[#CCCCCC] bg-[#FFF8EE] text-[#151515] transition duration-300 hover:border-[#2C368D]',
+          'testimonial-review-card group border border-[#CCCCCC] bg-[#FFF8EE] text-[#151515] transition duration-300 hover:border-[#2C368D]',
           isVideo ? 'overflow-hidden' : 'p-[34px]',
           className,
         )}

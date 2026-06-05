@@ -11,6 +11,7 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 
+import { cn } from '@/lib/utils'
 import type { PageBlock } from '@/types/content'
 
 type StatsBlock = Extract<PageBlock, { blockType: 'statsStrip' }>
@@ -32,16 +33,16 @@ const getIcon = (name?: string): LucideIcon => {
   return iconMap[name] || Globe
 }
 
-export function StatsStrip({ block, isHomepage = false }: { block: StatsBlock; isHomepage?: boolean }) {
+export function StatsStrip({ block, isHomepage = false, className }: { block: StatsBlock; isHomepage?: boolean; className?: string }) {
   if (block.layout === 'cards') {
-    return <StatsCards block={block} />
+    return <StatsCards block={block} className={className} />
   }
 
   if (isHomepage) {
     const itemPositions = ['2xl:left-[140px]', '2xl:left-[578px]', '2xl:left-[1029px]', '2xl:left-[1520px]']
 
     return (
-      <section className="bg-[linear-gradient(90deg,#050947_0%,#162072_60%,#213791_100%)] text-neutral-white">
+      <section className={cn('bg-[linear-gradient(90deg,#050947_0%,#162072_60%,#213791_100%)] text-neutral-white', className)}>
         <div className="mx-auto grid max-w-[1920px] grid-cols-2 gap-y-[20px] px-[24px] py-[24px] md:grid-cols-4 md:px-[40px] 2xl:relative 2xl:block 2xl:h-[146px] 2xl:px-[0px] 2xl:py-[0px]">
           {block.items?.map((item, index) => (
             <div
@@ -58,7 +59,7 @@ export function StatsStrip({ block, isHomepage = false }: { block: StatsBlock; i
   }
 
   return (
-    <section className="bg-brand-primary text-neutral-white">
+    <section className={cn('bg-brand-primary text-neutral-white', className)}>
       <div className="mx-auto grid max-w-[1920px] grid-cols-2 divide-x divide-white/20 md:grid-cols-4">
         {block.items?.map((item) => (
           <div key={`${item.value}-${item.label}`} className="flex h-[78px] items-center justify-center gap-2 px-4">
@@ -71,9 +72,9 @@ export function StatsStrip({ block, isHomepage = false }: { block: StatsBlock; i
   )
 }
 
-function StatsCards({ block }: { block: StatsBlock }) {
+function StatsCards({ block, className }: { block: StatsBlock; className?: string }) {
   return (
-    <section className="bg-[#EAEBF4] py-[64px] lg:py-[80px]">
+    <section className={cn('bg-[#EAEBF4] py-[64px] lg:py-[80px]', className)}>
       <div className="mx-auto max-w-[1500px] px-[24px] lg:px-[0px]">
         {block.heading ? (
           <div className="mb-[48px]">

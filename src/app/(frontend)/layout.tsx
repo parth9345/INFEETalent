@@ -10,6 +10,7 @@ import { getSiteSettings } from '@/lib/payload-queries'
 import { organizationSchema, websiteSchema } from '@/lib/seo'
 import { siteConfig } from '@/lib/site'
 import '@/styles/globals.css'
+import '@/styles/custom-responsive.css'
 
 const manrope = Manrope({
   subsets: ['latin'],

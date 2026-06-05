@@ -217,6 +217,27 @@ img {
 }
 
 
+
+
+/* Home page CSS */
+.home-services-section article.group p{
+   display: -webkit-box;
+  -webkit-line-clamp: 4; /* Number of lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+
+
+
+.testimonials-hero-section article p {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+
 @media (max-width: 575px) {
   .heading-section{
     font-size: 25px;

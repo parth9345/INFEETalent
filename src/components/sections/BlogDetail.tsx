@@ -1,9 +1,10 @@
 import Link from 'next/link'
 import type { Route } from 'next'
 import type { ReactNode } from 'react'
-import { ArrowRight, Play } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 
 import { ContactSection } from '@/components/sections/ContactSection'
+import { BlogVideoTile } from '@/components/sections/blogs/BlogVideoTile'
 import { Button } from '@/components/ui/Button'
 import { Container } from '@/components/ui/Container'
 import { OptimizedImage } from '@/components/ui/OptimizedImage'
@@ -31,7 +32,7 @@ export function BlogDetail({ post, relatedPosts = [] }: { post: BlogItem; relate
   return (
     <>
       <article className="bg-[#FFF8EE] text-[#151515]">
-        <section className="border-b border-[#CCCCCC] pb-[72px] pt-[28px] md:pb-[88px] md:pt-[34px] lg:pb-[120px] lg:pt-[40px]">
+        <section className="border-b border-[#CCCCCC] pb-[72px] pt-[28px] md:pb-[88px] md:pt-[34px] lg:pb-[120px] lg:pt-[40px] blog-detail-hero-section">
           <Container className="grid max-w-[1500px] gap-[38px] px-[24px] lg:grid-cols-[660px_718px] lg:items-start lg:gap-[122px] lg:px-[0px]">
             <div className="lg:flex lg:min-h-[451px] lg:flex-col">
               <nav aria-label="Breadcrumb" className="text-[11px] font-[800] uppercase leading-[16px] tracking-[4px] text-[#555555]">
@@ -66,7 +67,7 @@ export function BlogDetail({ post, relatedPosts = [] }: { post: BlogItem; relate
           </Container>
         </section>
 
-        <section className="bg-[#FFF8EE] py-[86px] text-[#151515] md:py-[104px] lg:py-[120px]">
+        <section className="bg-[#FFF8EE] py-[86px] text-[#151515] md:py-[104px] lg:py-[120px] blog-detail-content-section">
           <Container className="grid max-w-[1500px] gap-[52px] px-[24px] lg:grid-cols-[896px_542px] lg:gap-[62px] lg:px-[0px]">
             <div>
               <BlogRichText
@@ -93,7 +94,7 @@ export function BlogDetail({ post, relatedPosts = [] }: { post: BlogItem; relate
       </article>
 
       <RelatedBlogsSection posts={relatedPosts} />
-      <ContactSection block={detailContactBlock} isHomepage />
+      <ContactSection block={detailContactBlock} isHomepage className="blog-detail-cta-section" />
     </>
   )
 }
@@ -108,7 +109,7 @@ function BlogMeta({
   publishedDate: string
 }) {
   return (
-    <div className="mt-[38px] flex flex-wrap items-center gap-x-[18px] gap-y-[8px] text-[16px] font-[500] leading-[24px] tracking-[0px] text-[#555555] lg:mt-auto">
+    <div className="mt-[38px] flex flex-wrap items-center gap-x-[18px] gap-y-[8px] text-[16px] font-[500] leading-[24px] tracking-[0px] text-[#555555] lg:mt-auto blog-detail-author-section">
       <span className="inline-flex h-[36px] items-center rounded-[999px] border border-[#CCCCCC] px-[16px] text-[16px] font-[500] leading-[24px] tracking-[0px] text-[#555555]">
         {category}
       </span>
@@ -125,35 +126,36 @@ function RelatedBlogsSection({ posts }: { posts: BlogItem[] }) {
   }
 
   const lead = posts[0]
-  const textPosts = posts.slice(1, 4)
-  const imagePost = posts[4] || posts[3] || posts[2] || lead
+  const textPosts = posts.slice(1, 3)
+  const imagePost = posts[3] || posts[2] || posts[1] || lead
 
   return (
-    <section className="bg-[linear-gradient(108deg,#040946_0%,#121967_56%,#223891_100%)] py-[72px] text-[#FFFFFF] lg:h-[1088px] lg:pb-[97px] lg:pt-[103px]">
-      <Container className="max-w-[1500px] px-[24px] lg:px-[0px]">
-        <p className="text-[13px] font-[800] uppercase leading-[16px] tracking-[6px] text-[#FCA62B]">Featured Blogs</p>
-        <h2 className="heading-section mt-[31px] text-[42px] font-[800] leading-[52px] tracking-[0px] md:text-[48px] md:leading-[58px]">
-          Featured{' '}
-          <span className="relative inline-block">
-            <span className="relative z-[1]">Post</span>
-            <span className="absolute bottom-[5px] left-[0px] h-[9px] w-[115px] bg-[#6D6335]" aria-hidden="true" />
-          </span>
-        </h2>
-        <div className="mt-[50px] grid gap-[24px] lg:grid-cols-[556px_920px]">
-          <FeaturedLeadCard post={lead} />
-          <div className="grid gap-[24px] lg:grid-rows-[355px_354px]">
-            <div className="grid gap-[24px] md:grid-cols-2 lg:grid-cols-[448px_448px]">
-              {textPosts[0] ? <FeaturedTextCard post={textPosts[0]} /> : null}
-              {textPosts[1] ? <FeaturedTextCard post={textPosts[1]} /> : null}
-            </div>
-            <div className="grid gap-[24px] md:grid-cols-2 lg:grid-cols-[460px_460px] lg:gap-[0px]">
-              {textPosts[2] ? <FeaturedTextCard post={textPosts[2]} /> : null}
-              <FeaturedImageTile post={imagePost} />
+    <div className="page-blogs blog-detail-featured-scope">
+      <section className="bg-[linear-gradient(108deg,#040946_0%,#121967_56%,#223891_100%)] py-[72px] text-[#FFFFFF] lg:min-h-[1080px] lg:pb-[89px] lg:pt-[103px] blogs-featured-section blog-detail-related-section">
+        <Container className="blogs-featured-container max-w-[1500px] px-[24px] lg:px-[0px]">
+          <p className="blogs-featured-eyebrow text-[13px] font-[800] uppercase leading-[16px] tracking-[6px] text-[#FCA62B]">Featured Blogs</p>
+          <h2 className="blogs-featured-title heading-section mt-[31px] text-[42px] font-[800] leading-[52px] tracking-[0px] md:text-[48px] md:leading-[58px]">
+            Featured{' '}
+            <span className="relative inline-block">
+              <span className="relative z-[1]">Post</span>
+              <span className="absolute bottom-[5px] left-[0px] h-[9px] w-[115px] bg-[#6D6335]" aria-hidden="true" />
+            </span>
+          </h2>
+          <div className="blogs-featured-layout mt-[50px] grid gap-[24px] lg:grid-cols-[556px_920px]">
+            <FeaturedLeadCard post={lead} />
+            <div className="blogs-featured-side-grid grid gap-[24px] lg:grid-rows-[355px_354px]">
+              <div className="blogs-featured-text-row grid gap-[24px] md:grid-cols-2 lg:grid-cols-[448px_448px]">
+                {textPosts[0] ? <FeaturedTextCard post={textPosts[0]} /> : null}
+                {textPosts[1] ? <FeaturedTextCard post={textPosts[1]} /> : null}
+              </div>
+              <div className="blogs-featured-mixed-row grid gap-[24px] md:grid-cols-2 lg:grid-cols-[460px_460px] lg:gap-[0px]">
+                <FeaturedSplitImageCard post={imagePost} />
+              </div>
             </div>
           </div>
-        </div>
-      </Container>
-    </section>
+        </Container>
+      </section>
+    </div>
   )
 }
 
@@ -161,9 +163,9 @@ function FeaturedLeadCard({ post }: { post: BlogItem }) {
   const href = post.slug ? `/blogs/${post.slug}` : '/blogs'
 
   return (
-    <article className="group overflow-hidden border border-[#303877] bg-[linear-gradient(135deg,#171F63_0%,#26308A_100%)] lg:row-span-2 lg:h-[733px]">
+    <article className="blog-featured-lead-card group overflow-hidden border border-[#303877] bg-[linear-gradient(135deg,#171F63_0%,#26308A_100%)] lg:row-span-2 lg:h-[733px]">
       <Link href={href as Route} className="block" aria-label={`Read more about ${post.title}`}>
-        <div className="relative h-[260px] overflow-hidden md:h-[360px] lg:h-[417px]">
+        <div className="blog-featured-lead-image relative h-[260px] overflow-hidden md:h-[360px] lg:h-[417px]">
           <OptimizedImage
             media={post.featuredImage}
             fallbackSrc={figmaAssets.insights[0]}
@@ -173,7 +175,7 @@ function FeaturedLeadCard({ post }: { post: BlogItem }) {
           />
         </div>
       </Link>
-      <div className="flex min-h-[316px] flex-col px-[32px] pb-[36px] pt-[38px]">
+      <div className="blog-featured-lead-content flex min-h-[316px] flex-col px-[32px] pb-[36px] pt-[38px]">
         <FeaturedDate date={post.publishedAt} />
         <h3 className="mt-[28px] line-clamp-2 text-[28px] font-[800] leading-[38px] tracking-[0px] text-[#FFFFFF]">
           {post.title}
@@ -193,7 +195,7 @@ function FeaturedTextCard({ post }: { post: BlogItem }) {
   const href = post.slug ? `/blogs/${post.slug}` : '/blogs'
 
   return (
-    <article className="group flex min-h-[354px] flex-col border border-[#303877] bg-[linear-gradient(135deg,#171F63_0%,#26308A_100%)] px-[32px] pb-[36px] pt-[38px] transition duration-300 hover:border-[#FCA62B] lg:h-full">
+    <article className="blog-featured-text-card group flex min-h-[354px] flex-col border border-[#303877] bg-[linear-gradient(135deg,#171F63_0%,#26308A_100%)] px-[32px] pb-[36px] pt-[38px] transition duration-300 lg:h-full">
       <FeaturedDate date={post.publishedAt} />
       <h3 className="mt-[28px] line-clamp-3 text-[28px] font-[800] leading-[38px] tracking-[0px] text-[#FFFFFF]">
         {post.title}
@@ -208,23 +210,33 @@ function FeaturedTextCard({ post }: { post: BlogItem }) {
   )
 }
 
-function FeaturedImageTile({ post }: { post: BlogItem }) {
+function FeaturedSplitImageCard({ post }: { post: BlogItem }) {
   const href = post.slug ? `/blogs/${post.slug}` : '/blogs'
 
   return (
-    <Link
-      href={href as Route}
-      className="group relative block h-[280px] overflow-hidden md:h-[354px] lg:h-[354px]"
-      aria-label={`Read more about ${post.title}`}
-    >
-      <OptimizedImage
-        media={post.featuredImage}
-        fallbackSrc={figmaAssets.aboutOfficeSide}
-        altFallback={post.title}
-        sizes="(min-width: 1024px) 460px, 100vw"
-        className="object-cover transition duration-500 group-hover:scale-105"
-      />
-    </Link>
+    <article className="blog-featured-split-card group grid min-h-[354px] gap-[24px] md:col-span-2 md:grid-cols-2 lg:col-span-2">
+      <div className="blog-featured-split-content flex min-h-[354px] flex-col border border-[#303877] bg-[linear-gradient(135deg,#171F63_0%,#26308A_100%)] px-[32px] pb-[36px] pt-[38px] transition duration-300">
+        <FeaturedDate date={post.publishedAt} />
+        <h3 className="mt-[28px] line-clamp-3 text-[28px] font-[800] leading-[38px] tracking-[0px] text-[#FFFFFF]">
+          {post.title}
+        </h3>
+        {post.excerpt ? (
+          <p className="mt-[24px] line-clamp-2 text-[16px] font-[400] leading-[28px] tracking-[0px] text-[#FFFFFF]/85">
+            {post.excerpt}
+          </p>
+        ) : null}
+        <FeaturedReadMore href={href} title={post.title} />
+      </div>
+      <Link href={href as Route} className="blog-featured-split-image relative block h-[280px] overflow-hidden md:h-[354px] lg:h-[354px]" aria-label={`Read more about ${post.title}`}>
+        <OptimizedImage
+          media={post.featuredImage}
+          fallbackSrc={figmaAssets.aboutOfficeSide}
+          altFallback={post.title}
+          sizes="(min-width: 1024px) 460px, 100vw"
+          className="object-cover transition duration-500 group-hover:scale-105"
+        />
+      </Link>
+    </article>
   )
 }
 
@@ -244,7 +256,7 @@ function FeaturedReadMore({ href, title }: { href: string; title: string }) {
   return (
     <Link
       href={href as Route}
-      className="mt-auto inline-flex items-center gap-[14px] pt-[26px] text-[14px] font-[800] uppercase leading-[24px] tracking-[0.84px] text-[#FFFFFF] transition duration-300 hover:text-[#FCA62B]"
+      className="blog-featured-read-more mt-auto inline-flex items-center gap-[14px] pt-[26px] text-[14px] font-[800] uppercase leading-[24px] tracking-[0.84px] text-[#FFFFFF] transition duration-300 hover:text-[#FCA62B]"
       aria-label={`Read more about ${title}`}
     >
       Read More <ArrowRight size={22} strokeWidth={1.8} aria-hidden="true" />
@@ -375,29 +387,15 @@ function renderVideo(node: BlogRichTextNode, index: number) {
   const videoUrl = node.videoUrl || node.fields?.videoUrl || node.fields?.url || 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4'
 
   return (
-    <a
+    <BlogVideoTile
       key={index}
-      href={videoUrl}
-      target="_blank"
-      rel="noreferrer"
-      aria-label="Play blog video"
-      className="group relative my-[52px] block h-[320px] overflow-hidden bg-[#111111] md:h-[460px] lg:h-[522px]"
-    >
-      <OptimizedImage
-        media={node.thumbnail || (node.value as MediaLike)}
-        src={typeof node.value === 'string' ? node.value : undefined}
-        fallbackSrc={figmaAssets.testimonialVideo}
-        altFallback={node.alt || 'Blog video'}
-        sizes="(min-width: 1024px) 896px, 100vw"
-        className="object-cover transition duration-500 group-hover:scale-[1.035]"
-      />
-      <span className="absolute inset-0 bg-[#000000]/34 transition duration-300 group-hover:bg-[#000000]/24" />
-      <span className="absolute left-1/2 top-1/2 flex size-[94px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#FFFFFF]/30 backdrop-blur-[2px] transition duration-300 group-hover:scale-[1.06] group-hover:bg-[#FFFFFF]/40">
-        <span className="flex size-[66px] items-center justify-center rounded-full bg-[#FFFFFF]/45 text-[#FFFFFF]">
-          <Play size={34} fill="currentColor" strokeWidth={0} aria-hidden="true" />
-        </span>
-      </span>
-    </a>
+      media={node.thumbnail || (node.value as MediaLike)}
+      thumbnailSrc={typeof node.value === 'string' ? node.value : undefined}
+      fallbackSrc={figmaAssets.testimonialVideo}
+      alt={node.alt || 'Blog video'}
+      videoSrc={videoUrl}
+      className="my-[52px] h-[320px] md:h-[460px] lg:h-[522px]"
+    />
   )
 }
 

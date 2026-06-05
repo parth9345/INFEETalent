@@ -70,18 +70,18 @@ export default async function ContactPage() {
   const contactBlock = getContactBlock(page)
 
   return (
-    <>
-      <ContactSection block={contactBlock} isHomepage />
+    <div className="page-contact">
+      <ContactSection block={contactBlock} isHomepage className="contact-hero-section contact-form-section" />
       <GlobalPresenceSection />
       <JoinTeamSection />
       <PageStructuredData page={page} path="/contact" />
-    </>
+    </div>
   )
 }
 
 function GlobalPresenceSection() {
   return (
-    <section className="border-t border-[#CCCCCC] bg-[#FFF8EE] py-[84px] text-[#151515] lg:pb-[120px] lg:pt-[132px]">
+    <section className="border-t border-[#CCCCCC] bg-[#FFF8EE] py-[84px] text-[#151515] lg:pb-[120px] lg:pt-[132px] contact-info-section contact-map-section">
       <Container className="max-w-[1500px] px-[24px] lg:px-[0px]">
         <h2 className="heading-section relative inline-block text-[42px] font-[800] leading-[54px] tracking-[0px] text-[#000000] md:text-[50px] md:leading-[66px]">
           <span className="relative z-[1]">Our Global Presence</span>
@@ -113,7 +113,7 @@ function GlobalPresenceSection() {
 
 function JoinTeamSection() {
   return (
-    <section className="bg-[linear-gradient(108deg,#050948_0%,#121967_56%,#243C91_100%)] py-[84px] text-[#FFFFFF] lg:h-[812px] lg:py-[0px]">
+    <section className="bg-[linear-gradient(108deg,#050948_0%,#121967_56%,#243C91_100%)] py-[84px] text-[#FFFFFF] lg:h-[812px] lg:py-[0px] contact-cta-section">
       <Container className="grid max-w-[1500px] items-center gap-[56px] px-[24px] lg:h-full lg:grid-cols-[692px_675px] lg:gap-[133px] lg:px-[0px]">
         <div className="grid gap-[24px] md:grid-cols-[236px_204px_204px] md:grid-rows-[188px_194px_154px] lg:h-[566px]">
           <div className="flex h-[188px] flex-col justify-center bg-[#FCA62B] px-[33px] text-[#000000]">

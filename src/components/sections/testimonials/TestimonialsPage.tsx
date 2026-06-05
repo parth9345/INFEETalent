@@ -1,6 +1,7 @@
-import { Play, Quote } from 'lucide-react'
+import { Quote } from 'lucide-react'
 
 import { ContactSection } from '@/components/sections/ContactSection'
+import { VideoTestimonialTile } from '@/components/sections/VideoTestimonialTile'
 import { TestimonialsReviewGrid } from '@/components/sections/testimonials/TestimonialsReviewGrid'
 import { Container } from '@/components/ui/Container'
 import { OptimizedImage } from '@/components/ui/OptimizedImage'
@@ -25,13 +26,13 @@ export function TestimonialsPage({ page, testimonials }: TestimonialsPageProps) 
   const featuredItems = featuredTestimonials.length ? featuredTestimonials : sortedTestimonials.slice(0, 5)
 
   return (
-    <>
+    <div className="page-testimonials">
       <TestimonialsHero hero={hero} testimonials={sortedTestimonials} />
       {featuredItems.length ? <FeaturedTestimonials testimonials={featuredItems} /> : null}
       <ClientReviews testimonials={sortedTestimonials} />
       {stats ? <TestimonialsStats block={stats} /> : null}
-      {contact ? <ContactSection block={contact} isHomepage /> : null}
-    </>
+      {contact ? <ContactSection block={contact} isHomepage className="testimonials-cta-section" /> : null}
+    </div>
   )
 }
 
@@ -44,9 +45,9 @@ function TestimonialsHero({ hero, testimonials }: { hero?: HeroBlock; testimonia
   const secondVideo = videoItems[1] || testimonials[1] || testimonials[0]
 
   return (
-    <section className="bg-[#FFF8EE] pb-[106px] pt-[94px] text-[#151515] lg:pb-[126px] lg:pt-[96px]">
-      <Container className="grid max-w-[1500px] gap-[56px] px-[24px] lg:grid-cols-[620px_710px] lg:gap-[170px] lg:px-[0px]">
-        <div className="flex min-h-[590px] flex-col justify-between">
+    <section className="bg-[#FFF8EE] pb-[106px] pt-[94px] text-[#151515] lg:pb-[126px] lg:pt-[96px] testimonials-hero-section">
+      <Container className="testimonials-hero-layout grid max-w-[1500px] gap-[56px] px-[24px] lg:grid-cols-[620px_710px] lg:gap-[170px] lg:px-[0px]">
+        <div className="testimonials-hero-copy flex min-h-[590px] flex-col justify-between">
           <div>
             {hero?.eyebrow ? (
               <p className="eyebrow-title text-[12px] font-[800] uppercase leading-[16px] tracking-[6px] text-[#151515]">
@@ -65,11 +66,11 @@ function TestimonialsHero({ hero, testimonials }: { hero?: HeroBlock; testimonia
         </div>
 
         {testimonials.length ? (
-          <div className="grid gap-[20px] md:grid-cols-2 lg:h-[598px]">
-            <VideoPreviewCard item={firstVideo} media={resolveVideoMedia(firstVideo)} fallbackSrc={figmaAssets.aboutOfficeTall} className="h-[294px]" />
-            {quoteItem ? <HeroQuoteCard item={quoteItem} className="h-[294px]" /> : null}
+          <div className="testimonials-hero-card-grid grid gap-[20px] md:grid-cols-2 lg:h-[598px]">
+            <VideoPreviewCard item={firstVideo} media={resolveVideoMedia(firstVideo)} fallbackSrc={figmaAssets.aboutOfficeTall} className="h-[294px] testimonial-video-card testimonial-hero-card testimonial-hero-video-primary" />
+            {quoteItem ? <HeroQuoteCard item={quoteItem} className="h-[294px] testimonial-quote-card testimonial-hero-card" /> : null}
             <HeroProofCard />
-            <VideoPreviewCard item={secondVideo} media={resolveVideoMedia(secondVideo)} fallbackSrc={figmaAssets.profileCard} className="h-[294px]" />
+            <VideoPreviewCard item={secondVideo} media={resolveVideoMedia(secondVideo)} fallbackSrc={figmaAssets.profileCard} className="h-[294px] testimonial-video-card testimonial-hero-card testimonial-hero-video-secondary" />
           </div>
         ) : null}
       </Container>
@@ -85,9 +86,9 @@ function FeaturedTestimonials({ testimonials }: { testimonials: TestimonialItem[
   const fifth = testimonials[4] || testimonials[1] || testimonials[0]
 
   return (
-    <section className="bg-[linear-gradient(108deg,#050948_0%,#121967_56%,#243C91_100%)] py-[96px] text-[#FFFFFF] lg:py-[112px]">
+    <section className="bg-[linear-gradient(108deg,#050948_0%,#121967_56%,#243C91_100%)] py-[96px] text-[#FFFFFF] lg:py-[112px] testimonials-featured-section testimonials-video-section">
       <Container className="max-w-[1500px] px-[24px] lg:px-[0px]">
-        <div>
+        <div className="testimonials-featured-header">
           <p className="text-[12px] font-[800] uppercase leading-[16px] tracking-[6px] text-[#FCA62B]">Voices</p>
           <h2 className="heading-section relative mt-[24px] max-w-[670px] text-[44px] font-[800] leading-[56px] tracking-[0px] text-[#FFFFFF] md:text-[50px] md:leading-[66px]">
             <span className="relative z-[1]">Featured Testimonials</span>
@@ -95,16 +96,16 @@ function FeaturedTestimonials({ testimonials }: { testimonials: TestimonialItem[
           </h2>
         </div>
 
-        <div className="mt-[70px] grid gap-[24px]">
-          <div className="grid gap-[24px] lg:grid-cols-[605px_521px_326px]">
-            <VideoPreviewCard item={first} media={resolveVideoMedia(first)} fallbackSrc={figmaAssets.testimonialVideo} className="h-[439px] border border-[#FFFFFF]/10" dark />
-            <FeaturedQuoteCard item={first} className="h-[439px]" wide />
-            <VideoPreviewCard item={second} media={resolveVideoMedia(second)} fallbackSrc={figmaAssets.profileCard} className="h-[439px] border border-[#FFFFFF]/10" dark />
+        <div className="testimonials-featured-grid mt-[70px] grid gap-[24px]">
+          <div className="testimonials-featured-row testimonials-featured-row-top grid gap-[24px] lg:grid-cols-[605px_521px_326px]">
+            <VideoPreviewCard item={first} media={resolveVideoMedia(first)} fallbackSrc={figmaAssets.testimonialVideo} className="h-[439px] border border-[#FFFFFF]/10 testimonial-video-card testimonial-featured-card" dark />
+            <FeaturedQuoteCard item={first} className="h-[439px] testimonial-quote-card testimonial-featured-card" wide />
+            <VideoPreviewCard item={second} media={resolveVideoMedia(second)} fallbackSrc={figmaAssets.profileCard} className="h-[439px] border border-[#FFFFFF]/10 testimonial-video-card testimonial-featured-card" dark />
           </div>
-          <div className="grid gap-[24px] lg:grid-cols-[423px_605px_423px]">
-            <FeaturedQuoteCard item={third} className="h-[439px]" />
-            <VideoPreviewCard item={fourth} media={resolveVideoMedia(fourth)} fallbackSrc={figmaAssets.aboutOfficeTall} className="h-[439px] border border-[#FFFFFF]/10" dark />
-            <FeaturedQuoteCard item={fifth} className="h-[439px]" />
+          <div className="testimonials-featured-row testimonials-featured-row-bottom grid gap-[24px] lg:grid-cols-[423px_605px_423px]">
+            <FeaturedQuoteCard item={third} className="h-[439px] testimonial-quote-card testimonial-featured-card" />
+            <VideoPreviewCard item={fourth} media={resolveVideoMedia(fourth)} fallbackSrc={figmaAssets.aboutOfficeTall} className="h-[439px] border border-[#FFFFFF]/10 testimonial-video-card testimonial-featured-card" dark />
+            <FeaturedQuoteCard item={fifth} className="h-[439px] testimonial-quote-card testimonial-featured-card" />
           </div>
         </div>
       </Container>
@@ -114,7 +115,7 @@ function FeaturedTestimonials({ testimonials }: { testimonials: TestimonialItem[
 
 function ClientReviews({ testimonials }: { testimonials: TestimonialItem[] }) {
   return (
-    <section id="client-reviews" className=" py-[88px] text-[#151515] lg:pb-[92px] lg:pt-[128px]">
+    <section id="client-reviews" className=" py-[88px] text-[#151515] lg:pb-[92px] lg:pt-[128px] testimonials-grid-section testimonials-clients-section">
       <Container className="max-w-[1500px] px-[24px] lg:px-[0px]">
         <h2 className="heading-section mx-auto max-w-[760px] text-center text-[38px] font-[800] leading-[48px] tracking-[0px] text-[#000000] md:text-[50px] md:leading-[66px]">
           Client Success Stories & Reviews
@@ -135,7 +136,7 @@ function ClientReviews({ testimonials }: { testimonials: TestimonialItem[] }) {
 
 function TestimonialsStats({ block }: { block: StatsBlock }) {
   return (
-    <section className="bg-[linear-gradient(108deg,#050948_0%,#121967_56%,#243C91_100%)] text-[#FFFFFF]">
+    <section className="bg-[linear-gradient(108deg,#050948_0%,#121967_56%,#243C91_100%)] text-[#FFFFFF] testimonials-stats-section">
       <div className="mx-auto grid max-w-[1920px] grid-cols-2 gap-y-[20px] px-[24px] py-[24px] md:grid-cols-4 md:px-[40px] lg:h-[146px] lg:px-[0px] lg:py-[0px]">
         {block.items?.slice(0, 4).map((item) => (
           <div key={`${item.value}-${item.label}`} className="flex items-center justify-center gap-[12px] lg:h-[146px]">
@@ -154,7 +155,6 @@ function TestimonialsStats({ block }: { block: StatsBlock }) {
 
 function VideoPreviewCard({
   className,
-  dark = false,
   fallbackSrc,
   item,
   media,
@@ -165,29 +165,15 @@ function VideoPreviewCard({
   item?: TestimonialItem
   media?: MediaLike
 }) {
-  const content = (
-    <>
-      <OptimizedImage media={media} fallbackSrc={fallbackSrc} altFallback={item?.name || 'INFE Talent testimonial'} sizes="(min-width: 1024px) 605px, 100vw" className="object-cover transition duration-500 group-hover:scale-[1.04]" />
-      <span className="absolute inset-0 bg-[#000000]/43 transition duration-300 group-hover:bg-[#000000]/32" />
-      <span className="absolute left-1/2 top-1/2 flex size-[98px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#FFFFFF]/28 backdrop-blur-[2px] transition duration-300 group-hover:scale-[1.06]">
-        <span className="flex size-[68px] items-center justify-center rounded-full bg-[#FFFFFF]/45 text-[#FFFFFF]">
-          <Play size={35} fill="currentColor" strokeWidth={0} aria-hidden="true" />
-        </span>
-      </span>
-    </>
+  return (
+    <VideoTestimonialTile
+      media={media}
+      fallbackSrc={fallbackSrc}
+      alt={item?.name || 'INFE Talent testimonial'}
+      videoSrc={item?.videoUrl || undefined}
+      className={`testimonial-video-preview ${className || ''}`}
+    />
   )
-
-  const sharedClassName = `group relative block min-h-[260px] overflow-hidden bg-[#151515] ${dark ? 'text-[#FFFFFF]' : 'text-[#151515]'} ${className || ''}`
-
-  if (item?.videoUrl) {
-    return (
-      <a href={item.videoUrl} target="_blank" rel="noreferrer" aria-label={`Play ${item.name} testimonial`} className={sharedClassName}>
-        {content}
-      </a>
-    )
-  }
-
-  return <div className={sharedClassName}>{content}</div>
 }
 
 function HeroQuoteCard({ item, className }: { className?: string; item: TestimonialItem }) {
@@ -207,7 +193,7 @@ function HeroQuoteCard({ item, className }: { className?: string; item: Testimon
 
 function HeroProofCard() {
   return (
-    <article className="flex h-[294px] flex-col justify-center bg-[#FCA62B] px-[36px] text-[#000D6B]">
+    <article className="testimonial-proof-card testimonial-hero-card flex h-[294px] flex-col justify-center bg-[#FCA62B] px-[36px] text-[#000D6B]">
       <h2 className="heading-section text-[34px] font-[800] leading-[42px] tracking-[0px] text-[#000D6B]">Trusted By 3000+</h2>
       <p className="mt-[3px] text-[18px] font-[500] leading-[26px] tracking-[0px] text-[#000D6B]">Global Staffing Leaders</p>
       <div className="mt-[29px] flex -space-x-[8px]">
