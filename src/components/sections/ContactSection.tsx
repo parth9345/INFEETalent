@@ -28,6 +28,25 @@ export function ContactSection({
       ]
 
   const featureLayout = isHomepage || isAboutPage
+  const classNameString = typeof className === 'string' ? className : ''
+  const shouldAnimateHome = classNameString.includes('home-contact-section')
+  const shouldAnimateAbout = classNameString.includes('about-contact-section')
+  const shouldAnimateSplit =
+    classNameString.includes('services-cta-section') ||
+    classNameString.includes('testimonials-cta-section') ||
+    classNameString.includes('blogs-cta-section') ||
+    classNameString.includes('blog-detail-cta-section') ||
+    classNameString.includes('contact-form-section')
+  const leftAnimationClass = shouldAnimateHome
+    ? 'anim-fade-right anim-stagger-item'
+    : shouldAnimateAbout || shouldAnimateSplit
+      ? 'anim-left-part anim-fade-left'
+      : undefined
+  const rightAnimationClass = shouldAnimateHome
+    ? 'anim-fade-left anim-stagger-item'
+    : shouldAnimateAbout || shouldAnimateSplit
+      ? 'anim-right-part anim-fade-right'
+      : undefined
 
   return (
     <section id={sectionId(block.settings, 'contact')} className={cn(isAboutPage ? 'border-t border-[#CCCCCC] py-[64px] md:py-[80px] xl:py-[120px]' : isHomepage ? 'border-t border-[#CCCCCC]  py-[80px] lg:py-[120px]' : sectionClasses(block.settings, { defaultBackground: 'cream', className: 'border-t border-neutral-border' }), className)}>
@@ -41,7 +60,7 @@ export function ContactSection({
               : 'gap-10 lg:grid-cols-[1fr_520px]',
         )}
       >
-        <div className={cn('min-w-0 flex flex-col justify-between', isAboutPage ? 'min-h-0 xl:min-h-[657px]' : isHomepage && 'min-h-[425px] lg:min-h-[657px]')}>
+        <div className={cn('min-w-0 flex flex-col justify-between', isAboutPage ? 'min-h-0 xl:min-h-[657px]' : isHomepage && 'min-h-[425px] lg:min-h-[657px]', leftAnimationClass)}>
           {featureLayout ? (
             <div className="max-w-[645px]">
               {block.eyebrow ? <p className="eyebrow-title text-[12px] font-[800] uppercase leading-[16px] tracking-[8px] text-[#2C368D]">{block.eyebrow}</p> : null}
@@ -75,7 +94,13 @@ export function ContactSection({
           </div>
           </div>
         </div>
-        <ContactForm heading={block.formHeading} description={block.formDescription} sourceOptions={block.sourceOptions} variant={isAboutPage ? 'about' : isHomepage ? 'home' : 'default'} />
+        <ContactForm
+          heading={block.formHeading}
+          description={block.formDescription}
+          sourceOptions={block.sourceOptions}
+          variant={isAboutPage ? 'about' : isHomepage ? 'home' : 'default'}
+          className={rightAnimationClass}
+        />
       </Container>
     </section>
   )

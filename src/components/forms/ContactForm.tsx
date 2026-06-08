@@ -30,7 +30,7 @@ export function ContactForm({ heading = 'Get in touch today!', description, sour
       </div>
       <select
         name="source"
-        className={isFeature ? 'mt-[24px] h-[60px] w-full bg-[#FFFFFF]/[0.08] px-[24px] text-[16px] font-[400] leading-[28px] text-[#FFFFFF] outline-none transition placeholder:text-[#FFFFFF] focus:bg-[#FFFFFF]/[0.12]' : 'mt-4 h-11 w-full bg-neutral-white/10 px-4 text-body14 text-neutral-white outline-none transition placeholder:text-neutral-white/80 focus:bg-neutral-white/15'}
+        className={isFeature ? 'contact-source-select mt-[24px] h-[60px] w-full bg-[#FFFFFF]/[0.08] px-[24px] text-[16px] font-[400] leading-[28px] text-[#FFFFFF] outline-none transition placeholder:text-[#FFFFFF] focus:bg-[#FFFFFF]/[0.12]' : 'contact-source-select mt-4 h-11 w-full bg-neutral-white/10 px-4 text-body14 text-neutral-white outline-none transition placeholder:text-neutral-white/80 focus:bg-neutral-white/15'}
         defaultValue=""
         aria-label="Communication channel"
       >
@@ -50,7 +50,7 @@ export function ContactForm({ heading = 'Get in touch today!', description, sour
         rows={isFeature ? 6 : 5}
         className={isFeature ? 'mt-[24px] h-[172px] w-full resize-none bg-[#FFFFFF]/[0.08] px-[24px] py-[16px] text-[16px] font-[400] leading-[28px] text-[#FFFFFF] outline-none transition placeholder:text-[#FFFFFF] focus:bg-[#FFFFFF]/[0.12]' : 'mt-4 w-full resize-none bg-neutral-white/10 px-4 py-3 text-body14 text-neutral-white outline-none transition placeholder:text-neutral-white/80 focus:bg-neutral-white/15'}
       />
-      <Button type="submit" size={isFeature ? 'md' : 'md'} className={isFeature ? 'mt-[24px] h-[50px] w-full border-[0px] bg-[#FCA62B] px-[0px] text-[14px] font-[700] leading-[24px] tracking-[0.84px] text-[#262164] hover:bg-[#FCA62B]' : 'mt-4 w-full'}>
+      <Button type="submit" size={isFeature ? 'md' : 'md'} className={isFeature ? 'submit-cst-btn mt-[24px] h-[50px] w-full border-[0px] bg-[#FCA62B] px-[0px] text-[14px] font-bold leading-[24px] tracking-[0.84px] text-[#262164] hover:bg-[#FCA62B]' : 'submit-cst-btn mt-4 w-full font-bold'}>
         Submit
       </Button>
     </form>

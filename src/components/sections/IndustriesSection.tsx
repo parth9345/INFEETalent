@@ -55,6 +55,8 @@ export function IndustriesSection({
   const midpoint = Math.ceil((block.items?.length || 0) / 2)
   const columns = [block.items?.slice(0, midpoint) || [], block.items?.slice(midpoint) || []]
   const featureLayout = isHomepage || isAboutPage
+  const shouldAnimateHome = typeof className === 'string' && className.includes('home-industries-section')
+  const shouldAnimateAbout = typeof className === 'string' && className.includes('about-recruitment-verticals-section')
 
   return (
     <section className={cn(isAboutPage ? 'bg-[#fff8ee] py-[64px] md:py-[80px] xl:py-[120px]' : isHomepage ? 'bg-[#fff8ee] py-[80px] lg:py-[120px]' : 'bg-brand-background py-[48px] md:py-[64px]', className)}>
@@ -68,7 +70,7 @@ export function IndustriesSection({
               : 'max-w-[1500px] gap-10 lg:grid-cols-[1fr_1fr]',
         )}
       >
-        <div className={cn('flex flex-col justify-between', isAboutPage ? 'min-h-0 xl:min-h-[550px]' : isHomepage ? 'min-h-[300px] lg:min-h-[550px]' : 'min-h-[360px]')}>
+        <div className={cn('flex flex-col justify-between', isAboutPage ? 'min-h-0 xl:min-h-[550px]' : isHomepage ? 'min-h-[300px] lg:min-h-[550px]' : 'min-h-[360px]', shouldAnimateHome && 'anim-fade-right anim-stagger-item', shouldAnimateAbout && 'anim-left-part anim-fade-left')}>
           {featureLayout ? (
             <div className="max-w-[599px]">
               {block.eyebrow ? <p className="eyebrow-title text-[12px] font-[800] uppercase leading-[16px] tracking-[8px] text-[#2C368D]">{block.eyebrow}</p> : null}
@@ -86,7 +88,7 @@ export function IndustriesSection({
           )}
           <div>
             {featureLayout && block.description ? <p className={isAboutPage ? 'max-w-[569px] text-[16px] font-[400] leading-[26px] tracking-[0px] text-[#555555] md:text-[18px] md:leading-[28px]' : 'max-w-[569px] text-[18px] font-[400] leading-[28px] tracking-[0px] text-[#555555]'}>{block.description}</p> : null}
-          <div className={featureLayout ? 'mt-[32px] flex flex-wrap gap-[16px]' : 'mt-10 flex flex-wrap gap-4'}>
+          <div className={featureLayout ? 'about-two-btn mt-[32px] flex flex-wrap gap-[16px]' : 'about-two-btn mt-10 flex flex-wrap gap-4'}>
             {block.primaryAction?.url ? (
               <ButtonLink href={block.primaryAction.url} size={featureLayout ? 'md' : 'md'} className={featureLayout ? 'h-[50px] w-[160px] border-[0px] bg-[#FCA62B] px-[0px] text-[14px] font-[700] leading-[18px] tracking-[0.84px] text-[#262164] hover:bg-[#FCA62B]' : undefined}>
                 {block.primaryAction.label || 'Get Started'}
@@ -100,7 +102,7 @@ export function IndustriesSection({
           </div>
           </div>
         </div>
-        <div className={featureLayout ? 'grid border-l border-t border-[#CCCCCC] sm:grid-cols-2' : 'grid border-l border-t border-neutral-border sm:grid-cols-2'}>
+        <div className={cn(featureLayout ? 'grid border-l border-t border-[#CCCCCC] sm:grid-cols-2' : 'grid border-l border-t border-neutral-border sm:grid-cols-2', shouldAnimateHome && 'anim-fade-left anim-stagger-item anim-stagger-parent', shouldAnimateAbout && 'anim-right-part anim-fade-right')}>
           {columns.map((column, columnIndex) => (
             <div key={columnIndex}>
               {column.map((industry) => {
@@ -117,6 +119,7 @@ export function IndustriesSection({
                         : isHomepage
                           ? 'h-[60px] gap-[25px] border-[#CCCCCC]  pl-[10px] pr-[10px] text-[#262164] duration-300 hover:bg-[#ffffff] lg:h-[110px] lg:pl-[40px] lg:pr-[32px]'
                           : 'h-[82px] gap-4 border-neutral-border bg-neutral-white/40 px-7 text-brand-primary hover:bg-neutral-white',
+                      shouldAnimateHome && 'anim-fade-up anim-stagger-item',
                     )}
                   >
                     <Icon size={featureLayout ? 28 : 19} strokeWidth={featureLayout ? 2 : 2} className={featureLayout ? 'shrink-0 transition duration-300 group-hover:scale-[1.08]' : undefined} aria-hidden="true" />

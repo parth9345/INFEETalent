@@ -34,9 +34,9 @@ function HomepageAbout({ block, imageFirst, className }: { block: ContentImageBl
           !imageFirst && 'md:grid-cols-[1fr_430px]',
         )}
       >
-        <MediaPair block={block} isHomepage className={!imageFirst ? 'lg:order-2' : undefined} />
-        <div className="min-w-0 md:p-[0px] lg:pt-[90px]">
-          <h2 className="heading-section mb-[0px] max-w-[550px] text-[42px] font-[800] leading-[52px] tracking-[0px] text-[#000000] md:text-[48px] md:leading-[58px]">
+        <MediaPair block={block} isHomepage className={cn(!imageFirst ? 'lg:order-2' : undefined, 'anim-fade-right anim-stagger-item')} />
+        <div className="min-w-0 md:p-[0px] lg:pt-[90px] anim-fade-left anim-stagger-item">
+          <h2 className="heading-section mb-[0px] max-w-[540px] text-[42px] font-[800] leading-[52px] tracking-[0px] text-[#000000] md:text-[48px] md:leading-[58px]">
             <HomepageAboutHeading heading={block.heading} highlight={block.highlight} />
           </h2>
           <div className="h-[10px] w-full max-w-[472px] bg-[#fdeea1]" />

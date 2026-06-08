@@ -78,6 +78,40 @@ export const HeroBlock: Block = {
       },
     },
     {
+      name: 'careerCollage',
+      type: 'group',
+      label: 'Career page collage images',
+      admin: {
+        description: 'Optional images used by the Careers listing page hero collage.',
+      },
+      fields: [
+        {
+          name: 'imageOne',
+          type: 'upload',
+          relationTo: 'media',
+          admin: {
+            description: 'Left collage image on the Careers listing page.',
+          },
+        },
+        {
+          name: 'imageTwo',
+          type: 'upload',
+          relationTo: 'media',
+          admin: {
+            description: 'Middle collage image on the Careers listing page.',
+          },
+        },
+        {
+          name: 'imageThree',
+          type: 'upload',
+          relationTo: 'media',
+          admin: {
+            description: 'Right collage image on the Careers listing page.',
+          },
+        },
+      ],
+    },
+    {
       name: 'badgeLabel',
       type: 'text',
       defaultValue: 'Consultation Session',

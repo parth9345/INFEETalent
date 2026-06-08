@@ -32,7 +32,7 @@ export function BlogDetail({ post, relatedPosts = [] }: { post: BlogItem; relate
   return (
     <>
       <article className="bg-[#FFF8EE] text-[#151515]">
-        <section className="border-b border-[#CCCCCC] pb-[72px] pt-[28px] md:pb-[88px] md:pt-[34px] lg:pb-[120px] lg:pt-[40px] blog-detail-hero-section">
+        <section className="border-b border-[#CCCCCC] pb-[72px] pt-[28px] md:pb-[88px] md:pt-[34px] lg:pb-[120px] lg:pt-[40px] blog-detail-hero-section anim-full-section anim-fade-down">
           <Container className="grid max-w-[1500px] gap-[38px] px-[24px] lg:grid-cols-[660px_718px] lg:items-start lg:gap-[122px] lg:px-[0px]">
             <div className="lg:flex lg:min-h-[451px] lg:flex-col">
               <nav aria-label="Breadcrumb" className="text-[11px] font-[800] uppercase leading-[16px] tracking-[4px] text-[#555555]">
@@ -67,7 +67,7 @@ export function BlogDetail({ post, relatedPosts = [] }: { post: BlogItem; relate
           </Container>
         </section>
 
-        <section className="bg-[#FFF8EE] py-[86px] text-[#151515] md:py-[104px] lg:py-[120px] blog-detail-content-section">
+        <section className="bg-[#FFF8EE] py-[86px] text-[#151515] md:py-[104px] lg:py-[120px] blog-detail-content-section anim-full-section anim-fade-up">
           <Container className="grid max-w-[1500px] gap-[52px] px-[24px] lg:grid-cols-[896px_542px] lg:gap-[62px] lg:px-[0px]">
             <div>
               <BlogRichText
@@ -109,7 +109,7 @@ function BlogMeta({
   publishedDate: string
 }) {
   return (
-    <div className="mt-[38px] flex flex-wrap items-center gap-x-[18px] gap-y-[8px] text-[16px] font-[500] leading-[24px] tracking-[0px] text-[#555555] lg:mt-auto blog-detail-author-section">
+    <div className="mt-[38px] flex flex-wrap items-center gap-x-[18px] gap-y-[8px] text-[16px] font-[500] leading-[24px] tracking-[0px] text-[#555555] lg:mt-auto blog-detail-author-section anim-full-section anim-fade-up">
       <span className="inline-flex h-[36px] items-center rounded-[999px] border border-[#CCCCCC] px-[16px] text-[16px] font-[500] leading-[24px] tracking-[0px] text-[#555555]">
         {category}
       </span>
@@ -131,7 +131,7 @@ function RelatedBlogsSection({ posts }: { posts: BlogItem[] }) {
 
   return (
     <div className="page-blogs blog-detail-featured-scope">
-      <section className="bg-[linear-gradient(108deg,#040946_0%,#121967_56%,#223891_100%)] py-[72px] text-[#FFFFFF] lg:min-h-[1080px] lg:pb-[89px] lg:pt-[103px] blogs-featured-section blog-detail-related-section">
+      <section className="bg-[linear-gradient(108deg,#040946_0%,#121967_56%,#223891_100%)] py-[72px] text-[#FFFFFF] lg:min-h-[1080px] lg:pb-[89px] lg:pt-[103px] blogs-featured-section blog-detail-related-section anim-full-section anim-fade-up">
         <Container className="blogs-featured-container max-w-[1500px] px-[24px] lg:px-[0px]">
           <p className="blogs-featured-eyebrow text-[13px] font-[800] uppercase leading-[16px] tracking-[6px] text-[#FCA62B]">Featured Blogs</p>
           <h2 className="blogs-featured-title heading-section mt-[31px] text-[42px] font-[800] leading-[52px] tracking-[0px] md:text-[48px] md:leading-[58px]">
@@ -197,7 +197,7 @@ function FeaturedTextCard({ post }: { post: BlogItem }) {
   return (
     <article className="blog-featured-text-card group flex min-h-[354px] flex-col border border-[#303877] bg-[linear-gradient(135deg,#171F63_0%,#26308A_100%)] px-[32px] pb-[36px] pt-[38px] transition duration-300 lg:h-full">
       <FeaturedDate date={post.publishedAt} />
-      <h3 className="mt-[28px] line-clamp-3 text-[28px] font-[800] leading-[38px] tracking-[0px] text-[#FFFFFF]">
+      <h3 className="mt-[15px] line-clamp-3 text-[28px] font-[800] leading-[38px] tracking-[0px] text-[#FFFFFF]">
         {post.title}
       </h3>
       {post.excerpt ? (

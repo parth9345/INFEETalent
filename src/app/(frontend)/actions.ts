@@ -1,6 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
 
 import { getPayload } from '@/payload/getPayload'
 
@@ -12,6 +13,18 @@ const requiredString = (formData: FormData, key: string) => {
   }
 
   return value.trim()
+}
+
+const optionalString = (formData: FormData, key: string) => {
+  const value = formData.get(key)
+
+  if (typeof value !== 'string') {
+    return undefined
+  }
+
+  const trimmed = value.trim()
+
+  return trimmed.length ? trimmed : undefined
 }
 
 export async function submitContact(formData: FormData) {
@@ -31,6 +44,7 @@ export async function submitContact(formData: FormData) {
   })
 
   revalidatePath('/')
+  redirect('/thank-you')
 }
 
 export async function submitCareerApplication(formData: FormData) {
@@ -63,13 +77,18 @@ export async function submitCareerApplication(formData: FormData) {
       fullName: requiredString(formData, 'fullName'),
       email: requiredString(formData, 'email'),
       phone: requiredString(formData, 'phone'),
-      currentLocation: formData.get('currentLocation')?.toString().trim(),
-      experience: formData.get('experience')?.toString().trim(),
-      portfolioUrl: formData.get('portfolioUrl')?.toString().trim(),
+      positionAppliedFor: optionalString(formData, 'positionAppliedFor'),
+      experience: optionalString(formData, 'experience'),
+      currentSalary: optionalString(formData, 'currentSalary'),
+      expectedSalary: optionalString(formData, 'expectedSalary'),
+      noticePeriod: optionalString(formData, 'noticePeriod'),
+      currentLocation: optionalString(formData, 'currentLocation'),
+      portfolioUrl: optionalString(formData, 'portfolioUrl'),
       resume: resumeId,
       status: 'new',
     },
   })
 
   revalidatePath('/careers')
+  redirect('/thank-you')
 }

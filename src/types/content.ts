@@ -195,6 +195,11 @@ export type PageBlock =
       primaryAction?: Link
       secondaryAction?: Link
       media?: MediaLike
+      careerCollage?: {
+        imageOne?: MediaLike
+        imageTwo?: MediaLike
+        imageThree?: MediaLike
+      }
       badgeLabel?: string
       imagePosition?: 'left' | 'right'
       featureCard?: {
@@ -312,6 +317,31 @@ export type PageBlock =
       formDescription?: string
       sourceOptions?: { label: string }[]
       contactMethods?: ContactMethodItem[]
+      joinTeam?: {
+        enabled?: boolean
+        heading?: string
+        description?: string
+        action?: Link
+        yearsStat?: {
+          value?: string
+          label?: string
+        }
+        professionalsStat?: {
+          value?: string
+          label?: string
+        }
+        images?: {
+          portraitImage?: MediaLike
+          interviewImage?: MediaLike
+          advisorImage?: MediaLike
+        }
+        avatars?: {
+          avatarOne?: MediaLike
+          avatarTwo?: MediaLike
+          avatarThree?: MediaLike
+          avatarFour?: MediaLike
+        }
+      }
     })
   | (BlockBase<'career'> & {
       eyebrow?: string

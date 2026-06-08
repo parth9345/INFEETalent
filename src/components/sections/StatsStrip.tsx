@@ -47,10 +47,14 @@ export function StatsStrip({ block, isHomepage = false, className }: { block: St
           {block.items?.map((item, index) => (
             <div
               key={`${item.value}-${item.label}`}
-              className={`flex flex-col md:flex-row min-w-0 items-center gap-[10px] md:justify-center 2xl:absolute 2xl:top-[43px] 2xl:justify-start 2xl:gap-[14px] ${itemPositions[index] || '2xl:left-[140px]'}`}
+              className={cn(
+                'flex flex-col md:flex-row min-w-0 items-center gap-[10px] md:justify-center 2xl:absolute 2xl:top-[43px] 2xl:justify-start 2xl:gap-[14px]',
+                itemPositions[index] || '2xl:left-[140px]',
+                'anim-fade-up anim-stagger-item',
+              )}
             >
-              <strong className="shrink-0 text-[32px] font-[800] leading-[38px] tracking-[0px] md:text-[38px] md:leading-[46px] 2xl:text-[50px] 2xl:leading-[60px]">{item.value}</strong>
-              <span className="min-w-0 text-[13px] font-[700] leading-[18px] tracking-[0px] md:text-[16px] md:leading-[22px] 2xl:text-[25px] 2xl:leading-[30px]">{item.label}</span>
+              <strong className="shrink-0 text-[32px] font-[700] leading-[38px] tracking-[0px] md:text-[38px] md:leading-[46px] 2xl:text-[50px] 2xl:leading-[60px]">{item.value}</strong>
+              <span className="min-w-0 text-[13px] font-[600] leading-[18px] tracking-[0px] md:text-[16px] md:leading-[22px] 2xl:text-[25px] 2xl:leading-[30px]">{item.label}</span>
             </div>
           ))}
         </div>

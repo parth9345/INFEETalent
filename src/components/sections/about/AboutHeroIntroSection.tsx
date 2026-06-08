@@ -9,13 +9,13 @@ export function AboutHeroIntroSection({ block, className }: { block: HeroBlock; 
   return (
     <section id={sectionId(block.settings)} className={cn('overflow-hidden bg-[#FFF8EE] lg:min-h-[292px]', className)}>
       <Container className="grid max-w-[1500px] gap-[32px] px-[24px] pb-[52px] pt-[48px] md:gap-[40px] md:pb-[56px] md:pt-[50px] xl:grid-cols-[minmax(0,724px)_minmax(0,570px)] xl:justify-between xl:gap-[48px] xl:px-[24px] 2xl:gap-[206px] 2xl:px-[0px]">
-        <div className="min-w-0">
+        <div className="min-w-0 anim-left-part anim-fade-left">
           <h1 className="heading-section max-w-[724px] break-words text-[40px] font-[800] leading-[50px] tracking-[0px] text-[#000000] md:text-[50px] md:leading-[66px]">
             <AboutIntroHeading heading={block.heading} highlight={block.highlight} />
           </h1>
         </div>
         {block.description ? (
-          <p className="max-w-[570px] text-[16px] font-[400] leading-[26px] tracking-[0px] text-[#555555] md:text-[18px] md:leading-[30px] lg:pt-[43px]">
+          <p className="max-w-[570px] text-[16px] font-[400] leading-[26px] tracking-[0px] text-[#555555] md:text-[18px] md:leading-[30px] lg:pt-[43px] anim-right-part anim-fade-right">
             <AboutIntroDescription text={block.description} />
           </p>
         ) : null}

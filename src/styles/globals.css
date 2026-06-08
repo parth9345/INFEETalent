@@ -207,6 +207,27 @@ img {
 }
 
 
+.primary-cst-btn.submit-cst-btn {
+    font-size: 14px !important;
+    font-weight: 700 !important;
+}
+
+.contact-source-select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 58px;
+  background-image: url("data:image/svg+xml,%3Csvg width='14' height='14' viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M3 5L7 9L11 5' stroke='%23FFFFFF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 24px center;
+  background-size: 17px 17px;
+}
+
+.contact-source-select::-ms-expand {
+  display: none;
+}
+
+
+
 .heading-section {
   font-weight: 700;
 }
@@ -216,6 +237,11 @@ img {
     letter-spacing: 3px;
 }
 
+
+.careers-process-stats {
+    padding-inline: 70px !important;
+    background: linear-gradient( 180deg,#050947 0%,#162072 60%,#213791 100%);
+}
 
 
 
@@ -263,5 +289,46 @@ img {
     bottom: 0px;
     top: 0px; */
   }
+
+  .about-people-section .about-page-card{
+    display: none;
+  }
+
+  .about-Professionals-card {
+    height: fit-content !important;
+    padding: 15px !important;
+    width: 170px !important;
+}
+
+.consultation-session {
+    width: fit-content;
+    padding: 10px 20px;
+}
+
+.about-two-btn a {
+    font-size: 15px !important;
+    width: fit-content !important;
+    padding: 10px 20px !important;
+}
+
+.page-services .services-hero-section h1.heading-section span.absolute {
+    display: none;
+}
+
+section.blog-detail-content-section aside .primary-cst-btn
+ {
+    width: fit-content;
+    padding: 15px;
+}
+
+.page-careers .careers-hero-image-panel {
+    display: none;
+}
+
+.contact-cta-section .primary-cst-btn {
+    width: fit-content;
+    padding: 10px;
+}
+
 
 }

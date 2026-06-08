@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { HandCoins } from 'lucide-react'
 
 import { Container } from '@/components/ui/Container'
 import { sectionId } from '@/lib/sections'
@@ -10,6 +11,8 @@ type StatsBlock = Extract<PageBlock, { blockType: 'statsStrip' }>
 const statIconSources: Record<string, string> = {
   Building2: '/figma/about-stats-building.png',
   Globe: '/figma/about-stats-globe-shield.png',
+  People: '/figma/about-stats-users.png',
+  Quality: '/figma/about-stats-globe-shield.png',
   Star: '/figma/about-stats-nps.png',
   Users: '/figma/about-stats-users.png',
 }
@@ -38,7 +41,7 @@ export function AboutStatsSection({ block, className }: { block: StatsBlock; cla
                 <div className="flex h-[58px] w-[82px] items-center justify-center text-[#151515] transition duration-300 group-hover:scale-[1.05] group-hover:text-[#2C368D] lg:h-[72px] lg:w-[88px]">
                   <StatIcon name={item.icon} />
                 </div>
-                <p className="mt-[28px] text-[38px] font-[800] leading-[46px] tracking-[0px] text-[#151515] md:text-[44px] md:leading-[54px] xl:mt-[60px] xl:text-[50px] xl:leading-[60px]">
+                <p className="mt-[28px] text-[38px] font-[700] leading-[46px] tracking-[0px] text-[#151515] md:text-[44px] md:leading-[54px] xl:mt-[60px] xl:text-[50px] xl:leading-[60px]">
                   {item.value}
                 </p>
                 <p className="mt-[18px] max-w-[238px] text-[16px] font-[400] leading-[26px] tracking-[0px] text-[#555555] md:text-[18px] md:leading-[30px] xl:mt-[34px]">
@@ -54,6 +57,10 @@ export function AboutStatsSection({ block, className }: { block: StatsBlock; cla
 }
 
 function StatIcon({ name }: { name?: string }) {
+  if (name === 'HandCoins' || name === 'Hand') {
+    return <HandCoins className="h-[58px] w-[82px] lg:h-[72px] lg:w-[88px]" strokeWidth={1.5} aria-hidden="true" />
+  }
+
   const src = name ? statIconSources[name] : undefined
 
   return (

@@ -284,6 +284,9 @@ async function run() {
     teamOffice: await ensureMedia('Team office collaboration', figmaAssets.teamOffice),
     profileCard: await ensureMedia('Profile testimonial portrait', figmaAssets.profileCard),
     avatarOne: await ensureMedia('Client avatar portrait', figmaAssets.avatarOne),
+    avatarTwo: await ensureMedia('Client avatar portrait 2', figmaAssets.avatarTwo),
+    avatarThree: await ensureMedia('Client avatar portrait 3', figmaAssets.avatarThree),
+    avatarFour: await ensureMedia('Client avatar portrait 4', figmaAssets.avatarFour),
     testimonialVideo: await ensureMedia('Testimonial video thumbnail', figmaAssets.testimonialVideo),
     aboutTall: await ensureMedia('About office tall', figmaAssets.aboutOfficeTall),
     aboutSide: await ensureMedia('About office side', figmaAssets.aboutOfficeSide),
@@ -596,11 +599,11 @@ async function run() {
         heading: 'Global Impact Stats',
         description: 'Measurable outcomes from offshore recruitment delivery teams built for scale.',
         items: [
-          { icon: 'Globe', value: '20+', label: 'Trusted Partners Globally' },
-          { icon: 'Users', value: '3000+', label: 'Team Members operating from global delivery centres' },
+          { icon: 'Quality', value: '20+', label: 'Trusted Partners Globally' },
+          { icon: 'People', value: '3000+', label: 'Team Members operating from global delivery centres' },
           { icon: 'Building2', value: '50+', label: 'Industries served across US & UK markets' },
-          { icon: 'Globe', value: '3', label: 'State-of-the-art Delivery Centers' },
-          { icon: 'Star', value: '50+', label: 'Net Promoter Score (NPS)' },
+          { icon: 'Quality', value: '3', label: 'State-of-the-art Delivery Centers' },
+          { icon: 'HandCoins', value: '50+', label: 'Net Promoter Score (NPS)' },
         ],
       },
       {
@@ -710,6 +713,36 @@ async function run() {
           { label: 'AUS', value: '+61 740 620 017', url: 'tel:+61740620017' },
           { label: 'Email', value: 'info@infetalent.com', url: 'mailto:info@infetalent.com' },
         ],
+        joinTeam: {
+          enabled: true,
+          heading: 'Looking To Join Our Global Team?',
+          description:
+            "We are always searching for ambitious, globally-minded professionals to join our state-of-the-art delivery centers. If you are passionate about talent acquisition and want to build a rewarding career with an industry leader, let's grow together.",
+          action: {
+            label: 'Explore Career Opportunities',
+            url: '/careers',
+            newTab: false,
+          },
+          yearsStat: {
+            value: '20+',
+            label: 'Years of Experience',
+          },
+          professionalsStat: {
+            value: '3000+',
+            label: 'Professionals Joined',
+          },
+          images: {
+            portraitImage: media.avatarOne.id,
+            interviewImage: media.hero.id,
+            advisorImage: media.aboutSide.id,
+          },
+          avatars: {
+            avatarOne: media.avatarOne.id,
+            avatarTwo: media.avatarTwo.id,
+            avatarThree: media.avatarThree.id,
+            avatarFour: media.avatarFour.id,
+          },
+        },
       },
     ],
     seo: {
@@ -894,6 +927,12 @@ async function run() {
         eyebrow: 'Careers',
         heading: 'Build Your Career With A Global Recruitment Delivery Team.',
         description: 'Join a team that values ownership, communication, and the craft of connecting people to opportunity.',
+        media: media.hero.id,
+        careerCollage: {
+          imageOne: media.hero.id,
+          imageTwo: media.aboutSide.id,
+          imageThree: media.teamOffice.id,
+        },
       },
       {
         blockType: 'career',

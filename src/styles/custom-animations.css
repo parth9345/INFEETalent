@@ -1,0 +1,93 @@
+:root {
+  --anim-duration: 700ms;
+  --anim-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --anim-distance: 28px;
+  --anim-stagger-delay: 100ms;
+}
+
+.anim-fade-up,
+.anim-fade-down,
+.anim-fade-left,
+.anim-fade-right,
+.anim-fade-in,
+.anim-scale-in {
+  --anim-translate-x: 0px;
+  --anim-translate-y: 0px;
+  --anim-scale: 1;
+
+  opacity: 0;
+  transform: translate3d(var(--anim-translate-x), var(--anim-translate-y), 0) scale(var(--anim-scale));
+  transition-duration: var(--anim-duration);
+  transition-property: opacity, transform;
+  transition-timing-function: var(--anim-ease);
+  will-change: opacity, transform;
+}
+
+.anim-fade-up {
+  --anim-translate-y: var(--anim-distance);
+}
+
+.anim-fade-down {
+  --anim-translate-y: calc(var(--anim-distance) * -1);
+}
+
+.anim-fade-left {
+  --anim-translate-x: var(--anim-distance);
+}
+
+.anim-fade-right {
+  --anim-translate-x: calc(var(--anim-distance) * -1);
+}
+
+.anim-scale-in {
+  --anim-scale: 0.96;
+}
+
+.anim-stagger-item {
+  transition-delay: calc(var(--anim-stagger-index, 0) * var(--anim-stagger-delay));
+}
+
+.anim-fade-up[data-anim-visible='true'],
+.anim-fade-down[data-anim-visible='true'],
+.anim-fade-left[data-anim-visible='true'],
+.anim-fade-right[data-anim-visible='true'],
+.anim-fade-in[data-anim-visible='true'],
+.anim-scale-in[data-anim-visible='true'],
+.anim-stagger-parent[data-anim-visible='true'] .anim-fade-up.anim-stagger-item,
+.anim-stagger-parent[data-anim-visible='true'] .anim-fade-down.anim-stagger-item,
+.anim-stagger-parent[data-anim-visible='true'] .anim-fade-left.anim-stagger-item,
+.anim-stagger-parent[data-anim-visible='true'] .anim-fade-right.anim-stagger-item,
+.anim-stagger-parent[data-anim-visible='true'] .anim-fade-in.anim-stagger-item,
+.anim-stagger-parent[data-anim-visible='true'] .anim-scale-in.anim-stagger-item {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-fade-up,
+  .anim-fade-down,
+  .anim-fade-left,
+  .anim-fade-right,
+  .anim-fade-in,
+  .anim-scale-in,
+  .anim-stagger-item {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    transition-delay: 0ms;
+    will-change: auto;
+  }
+}
+
+@media (scripting: none) {
+  .anim-fade-up,
+  .anim-fade-down,
+  .anim-fade-left,
+  .anim-fade-right,
+  .anim-fade-in,
+  .anim-scale-in {
+    opacity: 1;
+    transform: none;
+  }
+}

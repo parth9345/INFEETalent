@@ -8,9 +8,9 @@ import {
   TrendingUp,
   UsersRound,
 } from 'lucide-react'
-import Image from 'next/image'
 
 import { Container } from '@/components/ui/Container'
+import { DotLottieAnimation } from '@/components/ui/DotLottieAnimation'
 import { sectionId } from '@/lib/sections'
 import { cn } from '@/lib/utils'
 import type { PageBlock } from '@/types/content'
@@ -58,7 +58,7 @@ export function AboutAdvantageSection({ block, className }: { block: AdvantageBl
               <h3 className="mt-[32px] text-[22px] font-[800] leading-[28px] tracking-[0px] text-[#FFFFFF] md:text-[24px] md:leading-[30px] xl:mt-[45px]">
                 {item.title}
               </h3>
-              <p className="mt-[18px] max-w-[400px] text-[16px] font-[400] leading-[26px] tracking-[0px] text-[#FFFFFF] md:text-[18px] md:leading-[28px] xl:text-[20px] xl:leading-[30px]">
+              <p className="mt-[18px] max-w-[400px] text-[16px] font-[400] leading-[26px] tracking-[0px] text-[#FFFFFF] md:text-[17px] md:leading-[28px]">
                 {item.description}
               </p>
             </article>
@@ -92,15 +92,7 @@ function HeadingHighlight({ heading, highlight }: { heading: string; highlight?:
 
 function CenterGraphic() {
   return (
-    <Image
-      src="/figma/about-advantage-animation.gif"
-      alt=""
-      width={250}
-      height={134}
-      unoptimized
-      className="pointer-events-none absolute left-1/2 top-1/2 h-auto w-[250px] -translate-x-1/2 -translate-y-1/2 opacity-[0.14]"
-      aria-hidden="true"
-    />
+    <DotLottieAnimation className="pointer-events-none absolute left-1/2 top-1/2 h-[300px] w-[300px] -translate-x-1/2 -translate-y-1/2" />
   )
 }
 

@@ -8,9 +8,9 @@ import {
   TrendingUp,
   UsersRound,
 } from 'lucide-react'
-import Image from 'next/image'
 
 import { Container } from '@/components/ui/Container'
+import { DotLottieAnimation } from '@/components/ui/DotLottieAnimation'
 import { sectionId } from '@/lib/sections'
 import { cn } from '@/lib/utils'
 import type { PageBlock } from '@/types/content'
@@ -25,13 +25,15 @@ const cardPositions = [
 ]
 
 export function AdvantageSection({ block, className }: { block: AdvantageBlock; className?: string }) {
+  const isHome = typeof className === 'string' && className.includes('home-advantage-section')
+
   return (
     <section
       id={sectionId(block.settings)}
       className={cn('relative overflow-hidden bg-[linear-gradient(108deg,#050948_0%,#121967_56%,#243C91_100%)] py-[72px] text-[#FFFFFF] xl:h-[1040px] xl:py-[0px]', className)}
     >
       <Container className="max-w-[1500px] px-[24px] xl:px-[24px] xl:pt-[126px] 2xl:px-[0px]">
-        <div className="grid gap-[36px] xl:grid-cols-[minmax(0,500px)_minmax(0,572px)] xl:justify-between xl:gap-[48px]">
+        <div className={cn('grid gap-[36px] xl:grid-cols-[minmax(0,500px)_minmax(0,572px)] xl:justify-between xl:gap-[48px]', isHome && 'anim-fade-up anim-stagger-item')}>
           <h2 className="heading-section max-w-[500px] break-words text-[40px] font-[800] leading-[52px] tracking-[0px] text-[#FFFFFF] md:text-[50px] md:leading-[66px]">
             <HeadingHighlight heading={block.heading} highlight={block.highlight} />
           </h2>
@@ -42,27 +44,19 @@ export function AdvantageSection({ block, className }: { block: AdvantageBlock; 
           ) : null}
         </div>
 
-        <div className="relative mt-[44px] grid grid-cols-1 border-l border-t border-[#FFFFFF]/55 sm:grid-cols-2 xl:mt-[34px] xl:h-[631px] xl:grid-cols-3 xl:grid-rows-[315px_316px]">
+        <div className={cn('relative mt-[44px] grid grid-cols-1 border-l border-t border-[#FFFFFF]/55 sm:grid-cols-2 xl:mt-[34px] xl:h-[631px] xl:grid-cols-3 xl:grid-rows-[315px_316px]', isHome && 'anim-fade-up anim-stagger-item anim-stagger-parent')}>
           <div className="relative hidden border-b border-r border-[#FFFFFF]/55 xl:col-start-2 xl:row-span-2 xl:block">
-            <div
-              className="pointer-events-none absolute left-1/2 top-1/2 h-[134px] w-[250px] -translate-x-1/2 -translate-y-1/2 opacity-[0.12]"
-              aria-hidden="true"
-            >
-              <Image
-                src="/figma/about-advantage-animation.gif"
-                alt=""
-                width={250}
-                height={134}
-                unoptimized
-                className="h-[134px] w-[250px] object-contain"
-              />
-            </div>
+            <DotLottieAnimation className="pointer-events-none absolute left-1/2 top-1/2 h-[300px] w-[300px] -translate-x-1/2 -translate-y-1/2" />
           </div>
 
           {block.items?.slice(0, 4).map((item, index) => (
             <article
               key={`${item.title}-${index}`}
-              className={`group flex min-h-[280px] flex-col border-b border-r border-[#FFFFFF]/55 px-[24px] pb-[32px] pt-[42px] transition duration-300 hover:bg-[#FFFFFF]/[0.04] md:min-h-[300px] md:px-[40px] md:pt-[52px] xl:min-h-0 xl:pb-[0px] xl:pt-[52px] ${cardPositions[index] || ''}`}
+              className={cn(
+                'group flex min-h-[280px] flex-col border-b border-r border-[#FFFFFF]/55 px-[24px] pb-[32px] pt-[42px] transition duration-300 hover:bg-[#FFFFFF]/[0.04] md:min-h-[300px] md:px-[40px] md:pt-[52px] xl:min-h-0 xl:pb-[0px] xl:pt-[52px]',
+                cardPositions[index] || '',
+                isHome && 'anim-scale-in anim-stagger-item',
+              )}
             >
               <div className="h-[76px] w-[90px] text-[#FFFFFF] transition duration-300 group-hover:scale-[1.05]">
                 <AdvantageIcon name={item.icon} />
@@ -70,7 +64,7 @@ export function AdvantageSection({ block, className }: { block: AdvantageBlock; 
               <h3 className="mt-[32px] text-[22px] font-[800] leading-[28px] tracking-[0px] text-[#FFFFFF] md:text-[24px] md:leading-[30px] xl:mt-[45px]">
                 {item.title}
               </h3>
-              <p className="mt-[18px] max-w-[430px] text-[16px] font-[400] leading-[26px] tracking-[0px] text-[#FFFFFF] md:text-[18px] md:leading-[28px] xl:text-[20px] xl:leading-[30px]">
+              <p className="mt-[18px] max-w-[430px] text-[16px] font-[400] leading-[26px] tracking-[0px] text-[#FFFFFF] md:text-[18px] md:leading-[28px]">
                 {item.description}
               </p>
             </article>

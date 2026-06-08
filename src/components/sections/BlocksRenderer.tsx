@@ -80,7 +80,7 @@ export function BlocksRenderer({ blocks, variant = 'default' }: BlocksRendererPr
           case 'cta':
             return <CTASection key={key} block={block} />
           case 'blogListing':
-            return <InsightsSection key={key} block={block} isHomepage={isHome} />
+            return <InsightsSection key={key} block={block} isHomepage={isHome} className={className} />
           case 'team':
             return <TeamSection key={key} block={block} />
           case 'faq':
@@ -107,25 +107,27 @@ function getSectionClassName(block: PageBlock, variant: BlocksRendererProps['var
   if (variant === 'home') {
     switch (block.blockType) {
       case 'hero':
-        return 'home-hero-section'
+        return 'home-hero-section anim-fade-in anim-stagger-parent'
       case 'statsStrip':
-        return 'home-impact-stats-section'
+        return 'home-impact-stats-section anim-fade-up anim-stagger-parent'
       case 'contentImage':
-        return 'home-about-section'
+        return 'home-about-section anim-fade-up anim-stagger-parent'
       case 'servicesGrid':
-        return 'home-services-section'
+        return 'home-services-section anim-fade-up anim-stagger-parent'
       case 'industries':
-        return 'home-industries-section'
+        return 'home-industries-section anim-fade-up anim-stagger-parent'
       case 'testimonials':
-        return 'home-testimonials-section'
+        return 'home-testimonials-section anim-fade-in anim-stagger-parent'
       case 'awards':
-        return 'home-awards-section'
+        return 'home-awards-section anim-fade-up anim-stagger-parent'
       case 'advantage':
-        return 'home-advantage-section'
+        return 'home-advantage-section anim-fade-up anim-stagger-parent'
       case 'contact':
-        return 'home-contact-section'
+        return 'home-contact-section anim-fade-up anim-stagger-parent'
       case 'certifications':
-        return 'home-certifications-section'
+        return 'home-certifications-section anim-fade-up anim-stagger-parent'
+      case 'blogListing':
+        return 'home-insights-section anim-fade-up anim-stagger-parent'
       default:
         return undefined
     }
@@ -136,21 +138,21 @@ function getSectionClassName(block: PageBlock, variant: BlocksRendererProps['var
       case 'hero':
         return block.variant === 'darkSplit' ? 'about-bridge-section' : 'about-hero-section'
       case 'statsStrip':
-        return 'about-impact-stats-section'
+        return 'about-impact-stats-section anim-full-section anim-fade-down'
       case 'contentImage':
         return block.settings?.background === 'blue' ? 'about-people-section' : undefined
       case 'industries':
         return 'about-recruitment-verticals-section'
       case 'testimonials':
-        return 'about-testimonials-section'
+        return 'about-testimonials-section anim-full-section anim-fade-up'
       case 'awards':
-        return 'about-awards-section'
+        return 'about-awards-section anim-full-section anim-fade-up'
       case 'advantage':
-        return 'about-advantage-section'
+        return 'about-advantage-section anim-full-section anim-fade-up'
       case 'contact':
         return 'about-contact-section'
       case 'certifications':
-        return 'about-certifications-section'
+        return 'about-certifications-section anim-full-section anim-fade-up'
       default:
         return undefined
     }

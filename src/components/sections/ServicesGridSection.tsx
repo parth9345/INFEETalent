@@ -23,7 +23,7 @@ export async function ServicesGridSection({ block, isHomepage = false, className
     <section id={sectionId(block.settings)} className={cn(isHomepage ? 'bg-[#fff8ee] py-[10px] border-y border-[#CCCCCC] lg:py-[120px]' : sectionClasses(block.settings, { defaultBackground: 'cream' }), className)}>
       <Container className={isHomepage ? 'max-w-[1500px] px-[10px] lg:px-[0px]' : undefined}>
         {isHomepage ? (
-          <div className="mb-[20px] lg:mb-[64px] w-full max-w-[764px]">
+          <div className="mb-[20px] lg:mb-[64px] w-full max-w-[764px] anim-fade-up anim-stagger-item">
             <h2 className="heading-section relative max-w-[575px] text-[50px] font-[800] capitalize leading-[66px] tracking-[-1.5px] text-[#000000]">
               <span className="relative z-[1]">{block.heading}</span>
               <span className="absolute bottom-[0px] left-[0px] z-0 h-[23px] w-full bg-gradient-to-t from-[rgba(251,223,45,0.4)] from-[40%] to-[rgba(251,223,45,0)] to-[40%]" aria-hidden="true" />
@@ -39,9 +39,15 @@ export async function ServicesGridSection({ block, isHomepage = false, className
           />
         )}
         {items.length ? (
-          <div className={cn('grid border-l border-t border-[#CCCCCC]', gridClass)}>
+          <div className={cn('grid border-l border-t border-[#CCCCCC]', gridClass, isHomepage && 'anim-fade-up anim-stagger-item anim-stagger-parent')}>
             {items.map((service) => (
-              <ServiceCard key={service.slug || service.title} service={service} showIcon={isHomepage ? false : block.showIcons !== false} variant={isHomepage ? 'home' : 'default'} />
+              <ServiceCard
+                key={service.slug || service.title}
+                service={service}
+                showIcon={isHomepage ? false : block.showIcons !== false}
+                variant={isHomepage ? 'home' : 'default'}
+                className={isHomepage ? 'anim-fade-up anim-stagger-item' : undefined}
+              />
             ))}
           </div>
         ) : null}

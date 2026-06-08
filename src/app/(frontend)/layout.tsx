@@ -6,15 +6,17 @@ import { FloatingActions } from '@/components/layout/FloatingActions'
 import { Footer } from '@/components/layout/Footer'
 import { Navbar } from '@/components/layout/Navbar'
 import { JsonLd } from '@/components/seo/JsonLd'
+import { ViewportAnimationObserver } from '@/components/ViewportAnimationObserver'
 import { getSiteSettings } from '@/lib/payload-queries'
 import { organizationSchema, websiteSchema } from '@/lib/seo'
 import { siteConfig } from '@/lib/site'
 import '@/styles/globals.css'
+import '@/styles/custom-animations.css'
 import '@/styles/custom-responsive.css'
 
 const manrope = Manrope({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
+  weight: ['200', '300', '400', '500', '600', '700', '800'],
   display: 'swap',
   variable: '--font-manrope',
 })
@@ -45,6 +47,7 @@ export default async function FrontendLayout({ children }: FrontendLayoutProps) 
         <main id="main-content">{children}</main>
         <Footer />
         <FloatingActions />
+        <ViewportAnimationObserver />
         <JsonLd data={[organizationSchema(settings), websiteSchema(settings)]} />
       </body>
     </html>

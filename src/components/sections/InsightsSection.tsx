@@ -4,21 +4,21 @@ import { Container } from '@/components/ui/Container'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { getBlogs } from '@/lib/payload-queries'
 import { sectionClasses, sectionId } from '@/lib/sections'
-import { relationItems } from '@/lib/utils'
+import { cn, relationItems } from '@/lib/utils'
 import type { BlogItem, PageBlock } from '@/types/content'
 
 type BlogListingBlock = Extract<PageBlock, { blockType: 'blogListing' }>
 
-export async function InsightsSection({ block, isHomepage = false }: { block: BlogListingBlock; isHomepage?: boolean }) {
+export async function InsightsSection({ block, isHomepage = false, className }: { block: BlogListingBlock; isHomepage?: boolean; className?: string }) {
   const limit = block.limit || 3
   const selectedPosts = relationItems<BlogItem>(block.posts)
   const items = selectedPosts.length ? selectedPosts : await getBlogs(limit)
   const posts = items.slice(0, limit)
 
   return (
-    <section id={sectionId(block.settings)} className={isHomepage ? 'bg-[#FFF8EE] py-[80px] lg:py-[120px]' : sectionClasses(block.settings, { defaultBackground: 'cream' })}>
+    <section id={sectionId(block.settings)} className={cn(isHomepage ? 'bg-[#FFF8EE] py-[80px] lg:py-[120px]' : sectionClasses(block.settings, { defaultBackground: 'cream' }), className)}>
       <Container className={isHomepage ? 'max-w-[1500px] px-[24px] lg:px-[0px]' : undefined}>
-        <div className={isHomepage ? 'mb-[64px] grid gap-[32px] lg:grid-cols-[742px_742px] lg:gap-[16px]' : 'mb-10 grid gap-8 lg:grid-cols-2'}>
+        <div className={cn(isHomepage ? 'mb-[64px] grid gap-[32px] lg:grid-cols-[742px_742px] lg:gap-[16px]' : 'mb-10 grid gap-8 lg:grid-cols-2', isHomepage && 'anim-fade-up anim-stagger-item')}>
           {isHomepage ? (
             <h2 className="heading-section text-[50px] font-[800] leading-[66px] tracking-[-1.5px] text-[#000000]">{block.heading}</h2>
           ) : (
@@ -26,7 +26,7 @@ export async function InsightsSection({ block, isHomepage = false }: { block: Bl
           )}
           {block.description ? <p className={isHomepage ? 'max-w-[742px] pt-[5px] text-[18px] font-[400] leading-[28px] tracking-[0px] text-[#555555]' : 'max-w-2xl text-body14 leading-[22px] text-neutral-muted md:text-body16 md:leading-[26px]'}>{block.description}</p> : null}
         </div>
-        <div className={isHomepage ? 'grid gap-[32px] md:grid-cols-3' : 'grid gap-7 md:grid-cols-3'}>
+        <div className={cn(isHomepage ? 'grid gap-[32px] md:grid-cols-3' : 'grid gap-7 md:grid-cols-3', isHomepage && 'anim-fade-up anim-stagger-item anim-stagger-parent')}>
           {posts.map((post, index) => (
             <BlogCard
               key={post.slug || post.title}
@@ -35,6 +35,7 @@ export async function InsightsSection({ block, isHomepage = false }: { block: Bl
               showImage={block.showFeaturedImages !== false}
               showExcerpt={block.showExcerpts !== false}
               variant={isHomepage ? 'home' : 'default'}
+              className={isHomepage ? 'anim-fade-up anim-stagger-item' : undefined}
             />
           ))}
         </div>

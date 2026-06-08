@@ -241,6 +241,23 @@ export interface Page {
          */
         media?: (number | null) | Media;
         /**
+         * Optional images used by the Careers listing page hero collage.
+         */
+        careerCollage?: {
+          /**
+           * Left collage image on the Careers listing page.
+           */
+          imageOne?: (number | null) | Media;
+          /**
+           * Middle collage image on the Careers listing page.
+           */
+          imageTwo?: (number | null) | Media;
+          /**
+           * Right collage image on the Careers listing page.
+           */
+          imageThree?: (number | null) | Media;
+        };
+        /**
          * Small floating label used on the split hero visual.
          */
         badgeLabel?: string | null;
@@ -900,6 +917,47 @@ export interface Page {
             }[]
           | null;
         /**
+         * Editable content for the blue "Looking To Join Our Global Team?" section on the Contact page.
+         */
+        joinTeam?: {
+          enabled?: boolean | null;
+          heading?: string | null;
+          description?: string | null;
+          /**
+           * Optional call-to-action link. Leave blank to hide this button.
+           */
+          action?: {
+            /**
+             * Button text shown to visitors.
+             */
+            label?: string | null;
+            /**
+             * Use a relative path like /contact, an anchor like #contact, or a full URL.
+             */
+            url?: string | null;
+            newTab?: boolean | null;
+          };
+          yearsStat?: {
+            value?: string | null;
+            label?: string | null;
+          };
+          professionalsStat?: {
+            value?: string | null;
+            label?: string | null;
+          };
+          images?: {
+            portraitImage?: (number | null) | Media;
+            interviewImage?: (number | null) | Media;
+            advisorImage?: (number | null) | Media;
+          };
+          avatars?: {
+            avatarOne?: (number | null) | Media;
+            avatarTwo?: (number | null) | Media;
+            avatarThree?: (number | null) | Media;
+            avatarFour?: (number | null) | Media;
+          };
+        };
+        /**
          * Internal notification recipients for future email workflows.
          */
         recipients?:
@@ -1460,8 +1518,12 @@ export interface CareerApplication {
   fullName: string;
   email: string;
   phone: string;
+  positionAppliedFor?: string | null;
   currentLocation?: string | null;
   experience?: string | null;
+  currentSalary?: string | null;
+  expectedSalary?: string | null;
+  noticePeriod?: string | null;
   portfolioUrl?: string | null;
   resume?: (number | null) | Media;
   status?: ('new' | 'shortlisted' | 'rejected') | null;
@@ -1728,6 +1790,13 @@ export interface PagesSelect<T extends boolean = true> {
                   };
               imagePosition?: T;
               media?: T;
+              careerCollage?:
+                | T
+                | {
+                    imageOne?: T;
+                    imageTwo?: T;
+                    imageThree?: T;
+                  };
               badgeLabel?: T;
               featureCard?:
                 | T
@@ -2093,6 +2162,47 @@ export interface PagesSelect<T extends boolean = true> {
                     url?: T;
                     id?: T;
                   };
+              joinTeam?:
+                | T
+                | {
+                    enabled?: T;
+                    heading?: T;
+                    description?: T;
+                    action?:
+                      | T
+                      | {
+                          label?: T;
+                          url?: T;
+                          newTab?: T;
+                        };
+                    yearsStat?:
+                      | T
+                      | {
+                          value?: T;
+                          label?: T;
+                        };
+                    professionalsStat?:
+                      | T
+                      | {
+                          value?: T;
+                          label?: T;
+                        };
+                    images?:
+                      | T
+                      | {
+                          portraitImage?: T;
+                          interviewImage?: T;
+                          advisorImage?: T;
+                        };
+                    avatars?:
+                      | T
+                      | {
+                          avatarOne?: T;
+                          avatarTwo?: T;
+                          avatarThree?: T;
+                          avatarFour?: T;
+                        };
+                  };
               recipients?:
                 | T
                 | {
@@ -2401,8 +2511,12 @@ export interface CareerApplicationsSelect<T extends boolean = true> {
   fullName?: T;
   email?: T;
   phone?: T;
+  positionAppliedFor?: T;
   currentLocation?: T;
   experience?: T;
+  currentSalary?: T;
+  expectedSalary?: T;
+  noticePeriod?: T;
   portfolioUrl?: T;
   resume?: T;
   status?: T;

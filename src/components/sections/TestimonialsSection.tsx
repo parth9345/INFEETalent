@@ -27,10 +27,11 @@ export async function TestimonialsSection({
   const selectedItems = relationItems<TestimonialItem>(block.items)
   const testimonials = selectedItems.length ? selectedItems : await getTestimonials(4)
   const gridOnly = block.display === 'grid'
+  const shouldAnimate = typeof className === 'string' && className.includes('home-testimonials-section')
 
   return (
     <section id={sectionId(block.settings)} className={cn(isHomepage ? 'bg-[#080D4D] text-[#FFFFFF]' : sectionClasses(block.settings, { defaultBackground: 'blue' }), className)}>
-      {isHomepage ? <HomeVoices block={block} testimonials={testimonials} isAboutPage={isAboutPage} /> : null}
+      {isHomepage ? <HomeVoices block={block} testimonials={testimonials} isAboutPage={isAboutPage} shouldAnimate={shouldAnimate} /> : null}
       {!isHomepage ? (
       <Container className={gridOnly ? 'space-y-10' : 'grid gap-10 lg:grid-cols-[0.8fr_1fr]'}>
         <div>
@@ -71,10 +72,12 @@ function HomeVoices({
   block,
   testimonials,
   isAboutPage = false,
+  shouldAnimate = false,
 }: {
   block: TestimonialsBlock
   testimonials: TestimonialItem[]
   isAboutPage?: boolean
+  shouldAnimate?: boolean
 }) {
   const first = testimonials[0]
   const second = testimonials[1] || testimonials[0]
@@ -83,7 +86,7 @@ function HomeVoices({
   return (
     <div className={isAboutPage ? 'relative overflow-hidden bg-[linear-gradient(108deg,#050948_0%,#121967_56%,#243C91_100%)] py-[64px] md:py-[80px] xl:py-[96px]' : 'relative overflow-hidden bg-[linear-gradient(108deg,#050948_0%,#121967_56%,#243C91_100%)] py-[80px] lg:min-h-[1322px] lg:py-[96px]'}>
       <Container className={isAboutPage ? 'relative max-w-[1500px] px-[24px] 2xl:px-[0px]' : 'relative max-w-[1500px] px-[24px] lg:px-[0px]'}>
-        <div className="max-w-[672px]">
+        <div className={cn('max-w-[672px]', shouldAnimate && 'anim-fade-up anim-stagger-item')}>
           {block.eyebrow ? <p className="eyebrow-title text-[12px] font-[800] uppercase leading-[16px] tracking-[6px] text-[#FCA62B]">{block.eyebrow}</p> : null}
           <h2 className={isAboutPage ? 'heading-section relative mt-[24px] max-w-[672px] text-[36px] font-[800] capitalize leading-[46px] tracking-[0px] text-[#FFFFFF] md:text-[44px] md:leading-[58px] xl:text-[50px] xl:leading-[66px] xl:tracking-[-1.5px]' : 'heading-section relative mt-[24px] max-w-[672px] text-[50px] font-[800] capitalize leading-[66px] tracking-[-1.5px] text-[#FFFFFF]'}>
             <span className="relative z-[1]">{block.heading}</span>
@@ -92,15 +95,15 @@ function HomeVoices({
         </div>
 
         <div className={isAboutPage ? 'mt-[48px] grid gap-[24px] md:mt-[56px] xl:mt-[70px]' : 'mt-[70px] grid gap-[24px] lg:mt-[70px]'}>
-          <div className={isAboutPage ? 'grid gap-[24px] md:grid-cols-2 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)_minmax(0,0.75fr)]' : 'grid gap-[24px] lg:grid-cols-[605px_521px_326px]'}>
-            <VideoTestimonialTile media={block.featuredMedia || first?.avatar} fallbackSrc={figmaAssets.testimonialVideo} alt={first?.name || 'Partner testimonial video'} className={isAboutPage ? 'md:h-[360px] xl:h-[439px]' : 'lg:h-[439px]'} />
-            {first ? <VoiceQuoteCard item={first} className={isAboutPage ? 'md:h-[360px] xl:h-[439px]' : 'lg:h-[439px]'} wide isAboutPage={isAboutPage} /> : null}
-            <VideoTestimonialTile media={second?.avatar} fallbackSrc={figmaAssets.avatarOne} alt={second?.name || 'Partner testimonial video'} className={isAboutPage ? 'md:h-[360px] xl:h-[439px]' : 'lg:h-[439px]'} />
+          <div className={cn(isAboutPage ? 'grid gap-[24px] md:grid-cols-2 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)_minmax(0,0.75fr)]' : 'grid gap-[24px] lg:grid-cols-[605px_521px_326px]', shouldAnimate && 'anim-fade-up anim-stagger-item anim-stagger-parent')}>
+            <VideoTestimonialTile media={block.featuredMedia || first?.avatar} fallbackSrc={figmaAssets.testimonialVideo} alt={first?.name || 'Partner testimonial video'} className={cn(isAboutPage ? 'md:h-[360px] xl:h-[439px]' : 'lg:h-[439px]', shouldAnimate && 'anim-scale-in anim-stagger-item')} />
+            {first ? <VoiceQuoteCard item={first} className={cn(isAboutPage ? 'md:h-[360px] xl:h-[439px]' : 'lg:h-[439px]', shouldAnimate && 'anim-scale-in anim-stagger-item')} wide isAboutPage={isAboutPage} /> : null}
+            <VideoTestimonialTile media={second?.avatar} fallbackSrc={figmaAssets.avatarOne} alt={second?.name || 'Partner testimonial video'} className={cn(isAboutPage ? 'md:h-[360px] xl:h-[439px]' : 'lg:h-[439px]', shouldAnimate && 'anim-scale-in anim-stagger-item')} />
           </div>
-          <div className={isAboutPage ? 'grid gap-[24px] md:grid-cols-2 xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1.2fr)_minmax(0,0.9fr)]' : 'grid gap-[24px] lg:grid-cols-[423.5px_605px_423.5px]'}>
-            {second ? <VoiceQuoteCard item={second} className={isAboutPage ? 'md:h-[360px] xl:h-[438.75px]' : 'lg:h-[438.75px]'} isAboutPage={isAboutPage} /> : null}
-            <VideoTestimonialTile media={third?.avatar || block.featuredMedia} fallbackSrc={figmaAssets.aboutOfficeSide} alt={third?.name || 'Partner testimonial video'} className={isAboutPage ? 'md:h-[360px] xl:h-[438.75px]' : 'lg:h-[438.75px]'} />
-            {third ? <VoiceQuoteCard item={third} className={isAboutPage ? 'md:h-[360px] xl:h-[438.75px]' : 'lg:h-[438.75px]'} isAboutPage={isAboutPage} /> : null}
+          <div className={cn(isAboutPage ? 'grid gap-[24px] md:grid-cols-2 xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1.2fr)_minmax(0,0.9fr)]' : 'grid gap-[24px] lg:grid-cols-[423.5px_605px_423.5px]', shouldAnimate && 'anim-fade-up anim-stagger-item anim-stagger-parent')}>
+            {second ? <VoiceQuoteCard item={second} className={cn(isAboutPage ? 'md:h-[360px] xl:h-[438.75px]' : 'lg:h-[438.75px]', shouldAnimate && 'anim-scale-in anim-stagger-item')} isAboutPage={isAboutPage} /> : null}
+            <VideoTestimonialTile media={third?.avatar || block.featuredMedia} fallbackSrc={figmaAssets.aboutOfficeSide} alt={third?.name || 'Partner testimonial video'} className={cn(isAboutPage ? 'md:h-[360px] xl:h-[438.75px]' : 'lg:h-[438.75px]', shouldAnimate && 'anim-scale-in anim-stagger-item')} />
+            {third ? <VoiceQuoteCard item={third} className={cn(isAboutPage ? 'md:h-[360px] xl:h-[438.75px]' : 'lg:h-[438.75px]', shouldAnimate && 'anim-scale-in anim-stagger-item')} isAboutPage={isAboutPage} /> : null}
           </div>
         </div>
       </Container>

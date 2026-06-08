@@ -10,9 +10,9 @@ type BridgeStat = NonNullable<HeroBlock['stats']>[number]
 
 const avatarImages = [
   figmaAssets.avatarOne,
-  figmaAssets.profileCard,
-  figmaAssets.teamOffice,
-  figmaAssets.aboutOfficeSide,
+  figmaAssets.avatarTwo,
+  figmaAssets.avatarThree,
+  figmaAssets.avatarFour,
 ]
 
 export function AboutBridgeSection({ block, className }: { block: HeroBlock; className?: string }) {
@@ -25,9 +25,9 @@ export function AboutBridgeSection({ block, className }: { block: HeroBlock; cla
       className={cn('relative overflow-hidden bg-[linear-gradient(108deg,#050948_0%,#121967_56%,#243C91_100%)] py-[72px] text-[#FFFFFF] xl:h-[814px] xl:py-[0px]', className)}
     >
       <Container className="grid max-w-[1500px] gap-[48px] px-[24px] xl:grid-cols-[minmax(0,690px)_minmax(0,650px)] xl:justify-between xl:gap-[48px] xl:px-[24px] xl:pt-[125px] 2xl:gap-[142px] 2xl:px-[0px]">
-        <BridgeVisual block={block} primaryStat={primaryStat} secondaryStat={secondaryStat} />
-        <div className="min-w-0 xl:pt-[113px]">
-          <h2 className="heading-section max-w-[650px] text-[40px] font-[800] leading-[52px] tracking-[0px] text-[#FFFFFF] md:text-[50px] md:leading-[66px]">
+        <BridgeVisual block={block} primaryStat={primaryStat} secondaryStat={secondaryStat} className="anim-left-part anim-fade-left" />
+        <div className="min-w-0 xl:pt-[113px] anim-right-part anim-fade-right">
+          <h2 className="heading-section max-w-[650px] text-[40px] font-[800] leading-[52px] tracking-[0px] text-[#FFFFFF] md:text-[48px] md:leading-[66px]">
             <HeadingHighlight heading={block.heading} highlight={block.highlight} />
           </h2>
           {block.description ? (
@@ -49,16 +49,18 @@ function BridgeVisual({
   block,
   primaryStat,
   secondaryStat,
+  className,
 }: {
   block: HeroBlock
   primaryStat: BridgeStat
   secondaryStat: BridgeStat
+  className?: string
 }) {
   return (
-    <div className="mx-auto grid w-full max-w-[690px] gap-[24px] md:grid-cols-[minmax(0,430px)_236px] xl:mx-0">
+    <div className={cn('mx-auto grid w-full max-w-[690px] gap-[24px] md:grid-cols-[minmax(0,430px)_236px] xl:mx-0', className)}>
       <div className="grid gap-[24px]">
-        <div className="relative flex h-[160px] w-full max-w-[430px] flex-col justify-center border border-[#FFFFFF]/10 bg-[#FFFFFF]/[0.04] px-[34px]">
-          <p className="text-[42px] font-[800] leading-[50px] tracking-[0px] text-[#FFFFFF] md:text-[50px] md:leading-[60px]">
+        <div className="relative flex h-[160px] w-full max-w-[430px] flex-col justify-center border border-[#FFFFFF]/10 bg-[#FFFFFF]/[0.04] px-[30px]">
+          <p className="text-[42px] font-[700] leading-[50px] tracking-[0px] text-[#FFFFFF] md:text-[50px] md:leading-[60px]">
             {primaryStat.value}
           </p>
           <p className="mt-[1px] text-[16px] font-[700] leading-[24px] tracking-[0px] text-[#FFFFFF] md:text-[18px]">
@@ -66,7 +68,7 @@ function BridgeVisual({
           </p>
           <div className="absolute right-[30px] top-[55px] hidden -space-x-[10px] sm:flex">
             {avatarImages.map((avatar) => (
-              <span key={avatar} className="relative size-[54px] overflow-hidden rounded-full border-[4px] border-[#FFFFFF] bg-[#EAEBF4]">
+              <span key={avatar} className="relative size-[54px] overflow-hidden rounded-full">
                 <OptimizedImage src={avatar} alt="" sizes="54px" className="object-cover" />
               </span>
             ))}

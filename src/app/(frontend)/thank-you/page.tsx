@@ -19,8 +19,8 @@ export const metadata: Metadata = buildMetadata(
 export default function ThankYouPage() {
   return (
     <div className="page-thank-you">
-      <section className="flex min-h-[60vh] items-center bg-brand-background thank-you-hero-section thank-you-content-section thank-you-cta-section">
-        <div className="mx-auto max-w-[900px] px-5 text-center">
+      <section className="flex min-h-[60vh] items-center bg-brand-background thank-you-hero-section thank-you-content-section thank-you-cta-section anim-full-section anim-fade-down">
+        <div className="mx-auto max-w-[900px] px-5 text-center anim-full-section anim-fade-up">
           <p className="text-body12 font-extrabold uppercase leading-[18px] tracking-[3px] text-brand-primary">Thank you</p>
           <h1 className="heading-section mt-4 text-h1 font-extrabold leading-[44px] text-neutral-dark">We received your request.</h1>
           <p className="mt-6 text-body18 leading-[30px] text-neutral-muted">

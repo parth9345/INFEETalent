@@ -12,7 +12,7 @@ export function CareerDetail({ career }: { career: CareerItem }) {
 
   return (
     <>
-      <section className="border-b border-[#CCCCCC] bg-[#FFF8EE] text-[#151515] career-detail-hero-section career-detail-cta-section">
+      <section className="border-b border-[#CCCCCC] bg-[#FFF8EE] text-[#151515] career-detail-hero-section career-detail-cta-section anim-full-section anim-fade-down">
         <Container className="career-detail-hero-layout flex max-w-[1500px] flex-col gap-[40px] px-[24px] py-[64px] lg:h-[372px] lg:flex-row lg:items-start lg:justify-between lg:px-[0px] lg:pb-[0px] lg:pt-[72px]">
           <div className="career-detail-hero-copy">
             <p className="text-[12px] font-[800] uppercase leading-[16px] tracking-[4.8px] text-[#555555]">
@@ -39,9 +39,9 @@ export function CareerDetail({ career }: { career: CareerItem }) {
         </Container>
       </section>
 
-      <section className="bg-[#FFF8EE] py-[84px] text-[#151515] lg:py-[120px] career-detail-content-section career-detail-requirements-section career-detail-process-section career-detail-related-section">
+      <section className="bg-[#FFF8EE] py-[84px] text-[#151515] lg:py-[120px] career-detail-content-section career-detail-requirements-section career-detail-process-section career-detail-related-section anim-full-section anim-fade-up">
         <Container className="career-detail-content-layout grid max-w-[1500px] gap-[56px] px-[24px] lg:grid-cols-[858px_577px] lg:gap-[65px] lg:px-[0px]">
-          <div className="career-detail-panels border-l border-t border-[#CCCCCC]">
+          <div className="career-detail-panels border-l border-t border-[#CCCCCC] anim-left-part anim-fade-left">
             <DetailPanel title="Job Title" text={career.title} />
             <DetailPanel title="Reports To" text="Team Leader / Assistant Operations Manager" />
             {detailSections.map((detail, index) => (
@@ -52,7 +52,7 @@ export function CareerDetail({ career }: { career: CareerItem }) {
             ))}
           </div>
 
-          <CareerForm careerId={career.id} careerTitle={career.title} className="career-detail-application-section career-application-form" />
+          <CareerForm careerId={career.id} careerTitle={career.title} className="career-detail-application-section career-application-form anim-right-part anim-fade-right" />
         </Container>
       </section>
     </>

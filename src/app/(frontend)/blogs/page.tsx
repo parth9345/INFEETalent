@@ -113,7 +113,7 @@ function BlogHero({
   const heroCategories = getHeroCategories(categories)
 
   return (
-    <section className="bg-[#FFF8EE] py-[38px] text-[#151515] lg:h-[324px] lg:overflow-hidden lg:py-[0px] blogs-hero-section">
+    <section className="bg-[#FFF8EE] py-[38px] text-[#151515] lg:h-[324px] lg:overflow-hidden lg:py-[0px] blogs-hero-section anim-full-section anim-fade-down">
       <Container className="blogs-hero-layout grid max-w-[1500px] gap-[30px] px-[24px] lg:grid-cols-[690px_520px] lg:gap-[210px] lg:px-[0px] lg:pt-[43px]">
         <div className="blogs-hero-copy">
           <p className="eyebrow-title text-[13px] font-[600] uppercase leading-[16px] tracking-[6px] text-[#555555]">
@@ -168,8 +168,8 @@ function FeaturedBlogsSection({ lead, posts }: { lead?: BlogItem; posts: BlogIte
           </span>
         </h2>
         <div className="blogs-featured-layout mt-[50px] grid gap-[24px] lg:grid-cols-[556px_920px]">
-          <FeaturedLeadCard post={lead} />
-          <div className="blogs-featured-side-grid grid gap-[24px] lg:grid-rows-[355px_354px]">
+          <FeaturedLeadCard post={lead} className="anim-left-part anim-fade-left" />
+          <div className="blogs-featured-side-grid grid gap-[24px] lg:grid-rows-[355px_354px] anim-right-part anim-fade-right">
             <div className="blogs-featured-text-row grid gap-[24px] md:grid-cols-2 lg:grid-cols-[448px_448px]">
               {textPosts[0] ? <FeaturedTextCard post={textPosts[0]} /> : null}
               {textPosts[1] ? <FeaturedTextCard post={textPosts[1]} /> : null}
@@ -184,11 +184,11 @@ function FeaturedBlogsSection({ lead, posts }: { lead?: BlogItem; posts: BlogIte
   )
 }
 
-function FeaturedLeadCard({ post }: { post: BlogItem }) {
+function FeaturedLeadCard({ className, post }: { className?: string; post: BlogItem }) {
   const href = post.slug ? `/blogs/${post.slug}` : '/blogs'
 
   return (
-    <article className="blog-featured-lead-card group overflow-hidden border border-[#303877] bg-[linear-gradient(135deg,#171F63_0%,#26308A_100%)] lg:row-span-2 lg:h-[733px]">
+    <article className={`blog-featured-lead-card group overflow-hidden border border-[#303877] bg-[linear-gradient(135deg,#171F63_0%,#26308A_100%)] lg:row-span-2 lg:h-[733px] ${className || ''}`}>
       <Link href={href as Route} className="block" aria-label={`Read more about ${post.title}`}>
         <div className="blog-featured-lead-image relative h-[260px] overflow-hidden md:h-[360px] lg:h-[417px]">
           <OptimizedImage
@@ -222,7 +222,7 @@ function FeaturedTextCard({ post }: { post: BlogItem }) {
     <article className="blog-featured-text-card group flex min-h-[354px] flex-col border border-[#303877]
      bg-[linear-gradient(135deg,#171F63_0%,#26308A_100%)] px-[32px] pb-[36px] pt-[38px] transition duration-300 hover:border-[#FCA62B] lg:h-full">
       <FeaturedDate date={post.publishedAt} />
-      <h3 className="mt-[28px] line-clamp-3 text-[28px] font-[800] leading-[38px] tracking-[0px] text-[#FFFFFF]">
+      <h3 className="mt-[15px] line-clamp-3 text-[28px] font-[800] leading-[38px] tracking-[0px] text-[#FFFFFF]">
         {post.title}
       </h3>
       {post.excerpt ? (
@@ -302,9 +302,9 @@ function BlogGridSection({
   const gridCategories = getHeroCategories(categories)
 
   return (
-    <section className=" py-[72px] lg:pb-[120px] lg:pt-[126px] blogs-grid-section blogs-categories-section">
+    <section className=" py-[72px] lg:pb-[120px] lg:pt-[126px] blogs-grid-section blogs-categories-section anim-full-section anim-fade-up">
       <Container className="blogs-grid-container max-w-[1500px] px-[24px] lg:px-[0px]">
-        <form action="/blogs" className="blogs-search-form w-full">
+        <form action="/blogs" className="blogs-search-form w-full anim-full-section anim-fade-down">
           <label htmlFor="blog-search" className="blogs-filter-label text-[13px] font-[800] uppercase leading-[16px] tracking-[0px] text-[#2C368D]">
             Search
           </label>
@@ -320,7 +320,7 @@ function BlogGridSection({
             {activeCategory ? <input type="hidden" name="category" value={activeCategory} /> : null}
           </div>
         </form>
-        <div className="blogs-category-filter mt-[38px]">
+        <div className="blogs-category-filter mt-[38px] anim-full-section anim-fade-down">
           <p className="blogs-filter-label text-[13px] font-[800] uppercase leading-[16px] tracking-[0px] text-[#2C368D]">Categories</p>
           <div className="blogs-category-list mt-[19px] flex flex-wrap gap-[14px]">
             <CategoryChip href={buildBlogsHref(undefined, query)} active={!activeCategory} variant="gridDark">

@@ -28,8 +28,12 @@ export const CareerApplications: CollectionConfig = {
     { name: 'fullName', type: 'text', required: true },
     { name: 'email', type: 'email', required: true },
     { name: 'phone', type: 'text', required: true },
+    { name: 'positionAppliedFor', type: 'text' },
     { name: 'currentLocation', type: 'text' },
     { name: 'experience', type: 'text' },
+    { name: 'currentSalary', type: 'text' },
+    { name: 'expectedSalary', type: 'text' },
+    { name: 'noticePeriod', type: 'text' },
     { name: 'portfolioUrl', type: 'text' },
     {
       name: 'resume',

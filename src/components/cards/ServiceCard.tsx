@@ -28,7 +28,7 @@ export function ServiceCard({ service, showIcon = true, showAction = false, clas
 
   if (variant === 'home') {
     return (
-      <article className={cn('group relative min-h-[200px] lg:min-h-[300px] overflow-hidden border-b border-r border-[#CCCCCC] bg-[#fff8ee] px-[15px] py-[15px] transition duration-300 hover:bg-[#2C368D] md:px-[48px] md:py-[56px] lg:h-[373px] lg:px-[60px] lg:pb-[60px] lg:pt-[67px]', className)}>
+      <article className={cn('group relative min-h-[200px] lg:min-h-[300px] overflow-hidden border-b border-r border-[#CCCCCC] bg-[#fff8ee] px-[15px] py-[15px] transition duration-300 hover:bg-[#151515] active:bg-[#151515] md:px-[48px] md:py-[56px] lg:h-[373px] lg:px-[60px] lg:pb-[60px] lg:pt-[67px]', className)}>
         <div className="absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100">
           <OptimizedImage
             src={figmaAssets.insights[2]}

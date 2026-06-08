@@ -19,18 +19,19 @@ export function AwardsSection({
   className?: string
 }) {
   const featureLayout = isHomepage || isAboutPage
+  const shouldAnimate = typeof className === 'string' && className.includes('home-awards-section')
 
   return (
     <section className={cn(isAboutPage ? 'bg-[#fff8ee] py-[64px] md:py-[80px] xl:py-[120px]' : isHomepage ? 'bg-[#fff8ee] py-[10px] lg:py-[120px]' : 'bg-[#FFF8EE] py-[48px] md:py-[64px]', className)}>
       <div className={cn('mx-auto px-5 2xl:px-0', isAboutPage ? 'max-w-[1500px] px-[24px] 2xl:px-[0px]' : isHomepage ? 'max-w-[1500px] px-[24px] lg:px-[0px]' : 'max-w-[1500px]')}>
         {featureLayout ? (
-          <AwardsHomeHeader title={block.heading} description={block.description} isAboutPage={isAboutPage} />
+          <AwardsHomeHeader title={block.heading} description={block.description} isAboutPage={isAboutPage} className={shouldAnimate ? 'anim-fade-up anim-stagger-item' : undefined} />
         ) : (
           <SectionHeading title={block.heading} description={block.description} className="mb-10" />
         )}
-        <div className="grid gap-0 border-l border-t border-[#CCCCCC] sm:grid-cols-2 lg:grid-cols-5">
+        <div className={cn('grid gap-0 border-l border-t border-[#CCCCCC] sm:grid-cols-2 lg:grid-cols-5', shouldAnimate && 'anim-fade-up anim-stagger-item anim-stagger-parent')}>
           {block.items?.map((award) => (
-            <article key={award.title} className={cn('group flex flex-col items-center border-b border-r  border-[#CCCCCC] text-center transition duration-300', isAboutPage ? 'min-h-[300px] bg-[#FFF8EE] px-[20px] pb-[28px] pt-[24px] hover:bg-[#F2F2F2] md:min-h-[320px] xl:h-[384.5px] xl:px-[24px] xl:pb-[31px]' : isHomepage ? 'min-h-[320px] bg-[#FFF8EE] px-[24px] pb-[31px] pt-[24px] hover:bg-[#F2F2F2] lg:h-[384.5px]' : 'min-h-[250px] px-5 py-7')}>
+            <article key={award.title} className={cn('group flex flex-col items-center border-b border-r  border-[#CCCCCC] text-center transition duration-300', isAboutPage ? 'min-h-[300px] bg-[#FFF8EE] px-[20px] pb-[28px] pt-[24px] hover:bg-[#F2F2F2] md:min-h-[320px] xl:h-[384.5px] xl:px-[24px] xl:pb-[31px]' : isHomepage ? 'min-h-[320px] bg-[#FFF8EE] px-[24px] pb-[31px] pt-[24px] hover:bg-[#F2F2F2] lg:h-[384.5px]' : 'min-h-[250px] px-5 py-7', shouldAnimate && 'anim-scale-in anim-stagger-item')}>
               <div className={isAboutPage ? 'relative h-[120px] w-[min(214.75px,100%)] overflow-hidden xl:h-[220.5px]' : isHomepage ? 'relative h-[120px] w-[214.75px] overflow-hidden lg:h-[220.5px]' : 'relative size-[112px]'}>
                 <Image src={resolveMediaUrl(award.image)} alt={resolveMediaAlt(award.image, award.title)} fill sizes={featureLayout ? '215px' : '112px'} className="object-contain transition duration-300 group-hover:scale-[1.04]" />
               </div>
@@ -43,13 +44,13 @@ export function AwardsSection({
   )
 }
 
-function AwardsHomeHeader({ title, description, isAboutPage = false }: { title?: string; description?: string; isAboutPage?: boolean }) {
+function AwardsHomeHeader({ title, description, isAboutPage = false, className }: { title?: string; description?: string; isAboutPage?: boolean; className?: string }) {
   const words = title?.trim().split(/\s+/) || []
   const lastWord = words.pop()
   const leadingWords = words.join(' ')
 
   return (
-    <div className={isAboutPage ? 'mb-[28px] max-w-[595px] md:mb-[36px]' : 'mb-[20px] max-w-[595px]'}>
+    <div className={cn(isAboutPage ? 'mb-[28px] max-w-[595px] md:mb-[36px]' : 'mb-[20px] max-w-[595px]', className)}>
       {title ? (
         <h2 className={isAboutPage ? 'heading-section text-[36px] font-[800] leading-[46px] tracking-[0px] text-[#000000] md:text-[44px] md:leading-[58px] xl:text-[50px] xl:leading-[66px] xl:tracking-[-1.5px]' : 'heading-section text-[50px] font-[800] leading-[66px] tracking-[-1.5px] text-[#000000]'}>
           {leadingWords ? `${leadingWords} ` : null}

@@ -9,7 +9,7 @@ import { OptimizedImage } from '@/components/ui/OptimizedImage'
 import { figmaAssets } from '@/lib/assets'
 import { getCareers, getPageBySlug } from '@/lib/payload-queries'
 import { buildMetadata } from '@/lib/seo'
-import type { CareerItem, PageBlock, PageContent } from '@/types/content'
+import type { CareerItem, MediaLike, PageBlock, PageContent } from '@/types/content'
 
 export const revalidate = 60
 
@@ -70,10 +70,11 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function CareersPage() {
   const [page, careers] = await Promise.all([getPageBySlug('careers'), getCareers(50)])
   const structuredDataPage = page || fallbackCareersPage
+  const heroBlock = getCareersHeroBlock(page)
 
   return (
     <div className="page-careers">
-      <CareersHeroSection />
+      <CareersHeroSection block={heroBlock} />
       <LatestJobsSection careers={careers} />
       <WhyWorkWithUsSection />
       <LeaderStorySection />
@@ -83,9 +84,13 @@ export default async function CareersPage() {
   )
 }
 
-function CareersHeroSection() {
+function getCareersHeroBlock(page?: PageContent | null) {
+  return page?.layout?.find((block): block is Extract<PageBlock, { blockType: 'hero' }> => block.blockType === 'hero')
+}
+
+function CareersHeroSection({ block }: { block?: Extract<PageBlock, { blockType: 'hero' }> }) {
   return (
-    <section className="border-b border-[#CCCCCC] bg-[#FFF8EE] text-[#151515] careers-hero-section">
+    <section className="border-b border-[#CCCCCC] bg-[#FFF8EE] text-[#151515] careers-hero-section anim-full-section anim-fade-down">
       <Container className="careers-hero-layout grid max-w-[1500px] gap-[56px] px-[24px] pb-[72px] pt-[70px] md:pt-[86px] lg:min-h-[628px] lg:grid-cols-[599px_692px] lg:items-start lg:gap-[209px] lg:px-[0px] lg:pb-[72px] lg:pt-[91px]">
         <div className="careers-hero-copy flex min-h-[404px] flex-col justify-between">
           <div>
@@ -103,35 +108,39 @@ function CareersHeroSection() {
           </p>
         </div>
 
-        <HeroCollage />
+        <HeroCollage block={block} />
       </Container>
     </section>
   )
 }
 
-function HeroCollage() {
-  return (
-    <div className="careers-hero-collage grid gap-[20px] sm:grid-cols-[1fr_1fr] lg:h-[406px] lg:grid-cols-[204px_204px_236px] lg:grid-rows-[126px_126px_126px] lg:gap-[14px]">
-      <ImagePanel className="h-[250px] sm:h-[300px] lg:col-start-1 lg:row-span-2 lg:h-full" src={figmaAssets.heroInterview} alt="INFE Talent team discussion" />
+function HeroCollage({ block }: { block?: Extract<PageBlock, { blockType: 'hero' }> }) {
+  const imageOne = block?.careerCollage?.imageOne || block?.media
+  const imageTwo = block?.careerCollage?.imageTwo || block?.featureCard?.image
+  const imageThree = block?.careerCollage?.imageThree
 
-      <div className="careers-hero-stat-card flex min-h-[126px] flex-col justify-center bg-[#242E8F] px-[26px] text-[#FFFFFF] sm:col-span-2 lg:col-span-2 lg:col-start-2 lg:row-start-1">
-        <div className="flex items-start gap-[19px]">
+  return (
+    <div className="careers-hero-collage grid gap-[20px] sm:grid-cols-[1fr_1fr] lg:h-[406px] lg:grid-cols-[204px_204px_236px] lg:grid-rows-[126px_126px_126px] lg:gap-[14px] 2xl:h-[563px] 2xl:grid-cols-[236px_203px_203px] 2xl:grid-rows-[157px_195px_163px] 2xl:gap-[24px]">
+      <ImagePanel className="h-[250px] sm:h-[300px] lg:col-start-1 lg:row-span-2 lg:h-full" media={imageOne} fallbackSrc={figmaAssets.heroInterview} alt="INFE Talent team discussion" />
+
+      <div className="careers-hero-stat-card relative flex min-h-[126px] flex-col justify-center bg-[#242E8F] px-[26px] text-[#FFFFFF] sm:col-span-2 lg:col-span-2 lg:col-start-2 lg:row-start-1 2xl:min-h-[157px] 2xl:px-[30px]">
+        <div className="flex items-start gap-[19px] 2xl:block">
           <div>
-            <p className="text-[42px] font-[800] leading-[50px] tracking-[0px]">3000+</p>
-            <p className="mt-[2px] text-[13px] font-[700] leading-[18px] tracking-[0px]">Professionals Joined</p>
+            <p className="text-[42px] font-[800] leading-[50px] tracking-[0px] 2xl:text-[51px] 2xl:leading-[56px]">3000+</p>
+            <p className="mt-[2px] whitespace-nowrap text-[13px] font-[700] leading-[18px] tracking-[0px] 2xl:mt-[4px] 2xl:text-[19px] 2xl:leading-[23px]">Professionals Joined</p>
           </div>
-          <div className="mt-[4px] hidden -space-x-[9px] md:flex">
-            {[figmaAssets.avatarOne, figmaAssets.profileCard, figmaAssets.aboutOfficeSide, figmaAssets.heroInterview].map((image, index) => (
-              <span key={`${image}-${index}`} className="relative block size-[38px] overflow-hidden rounded-full border-[3px] border-[#FFFFFF]">
-                <OptimizedImage src={image} altFallback="INFE professional" sizes="38px" className="object-cover" />
+          <div className="mt-[4px] hidden -space-x-[9px] md:flex 2xl:absolute 2xl:right-[22px] 2xl:top-[30px] 2xl:mt-0 2xl:-space-x-[13px]">
+            {[figmaAssets.avatarOne, figmaAssets.avatarTwo, figmaAssets.avatarThree, figmaAssets.avatarFour].map((image, index) => (
+              <span key={`${image}-${index}`} className="relative block size-[38px] overflow-hidden rounded-full 2xl:size-[54px]">
+                <OptimizedImage src={image} altFallback="INFE professional" sizes="(min-width: 1536px) 54px, 38px" className="object-cover" />
               </span>
             ))}
           </div>
         </div>
       </div>
 
-      <ImagePanel className="h-[250px] sm:h-[300px] lg:col-start-2 lg:row-span-2 lg:row-start-2 lg:h-full" src={figmaAssets.aboutOfficeSide} alt="INFE Talent advisor" />
-      <ImagePanel className="h-[250px] sm:h-[300px] lg:col-start-3 lg:row-span-2 lg:row-start-2 lg:h-full" src={figmaAssets.teamOffice} alt="INFE Talent global team" />
+      <ImagePanel className="h-[250px] sm:h-[300px] lg:col-start-2 lg:row-span-2 lg:row-start-2 lg:h-full" media={imageTwo} fallbackSrc={figmaAssets.aboutOfficeSide} alt="INFE Talent advisor" />
+      <ImagePanel className="h-[250px] sm:h-[300px] lg:col-start-3 lg:row-span-2 lg:row-start-2 lg:h-full" media={imageThree} fallbackSrc={figmaAssets.teamOffice} alt="INFE Talent global team" />
 
       <div className="careers-hero-stat-card flex min-h-[126px] flex-col justify-center bg-[#FCA62B] px-[26px] text-[#000000] lg:col-start-1 lg:row-start-3">
         <p className="text-[42px] font-[800] leading-[50px] tracking-[0px]">20+</p>
@@ -143,7 +152,7 @@ function HeroCollage() {
 
 function LatestJobsSection({ careers }: { careers: CareerItem[] }) {
   return (
-    <section className="bg-[#FFF8EE] py-[84px] text-[#151515] lg:pb-[92px] lg:pt-[96px] careers-jobs-section careers-cta-section">
+    <section className="bg-[#FFF8EE] py-[84px] text-[#151515] lg:pb-[92px] lg:pt-[96px] careers-jobs-section careers-cta-section anim-full-section anim-fade-up">
       <Container className="careers-jobs-container max-w-[1500px] px-[24px] lg:px-[0px]">
         <div className="mb-[46px]">
           <h2 className="heading-section text-[38px] font-[800] leading-[48px] tracking-[0px] text-[#000000] md:text-[50px] md:leading-[66px]">
@@ -161,14 +170,14 @@ function LatestJobsSection({ careers }: { careers: CareerItem[] }) {
 }
 
 function WhyWorkWithUsSection() {
-  return <AboutAdvantageSection block={careersAdvantageBlock} className="careers-benefits-section" />
+  return <AboutAdvantageSection block={careersAdvantageBlock} className="careers-benefits-section anim-full-section anim-fade-up" />
 }
 
 function LeaderStorySection() {
   return (
     <section className="bg-[#FFF8EE] py-[84px] text-[#151515] lg:py-[91px] careers-intro-section">
       <Container className="careers-intro-layout grid max-w-[1500px] items-center gap-[56px] px-[24px] lg:grid-cols-[610px_676px] lg:gap-[214px] lg:px-[0px]">
-        <div className="careers-intro-copy">
+        <div className="careers-intro-copy anim-left-part anim-fade-left">
           <p className="text-[12px] font-[800] uppercase leading-[16px] tracking-[4.8px] text-[#2C368D]">#INFETALENT</p>
           <h2 className="heading-section mt-[20px] max-w-[610px] text-[38px] font-[800] leading-[48px] tracking-[0px] text-[#000000] md:text-[50px] md:leading-[66px]">
             Every INFE Leader Carries A Story Shaped By These{' '}
@@ -182,7 +191,7 @@ function LeaderStorySection() {
           thumbnailSrc={figmaAssets.aboutOfficeSide}
           fallbackSrc={figmaAssets.aboutOfficeSide}
           alt="INFE Talent leadership story video"
-          className="careers-intro-video h-[260px] md:h-[344px]"
+          className="careers-intro-video h-[260px] md:h-[344px] anim-right-part anim-fade-right"
         />
       </Container>
     </section>
@@ -191,23 +200,23 @@ function LeaderStorySection() {
 
 function CareersStatsStrip() {
   return (
-    <section className="bg-[#2C368D] text-[#FFFFFF] careers-process-section">
-      <Container className="careers-process-stats grid max-w-[1500px] grid-cols-2 gap-y-[20px] px-[24px] py-[24px] md:grid-cols-4 lg:h-[146px] lg:items-center lg:px-[0px] lg:py-[0px]">
+    <section className="bg-[#2C368D] text-[#FFFFFF] careers-process-section anim-full-section anim-fade-up">
+      <div className="careers-process-stats grid grid-cols-2 gap-y-[20px] px-[24px] py-[24px] md:grid-cols-4 lg:h-[146px] lg:items-center lg:px-[0px] lg:py-[0px]">
         {careerStats.map((item) => (
-          <div key={item.value} className="flex min-w-0 items-center gap-[10px] lg:gap-[14px]">
+          <div key={item.value} className="flex justify-center min-w-0 items-center gap-[10px] lg:gap-[14px]">
             <strong className="shrink-0 text-[34px] font-[800] leading-[41px] tracking-[0px] md:text-[42px] md:leading-[50px] lg:text-[50px] lg:leading-[60px]">{item.value}</strong>
             <span className="min-w-0 text-[14px] font-[700] leading-[19px] tracking-[0px] md:text-[18px] md:leading-[24px] lg:text-[25px] lg:leading-[30px]">{item.label}</span>
           </div>
         ))}
-      </Container>
+      </div>
     </section>
   )
 }
 
-function ImagePanel({ alt, className, src }: { alt: string; className?: string; src: string }) {
+function ImagePanel({ alt, className, fallbackSrc, media }: { alt: string; className?: string; fallbackSrc: string; media?: MediaLike }) {
   return (
     <div className={`careers-hero-image-panel relative overflow-hidden ${className || ''}`}>
-      <OptimizedImage src={src} altFallback={alt} sizes="(min-width: 1024px) 236px, 100vw" className="object-cover" />
+      <OptimizedImage media={media} fallbackSrc={fallbackSrc} altFallback={alt} sizes="(min-width: 1024px) 236px, 100vw" className="object-cover" />
     </div>
   )
 }

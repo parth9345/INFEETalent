@@ -46,7 +46,7 @@ export function ServicesListingPage({ page, services }: ServicesListingPageProps
       <ServicesHero hero={hero} services={orderedServices} />
       {stats ? <ServicesStats block={stats} /> : null}
       <ServicesRows services={orderedServices} />
-      {advantage ? <AdvantageSection block={advantage} className="services-benefits-section" /> : null}
+      {advantage ? <AdvantageSection block={advantage} className="services-benefits-section anim-full-section anim-fade-up" /> : null}
       {contact ? <ContactSection block={contact} isHomepage className="services-cta-section" /> : null}
     </div>
   )
@@ -79,7 +79,7 @@ function ServicesHero({ hero, services }: { hero?: HeroBlock; services: ServiceI
   const highlight = hero?.highlight || 'Scalable Offshore Recruitment'
 
   return (
-    <section className="bg-[#FFF8EE] pb-[70px] pt-[92px] text-[#151515] lg:pb-[73px] lg:pt-[96px] services-hero-section">
+    <section className="bg-[#FFF8EE] pb-[70px] pt-[92px] text-[#151515] lg:pb-[73px] lg:pt-[96px] services-hero-section anim-full-section anim-fade-down">
       <Container className="max-w-[1500px] px-[24px] lg:px-[0px]">
         <div className="services-hero-layout grid gap-[44px] lg:grid-cols-[760px_590px] lg:gap-[150px]">
           <h1 className="heading-section max-w-[760px] text-[40px] font-[800] leading-[52px] tracking-[0px] md:text-[50px] md:leading-[66px]">
@@ -137,8 +137,8 @@ function ServicesStats({ block }: { block: StatsBlock }) {
   return (
     <section className="bg-[linear-gradient(108deg,#050948_0%,#121967_56%,#243C91_100%)] text-[#FFFFFF] services-overview-section">
       <div className="mx-auto grid max-w-[1920px] grid-cols-2 gap-y-[20px] px-[24px] py-[24px] md:grid-cols-4 md:px-[40px] lg:h-[146px] lg:px-[0px] lg:py-[0px]">
-        {block.items?.slice(0, 4).map((item) => (
-          <div key={`${item.value}-${item.label}`} className="services-stat-item flex items-center justify-center gap-[12px] lg:h-[146px]">
+        {block.items?.slice(0, 4).map((item, index) => (
+          <div key={`${item.value}-${item.label}`} className={`services-stat-item flex items-center justify-center gap-[12px] lg:h-[146px] ${index < 2 ? 'anim-left-part anim-fade-left' : 'anim-right-part anim-fade-right'}`}>
             <strong className="text-[36px] font-[800] leading-[44px] tracking-[0px] md:text-[50px] md:leading-[60px]">
               {item.value}
             </strong>
@@ -157,17 +157,17 @@ function ServicesRows({ services }: { services: ServiceItem[] }) {
     <section className="bg-[#FFF8EE] services-grid-section services-process-section">
       {services.map((service) => (
         <article key={service.slug || service.title} className="service-row grid border-b border-[#E2D8CC] lg:grid-cols-2">
-          <ServiceImage service={service} />
-          <ServiceCopy service={service} />
+          <ServiceImage service={service} className="anim-left-part anim-fade-left" />
+          <ServiceCopy service={service} className="anim-right-part anim-fade-right" />
         </article>
       ))}
     </section>
   )
 }
 
-function ServiceImage({ service }: { service: ServiceItem }) {
+function ServiceImage({ className, service }: { className?: string; service: ServiceItem }) {
   return (
-    <div className="service-row-image relative h-[420px] overflow-hidden lg:h-[760px]">
+    <div className={`service-row-image relative h-[420px] overflow-hidden lg:h-[760px] ${className || ''}`}>
       <OptimizedImage
         media={getServicePresentationImage(service)}
         fallbackSrc={figmaAssets.heroInterview}
@@ -180,12 +180,12 @@ function ServiceImage({ service }: { service: ServiceItem }) {
   )
 }
 
-function ServiceCopy({ service }: { service: ServiceItem }) {
+function ServiceCopy({ className, service }: { className?: string; service: ServiceItem }) {
   const cta = service.cta?.url ? service.cta : { label: 'Talk To An Expert', url: '/contact' }
   const benefits = service.benefits?.filter((item) => item.label).slice(0, 6) || []
 
   return (
-    <div className="service-row-content flex min-h-[560px] items-center bg-[#FFF8EE] px-[24px] py-[72px] lg:min-h-[760px] lg:px-[120px] lg:py-[0px]">
+    <div className={`service-row-content flex min-h-[560px] items-center bg-[#FFF8EE] px-[24px] py-[72px] lg:min-h-[760px] lg:px-[120px] lg:py-[0px] ${className || ''}`}>
       <div className="max-w-[620px]">
         <h2 className="text-[40px] font-[800] leading-[50px] tracking-[0px] text-[#151515] md:text-[50px] md:leading-[60px]">
           {service.title}

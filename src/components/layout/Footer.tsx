@@ -159,20 +159,21 @@ export async function Footer() {
 function FooterPartnerLogoItem({ index, partner }: { index: number; partner: FooterPartnerLogo }) {
   const label = partner.label || defaultPartnerLabels[index] || `Partner certification ${index + 1}`
   const content = (
-    <span className="relative block h-[92px] w-[92px] lg:h-[124.415px] lg:w-[124.415px]">
+    <span className="relative block h-[92px] w-[92px] lg:h-[124px] lg:w-[124px]">
       <OptimizedImage
         media={partner.image}
         altFallback={label}
         sizes="(min-width: 1024px) 124px, 92px"
+        preferredSizes={[]}
         className="object-contain"
-        unoptimized={isSvgMedia(partner.image)}
+        unoptimized
       />
     </span>
   )
 
   if (!partner.url) {
     return (
-      <div className="flex h-[92px] w-[92px] items-center justify-center lg:h-[124.415px] lg:w-[124.415px]">
+      <div className="flex h-[92px] w-[92px] items-center justify-center lg:h-[124px] lg:w-[124px]">
         {content}
       </div>
     )
@@ -183,7 +184,7 @@ function FooterPartnerLogoItem({ index, partner }: { index: number; partner: Foo
       href={partner.url}
       target={partner.newTab ? '_blank' : undefined}
       rel={partner.newTab ? 'noopener noreferrer' : undefined}
-      className="flex h-[92px] w-[92px] items-center justify-center opacity-80 transition duration-300 hover:opacity-100 lg:h-[124.415px] lg:w-[124.415px]"
+      className="flex h-[92px] w-[92px] items-center justify-center opacity-80 transition duration-300 hover:opacity-100 lg:h-[124px] lg:w-[124px]"
       aria-label={label}
     >
       {content}
@@ -257,14 +258,3 @@ function resolveFooterCTA(cta?: {
   }
 }
 
-function isSvgMedia(media: FooterPartnerLogo['image']) {
-  if (typeof media === 'string') {
-    return media.toLowerCase().split('?')[0]?.endsWith('.svg') || false
-  }
-
-  if (media && typeof media === 'object') {
-    return media.mimeType === 'image/svg+xml' || media.url?.toLowerCase().split('?')[0]?.endsWith('.svg') || false
-  }
-
-  return false
-}

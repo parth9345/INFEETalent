@@ -47,7 +47,7 @@ function TestimonialsHero({ hero, testimonials }: { hero?: HeroBlock; testimonia
   return (
     <section className="bg-[#FFF8EE] pb-[106px] pt-[94px] text-[#151515] lg:pb-[126px] lg:pt-[96px] testimonials-hero-section">
       <Container className="testimonials-hero-layout grid max-w-[1500px] gap-[56px] px-[24px] lg:grid-cols-[620px_710px] lg:gap-[170px] lg:px-[0px]">
-        <div className="testimonials-hero-copy flex min-h-[590px] flex-col justify-between">
+        <div className="testimonials-hero-copy flex min-h-[590px] flex-col justify-between anim-left-part anim-fade-left">
           <div>
             {hero?.eyebrow ? (
               <p className="eyebrow-title text-[12px] font-[800] uppercase leading-[16px] tracking-[6px] text-[#151515]">
@@ -66,7 +66,7 @@ function TestimonialsHero({ hero, testimonials }: { hero?: HeroBlock; testimonia
         </div>
 
         {testimonials.length ? (
-          <div className="testimonials-hero-card-grid grid gap-[20px] md:grid-cols-2 lg:h-[598px]">
+          <div className="testimonials-hero-card-grid grid gap-[20px] md:grid-cols-2 lg:h-[598px] anim-right-part anim-fade-right">
             <VideoPreviewCard item={firstVideo} media={resolveVideoMedia(firstVideo)} fallbackSrc={figmaAssets.aboutOfficeTall} className="h-[294px] testimonial-video-card testimonial-hero-card testimonial-hero-video-primary" />
             {quoteItem ? <HeroQuoteCard item={quoteItem} className="h-[294px] testimonial-quote-card testimonial-hero-card" /> : null}
             <HeroProofCard />
@@ -86,7 +86,7 @@ function FeaturedTestimonials({ testimonials }: { testimonials: TestimonialItem[
   const fifth = testimonials[4] || testimonials[1] || testimonials[0]
 
   return (
-    <section className="bg-[linear-gradient(108deg,#050948_0%,#121967_56%,#243C91_100%)] py-[96px] text-[#FFFFFF] lg:py-[112px] testimonials-featured-section testimonials-video-section">
+    <section className="bg-[linear-gradient(108deg,#050948_0%,#121967_56%,#243C91_100%)] py-[96px] text-[#FFFFFF] lg:py-[112px] testimonials-featured-section testimonials-video-section anim-full-section anim-fade-up">
       <Container className="max-w-[1500px] px-[24px] lg:px-[0px]">
         <div className="testimonials-featured-header">
           <p className="text-[12px] font-[800] uppercase leading-[16px] tracking-[6px] text-[#FCA62B]">Voices</p>
@@ -115,12 +115,12 @@ function FeaturedTestimonials({ testimonials }: { testimonials: TestimonialItem[
 
 function ClientReviews({ testimonials }: { testimonials: TestimonialItem[] }) {
   return (
-    <section id="client-reviews" className=" py-[88px] text-[#151515] lg:pb-[92px] lg:pt-[128px] testimonials-grid-section testimonials-clients-section">
+    <section id="client-reviews" className=" py-[88px] text-[#151515] lg:pb-[92px] lg:pt-[128px] testimonials-grid-section testimonials-clients-section anim-full-section anim-fade-up">
       <Container className="max-w-[1500px] px-[24px] lg:px-[0px]">
-        <h2 className="heading-section mx-auto max-w-[760px] text-center text-[38px] font-[800] leading-[48px] tracking-[0px] text-[#000000] md:text-[50px] md:leading-[66px]">
+        <h2 className="heading-section mx-auto max-w-[850px] text-center text-[38px] font-[800] leading-[48px] tracking-[0px] text-[#000000] md:text-[50px] md:leading-[66px]">
           Client Success Stories & Reviews
         </h2>
-        <div className="mx-auto mt-[24px] h-[8px] w-[384px] max-w-[72vw] bg-[#FFE029]" aria-hidden="true" />
+        <div className="mx-auto mt-[-11px] h-[8px] w-[384px] max-w-[72vw] bg-[rgba(251,223,45,0.45)]" aria-hidden="true" />
 
         {testimonials.length ? (
           <TestimonialsReviewGrid testimonials={testimonials} />
@@ -197,8 +197,8 @@ function HeroProofCard() {
       <h2 className="heading-section text-[34px] font-[800] leading-[42px] tracking-[0px] text-[#000D6B]">Trusted By 3000+</h2>
       <p className="mt-[3px] text-[18px] font-[500] leading-[26px] tracking-[0px] text-[#000D6B]">Global Staffing Leaders</p>
       <div className="mt-[29px] flex -space-x-[8px]">
-        {[figmaAssets.avatarOne, figmaAssets.profileCard, figmaAssets.teamOffice].map((avatar) => (
-          <span key={avatar} className="relative size-[48px] overflow-hidden rounded-full border-[3px] border-[#FFFFFF]">
+        {[figmaAssets.avatarOne, figmaAssets.avatarTwo, figmaAssets.avatarThree, figmaAssets.avatarFour].map((avatar) => (
+          <span key={avatar} className="relative size-[48px] overflow-hidden rounded-full">
             <OptimizedImage src={avatar} alt="" sizes="48px" className="object-cover" />
           </span>
         ))}

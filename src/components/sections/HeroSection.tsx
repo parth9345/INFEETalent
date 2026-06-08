@@ -18,12 +18,13 @@ export function HeroSection({ block, className }: { block: HeroBlock; className?
   }
 
   const centered = block.variant === 'centered'
-  const splitVisual = centered ? null : <SplitHeroVisual block={block} />
+  const isHome = typeof className === 'string' && className.includes('home-hero-section')
+  const splitVisual = centered ? null : <SplitHeroVisual block={block} className={isHome ? 'anim-fade-left anim-stagger-item' : undefined} />
 
   return (
     <section id={sectionId(block.settings)} className={cn(centered ? sectionClasses(block.settings, { defaultBackground: 'cream', includeSpacing: false }) : 'bg-[#FFF8EE] xl:min-h-[783px]', className)}>
       <Container className={centered ? 'grid min-h-[430px] place-items-center py-14 text-center' : 'grid max-w-[1500px] overflow-visible px-[10px] pb-[10px] pt-[20px] md:pb-[84px] md:pt-[64px] xl:grid-cols-[650px_minmax(0,1fr)] xl:gap-[64px] xl:pb-[0px] xl:pt-[48px] 2xl:grid-cols-[650px_710px] 2xl:gap-[140px] 2xl:px-[0px]'}>
-        <div className={centered ? 'mx-auto min-w-0 max-w-4xl' : 'min-w-0 max-w-[650px]'}>
+        <div className={cn(centered ? 'mx-auto min-w-0 max-w-4xl' : 'min-w-0 max-w-[650px]', isHome && (centered ? 'anim-fade-up anim-stagger-item' : 'anim-fade-right anim-stagger-item'))}>
           {centered && block.eyebrow ? (
             <p className="eyebrow-title mb-4 text-body12 font-extrabold uppercase leading-[18px] tracking-[3px] text-brand-primary">{block.eyebrow}</p>
           ) : null}
@@ -57,7 +58,7 @@ export function HeroSection({ block, className }: { block: HeroBlock; className?
   )
 }
 
-function SplitHeroVisual({ block }: { block: HeroBlock }) {
+function SplitHeroVisual({ block, className }: { block: HeroBlock; className?: string }) {
   const primaryStat = block.stats?.[0]
   const secondaryStat = block.stats?.[1]
   const featureCard = block.featureCard
@@ -73,7 +74,7 @@ function SplitHeroVisual({ block }: { block: HeroBlock }) {
   }
 
   return (
-    <div className="relative mt-[48px] min-h-[300px] min-w-0 md:min-h-[650px] xl:mt-[0px] xl:h-[621px] xl:min-h-[621px] xl:w-full 2xl:w-[756px]">
+    <div className={cn('relative mt-[48px] min-h-[300px] min-w-0 md:min-h-[650px] xl:mt-[0px] xl:h-[621px] xl:min-h-[621px] xl:w-full 2xl:w-[756px]', className)}>
       {block.media ? (
         <div className="relative ml-auto h-[320px] w-full overflow-hidden md:h-[420px] xl:absolute xl:left-auto xl:right-[46px] xl:top-[102px] xl:h-[450px] xl:w-[min(610px,calc(100%-60px))] 2xl:left-[100px] 2xl:right-auto 2xl:w-[610px]">
           <OptimizedImage
@@ -267,8 +268,8 @@ function DarkSplitVisual({ block }: { block: HeroBlock }) {
               {stat0?.value || '3000+'}
             </p>
             <div className="flex shrink-0 -space-x-[8px] pt-[4px]">
-              {[figmaAssets.avatarOne, figmaAssets.teamOffice, figmaAssets.profileCard, figmaAssets.aboutOfficeSide].map((avatar) => (
-                <span key={avatar} className="relative size-[28px] overflow-hidden rounded-full border-[2px] border-[#FFFFFF] lg:size-[32px]">
+              {[figmaAssets.avatarOne, figmaAssets.avatarTwo, figmaAssets.avatarThree, figmaAssets.avatarFour].map((avatar) => (
+                <span key={avatar} className="relative size-[28px] overflow-hidden rounded-full lg:size-[32px]">
                   <OptimizedImage src={avatar} alt="" sizes="32px" className="object-cover" />
                 </span>
               ))}
@@ -305,10 +306,10 @@ function DarkSplitVisual({ block }: { block: HeroBlock }) {
         </div>
         {/* Stats card — amber/yellow */}
         <div className="flex flex-none flex-col justify-between bg-[#FCA62B] p-[20px] lg:p-[28px]" style={{ height: '38%' }}>
-          <p className="text-[32px] font-[800] leading-[38px] tracking-[-0.5px] text-[#000000] lg:text-[40px] lg:leading-[48px]">
+          <p className="text-[32px] font-[700] leading-[38px] tracking-[-0.5px] text-[#000000] lg:text-[40px] lg:leading-[48px]">
             {stat1?.value || '20+'}
           </p>
-          <p className="text-[13px] font-[700] leading-[18px] text-[#000000] lg:text-[15px] lg:leading-[20px]">
+          <p className="text-[13px] font-[600] leading-[18px] text-[#000000] lg:text-[15px] lg:leading-[20px]">
             {stat1?.label || 'Years of Experience'}
           </p>
         </div>
