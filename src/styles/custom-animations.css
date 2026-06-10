@@ -91,3 +91,24 @@
     transform: none;
   }
 }
+
+.back-to-top-arrow {
+  animation: back-to-top-arrow 2.2s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes back-to-top-arrow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  45%, 55% {
+    transform: translateY(-4px);
+  }
+}
+
+.back-to-top-arrow {
+  animation: back-to-top-arrow 1.4s ease-in-out infinite;
+}
+
+
+

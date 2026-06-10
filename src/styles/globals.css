@@ -264,6 +264,14 @@ img {
 }
 
 
+a.back-to-top-button::before {content: "";background: #242e8f54;width: 63px;position: absolute;height: 63px;z-index: -1;border-radius: 50%;left: -10px;top: -10px;}
+
+a.back-to-top-button {
+    z-index: 999;
+}
+
+
+
 @media (max-width: 575px) {
   .heading-section{
     font-size: 25px;

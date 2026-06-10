@@ -372,7 +372,7 @@ function CategoryChip({
       <Link
         href={href as Route}
         scroll={false}
-        className={`blog-category-chip blog-category-chip-hero inline-flex h-[58px] ${heroChipWidthClass(children)} items-center justify-center whitespace-nowrap rounded-[29px] border border-[#CCCCCC] bg-[#FFF8EE] px-[0px] text-[18px] font-[700] leading-[24px] tracking-[0px] text-[#151515] transition duration-200 hover:border-[#2C368D] hover:text-[#2C368D] ${active ? 'border-[#CCCCCC]' : ''}`}
+        className={`blog-category-chip blog-category-chip-hero inline-flex items-center justify-center whitespace-nowrap rounded-[29px] border border-[#CCCCCC] bg-[#FFF8EE] px-[24px] py-[16px] text-[18px] font-[700] leading-[24px] tracking-[0px] text-[#151515] transition duration-200 hover:border-[#2C368D] hover:text-[#2C368D] ${active ? 'border-[#CCCCCC]' : ''}`}
       >
         {children}
       </Link>
@@ -384,7 +384,7 @@ function CategoryChip({
       <Link
         href={href as Route}
         scroll={false}
-        className={`blog-category-chip blog-category-chip-grid inline-flex h-[58px] ${gridChipWidthClass(children)} items-center justify-center whitespace-nowrap rounded-[29px] border-[2px] px-[0px] text-[16px] font-[700] leading-[24px] tracking-[0px] transition duration-200 hover:bg-[#2c368d] hover:text-[#FFFFFF] ${
+        className={`blog-category-chip blog-category-chip-grid inline-flex items-center justify-center whitespace-nowrap rounded-[29px] border-[2px] px-[24px] py-[16px] text-[16px] font-[700] leading-[24px] tracking-[0px] transition duration-200 hover:bg-[#2c368d] hover:text-[#FFFFFF] ${
           active ? 'bg-[#2C368D] text-[#FFFFFF]' : 'bg-transparent text-[#000000]'
         }`}
         aria-label={`Filter blogs by ${children}`}
@@ -400,47 +400,13 @@ function CategoryChip({
       scroll={false}
       className={
         active
-          ? 'blog-category-chip inline-flex h-[38px] items-center rounded-[999px] bg-[#2C368D] px-[18px] text-[12px] font-[800] leading-[16px] tracking-[0px] text-[#FFFFFF]'
-          : 'blog-category-chip inline-flex h-[38px] items-center rounded-[999px] bg-[#FFFFFF] px-[18px] text-[12px] font-[800] leading-[16px] tracking-[0px] text-[#151515] transition hover:bg-[#EAEBF4] hover:text-[#2C368D]'
+          ? 'blog-category-chip inline-flex items-center rounded-[999px] bg-[#2C368D] px-[24px] py-[16px] text-[12px] font-[800] leading-[16px] tracking-[0px] text-[#FFFFFF]'
+          : 'blog-category-chip inline-flex items-center rounded-[999px] bg-[#FFFFFF] px-[24px] py-[16px] text-[12px] font-[800] leading-[16px] tracking-[0px] text-[#151515] transition hover:bg-[#EAEBF4] hover:text-[#2C368D]'
       }
     >
       {children}
     </Link>
   )
-}
-
-function gridChipWidthClass(label: string) {
-  switch (label) {
-    case 'All Posts':
-      return 'w-[120px]'
-    case 'Offshore Strategy':
-      return 'w-[200px]'
-    case 'Market Trends':
-      return 'w-[168px]'
-    case 'Compliance & Security':
-      return 'w-[240px]'
-    case 'Case Studies':
-      return 'w-[160px]'
-    default:
-      return 'min-w-[120px]'
-  }
-}
-
-function heroChipWidthClass(label: string) {
-  switch (label) {
-    case 'All Posts':
-      return 'w-[120px]'
-    case 'Offshore Strategy':
-      return 'w-[199px]'
-    case 'Market Trends':
-      return 'w-[168px]'
-    case 'Compliance & Security':
-      return 'w-[237px]'
-    case 'Case Studies':
-      return 'w-[158px]'
-    default:
-      return 'min-w-[120px]'
-  }
 }
 
 function HighlightedHeading({ heading, highlight }: { heading: string; highlight?: string | null }) {
@@ -484,10 +450,23 @@ function getCategories(posts: BlogItem[]) {
 }
 
 function getHeroCategories(categories: string[]) {
-  const normalizedCategories = new Set(categories.map((category) => category.toLowerCase()))
-  const orderedCategories = fallbackCategories.filter((category) => normalizedCategories.has(category.toLowerCase()))
+  const uniqueCategories = Array.from(
+    new Set(categories.map((category) => category.trim()).filter((category): category is string => Boolean(category)))
+  )
 
-  return orderedCategories.length ? orderedCategories : fallbackCategories
+  if (!uniqueCategories.length) {
+    return fallbackCategories
+  }
+
+  const fallbackCategorySet = new Set(fallbackCategories.map((category) => category.toLowerCase()))
+  const orderedFallbackCategories = fallbackCategories.filter((category) =>
+    uniqueCategories.some((uniqueCategory) => uniqueCategory.toLowerCase() === category.toLowerCase())
+  )
+  const customCategories = uniqueCategories.filter(
+    (category) => !fallbackCategorySet.has(category.toLowerCase()),
+  )
+
+  return [...orderedFallbackCategories, ...customCategories]
 }
 
 function getFeaturedGridPosts(lead: BlogItem | undefined, featuredPosts: BlogItem[], latestPosts: BlogItem[]) {

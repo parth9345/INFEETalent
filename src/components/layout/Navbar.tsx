@@ -24,7 +24,8 @@ export async function Navbar() {
   const [navigation, settings] = await Promise.all([getNavigation(), getSiteSettings()])
   const header = settings?.header
   const footerContact = settings?.footer?.contact
-  const email = footerContact?.email || settings?.contact?.email || siteConfig.contactEmail
+  const inquiryEmail = footerContact?.email || settings?.contact?.email || siteConfig.contactEmail
+  const jobSeekerEmail = siteConfig.jobsEmail
   const ukPhone = footerContact?.ukPhone || footerContact?.phone || settings?.contact?.ukPhone || siteConfig.phones.uk
   const usPhone = footerContact?.usPhone || settings?.contact?.usPhone || siteConfig.phones.us
   const ausPhone = footerContact?.ausPhone || settings?.contact?.ausPhone || siteConfig.phones.aus
@@ -40,8 +41,8 @@ export async function Navbar() {
     <HeaderShell>
       <div className="hidden h-[50px] bg-[linear-gradient(90deg,#050947_0%,#162072_60%,#213791_100%)] text-[#FFFFFF] transition-[margin,opacity] duration-300 group-data-[scrolled=true]/header:mt-[-50px] group-data-[scrolled=true]/header:opacity-0 2xl:block site-header-topbar">
         <Container className="flex h-[50px] max-w-[1790px] items-center justify-between px-[24px] text-[16px] leading-[20px] tracking-[0px] 2xl:px-[0px]">
-          <HeaderContactGroup label="Client Inquiry:" ukPhone={ukPhone} usPhone={usPhone} ausPhone={ausPhone} email={email} />
-          <HeaderContactGroup label="Job Seekers :" ukPhone={ukPhone} usPhone={usPhone} ausPhone={ausPhone} email={email} />
+          <HeaderContactGroup label="Client Inquiry:" ukPhone={ukPhone} usPhone={usPhone} ausPhone={ausPhone} email={inquiryEmail} />
+          <HeaderContactGroup label="Job Seekers :" ukPhone={ukPhone} usPhone={usPhone} ausPhone={ausPhone} email={jobSeekerEmail} />
         </Container>
       </div>
       <Container as="nav" className="relative flex h-[84px] max-w-[1800px] items-center justify-between bg-[#FFF8EE] px-[24px] md:h-[96px] lg:h-[113px] 2xl:px-[0px] site-navbar">

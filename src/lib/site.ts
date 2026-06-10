@@ -5,6 +5,7 @@ export const siteConfig = {
   defaultDescription:
     'INFE Talent delivers end-to-end offshore recruitment solutions for staffing firms across the USA, UK, and APAC.',
   contactEmail: 'info@infetalent.com',
+  jobsEmail: 'hr@infetalent.com',
   phones: {
     uk: '+44 203 878 3559',
     us: '+1 614 266 3317',
