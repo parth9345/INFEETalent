@@ -1,12 +1,13 @@
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
+import { getSiteUrl } from '@/lib/site'
 import type { MediaLike } from '@/types/content'
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs))
 
 export const absoluteUrl = (path = '/') =>
-  new URL(path, process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000').toString()
+  new URL(path, getSiteUrl()).toString()
 
 export const resolveMediaUrl = (media: MediaLike, fallback = '', preferredSizes: string[] = ['hero', 'card']): string => {
   if (typeof media === 'string') {
@@ -40,7 +41,7 @@ const normalizeLocalMediaUrl = (url: string) => {
 
   try {
     const parsedUrl = new URL(url)
-    const configuredUrl = new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000')
+    const configuredUrl = new URL(getSiteUrl())
     const isLocalPayloadMedia = ['localhost', '127.0.0.1'].includes(parsedUrl.hostname) && parsedUrl.pathname.startsWith('/api/media/')
 
     if (parsedUrl.origin === configuredUrl.origin || isLocalPayloadMedia) {

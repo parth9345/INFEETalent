@@ -1,6 +1,27 @@
+const normalizeSiteUrl = (url?: string) => {
+  if (!url) {
+    return undefined
+  }
+
+  const trimmedUrl = url.trim().replace(/\/+$/, '')
+
+  if (!trimmedUrl) {
+    return undefined
+  }
+
+  return /^https?:\/\//i.test(trimmedUrl) ? trimmedUrl : `https://${trimmedUrl}`
+}
+
+export const getSiteUrl = () =>
+  normalizeSiteUrl(process.env.NEXT_PUBLIC_SITE_URL) ||
+  normalizeSiteUrl(process.env.NEXT_PUBLIC_SERVER_URL) ||
+  normalizeSiteUrl(process.env.VERCEL_PROJECT_PRODUCTION_URL) ||
+  normalizeSiteUrl(process.env.VERCEL_URL) ||
+  'http://localhost:3000'
+
 export const siteConfig = {
   name: 'INFE Talent',
-  url: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+  url: getSiteUrl(),
   defaultTitle: 'INFE Talent | Offshore Recruitment Solutions',
   defaultDescription:
     'INFE Talent delivers end-to-end offshore recruitment solutions for staffing firms across the USA, UK, and APAC.',
