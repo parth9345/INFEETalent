@@ -1,7 +1,7 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { sqliteAdapter } from '@payloadcms/db-sqlite'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import { copyFileSync, existsSync } from 'fs'
+import { copyFileSync, existsSync, statSync } from 'fs'
 import path from 'path'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
@@ -17,20 +17,38 @@ const localOrigins = ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://
 const allowedOrigins = Array.from(new Set([siteConfig.url, ...localOrigins]))
 const schemaPush = process.env.PAYLOAD_ENABLE_SCHEMA_PUSH === 'true'
 
-const getDatabaseUrl = () => {
-  if (process.env.DATABASE_URL) {
-    return process.env.DATABASE_URL
+const getSQLitePath = (databaseUrl = 'file:./infe-talent.sqlite') => databaseUrl.replace(/^file:/i, '')
+
+const copySQLiteToWritableVercelPath = (databaseUrl?: string) => {
+  const sourcePath = path.resolve(process.cwd(), getSQLitePath(databaseUrl))
+  const targetPath = '/tmp/infe-talent.sqlite'
+
+  if (!existsSync(sourcePath)) {
+    return `file:${targetPath}`
   }
 
-  if (process.env.VERCEL) {
-    const sourcePath = path.resolve(process.cwd(), 'infe-talent.sqlite')
-    const targetPath = '/tmp/infe-talent.sqlite'
+  const shouldCopy =
+    !existsSync(targetPath) ||
+    statSync(sourcePath).size !== statSync(targetPath).size ||
+    statSync(sourcePath).mtimeMs > statSync(targetPath).mtimeMs
 
-    if (!existsSync(targetPath) && existsSync(sourcePath)) {
-      copyFileSync(sourcePath, targetPath)
-    }
+  if (shouldCopy) {
+    copyFileSync(sourcePath, targetPath)
+  }
 
-    return `file:${targetPath}`
+  return `file:${targetPath}`
+}
+
+const getDatabaseUrl = () => {
+  const configuredDatabaseUrl = process.env.DATABASE_URL?.trim()
+  const isConfiguredSqlite = configuredDatabaseUrl ? /^file:/i.test(configuredDatabaseUrl) : false
+
+  if (process.env.VERCEL && (!configuredDatabaseUrl || isConfiguredSqlite)) {
+    return copySQLiteToWritableVercelPath(configuredDatabaseUrl)
+  }
+
+  if (configuredDatabaseUrl) {
+    return configuredDatabaseUrl
   }
 
   return 'file:./infe-talent.sqlite'
