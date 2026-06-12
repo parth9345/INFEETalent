@@ -39,6 +39,12 @@ const normalizeLocalMediaUrl = (url: string) => {
     return url
   }
 
+  const directMediaUrl = toDirectMediaUrl(url)
+
+  if (directMediaUrl) {
+    return directMediaUrl
+  }
+
   try {
     const parsedUrl = new URL(url)
     const configuredUrl = new URL(getSiteUrl())
@@ -52,4 +58,32 @@ const normalizeLocalMediaUrl = (url: string) => {
   }
 
   return url
+}
+
+const toDirectMediaUrl = (url: string) => {
+  const mediaPrefix = '/api/media/file/'
+
+  try {
+    const parsedUrl = url.startsWith('http') ? new URL(url) : new URL(url, getSiteUrl())
+    const mediaPrefixIndex = parsedUrl.pathname.indexOf(mediaPrefix)
+
+    if (mediaPrefixIndex === -1) {
+      return undefined
+    }
+
+    const encodedFilename = parsedUrl.pathname.slice(mediaPrefixIndex + mediaPrefix.length)
+    const filename = decodeURIComponent(encodedFilename)
+
+    return `/media/${filename}`
+  } catch {
+    const mediaPrefixIndex = url.indexOf(mediaPrefix)
+
+    if (mediaPrefixIndex === -1) {
+      return undefined
+    }
+
+    const encodedFilename = url.slice(mediaPrefixIndex + mediaPrefix.length).split('?')[0]
+
+    return `/media/${decodeURIComponent(encodedFilename)}`
+  }
 }
