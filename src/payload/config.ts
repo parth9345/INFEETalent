@@ -1,7 +1,7 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { sqliteAdapter } from '@payloadcms/db-sqlite'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import { copyFileSync, existsSync, statSync } from 'fs'
+import { copyFileSync, existsSync, readFileSync, statSync } from 'fs'
 import path from 'path'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
@@ -19,6 +19,18 @@ const schemaPush = process.env.PAYLOAD_ENABLE_SCHEMA_PUSH === 'true'
 
 const getSQLitePath = (databaseUrl = 'file:./infe-talent.sqlite') => databaseUrl.replace(/^file:/i, '')
 
+const hasDifferentFileContents = (sourcePath: string, targetPath: string) => {
+  if (!existsSync(targetPath)) {
+    return true
+  }
+
+  if (statSync(sourcePath).size !== statSync(targetPath).size) {
+    return true
+  }
+
+  return !readFileSync(sourcePath).equals(readFileSync(targetPath))
+}
+
 const copySQLiteToWritableVercelPath = (databaseUrl?: string) => {
   const sourcePath = path.resolve(process.cwd(), getSQLitePath(databaseUrl))
   const targetPath = '/tmp/infe-talent.sqlite'
@@ -27,12 +39,7 @@ const copySQLiteToWritableVercelPath = (databaseUrl?: string) => {
     return `file:${targetPath}`
   }
 
-  const shouldCopy =
-    !existsSync(targetPath) ||
-    statSync(sourcePath).size !== statSync(targetPath).size ||
-    statSync(sourcePath).mtimeMs > statSync(targetPath).mtimeMs
-
-  if (shouldCopy) {
+  if (hasDifferentFileContents(sourcePath, targetPath)) {
     copyFileSync(sourcePath, targetPath)
   }
 
