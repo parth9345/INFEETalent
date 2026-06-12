@@ -1,12 +1,7 @@
 .next
 node_modules
 dist
-build
 tsconfig.tsbuildinfo
-payload.db
-payload.db-*
-*.sqlite
-*.sqlite-*
 .env
 .env*.local
 *.log
